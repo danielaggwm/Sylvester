@@ -39,7 +39,7 @@ body{
     linear-gradient(180deg,#0a1322 0%, #070c17 55%, #05080f 100%);
   border:1px solid rgba(120,165,220,.10);
   box-shadow:0 0 120px rgba(0,0,0,.6), inset 0 0 160px rgba(0,0,0,.45);
-  display:grid; grid-template-rows:286px 1054px minmax(0,1fr) 46px; overflow:hidden;
+  display:grid; grid-template-rows:286px minmax(0,1fr) auto 46px; overflow:hidden;
 }
 /* subtle scanline + vignette */
 #stage::after{content:"";position:absolute;inset:0;pointer-events:none;
@@ -71,8 +71,8 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:14px;z-index:3
 .kpi.lead .v{color:#9fe6f4}
 
 /* ── atlas ── */
-#atlas{position:relative;z-index:2}
-#atlas svg{display:block;width:1080px;height:1054px}
+#atlas{position:relative;z-index:2;min-height:0}
+#atlas svg{display:block;width:1080px;height:100%}
 .ringline{fill:none;stroke:var(--ring);stroke-width:1}
 .spoke{stroke:rgba(120,165,220,.06);stroke-width:1}
 .link{fill:none;stroke:var(--edge);stroke-width:1;transition:stroke .6s,opacity .6s,stroke-width .6s}
@@ -86,14 +86,14 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:14px;z-index:3
 .hub-cat{font-family:var(--f-disp);font-weight:700;font-size:19px;letter-spacing:.12em;fill:var(--accent);text-anchor:middle;text-transform:uppercase}
 
 /* ── bottom ── */
-#bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 0;z-index:3;min-height:0}
+#bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 6px;z-index:3;min-height:0}
 #bottom>.card{min-height:0}
 .card{border:1px solid var(--hair-c);border-radius:16px;padding:20px 22px;
   background:linear-gradient(180deg,rgba(16,27,48,.6),rgba(9,16,30,.35));position:relative;overflow:hidden}
 .card h3{margin:0 0 2px;font-family:var(--f-mono);font-size:12px;letter-spacing:.34em;
   color:var(--ink-3);text-transform:uppercase;font-weight:500}
 .spot-name{font-family:var(--f-disp);font-weight:700;font-size:40px;letter-spacing:.04em;
-  color:var(--accent);text-transform:uppercase;line-height:1.02;margin:6px 0 2px;min-height:44px}
+  color:var(--accent);text-transform:uppercase;line-height:1.02;margin:6px 0 2px;min-height:44px;white-space:nowrap;overflow:hidden}
 .spot-stats{display:flex;gap:26px;margin:10px 0 14px}
 .spot-stats .s .v{font-family:var(--f-mono);font-weight:600;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
 .spot-stats .s .l{font-family:var(--f-disp);font-size:12.5px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;margin-top:2px}
@@ -104,12 +104,14 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:14px;z-index:3
 .vbar .fill{height:100%;border-radius:5px;transition:width .6s cubic-bezier(.3,.8,.3,1)}
 .vbar .pc{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
 
-.subs{display:flex;flex-direction:column;gap:6px}
+.subs{display:flex;flex-direction:column;gap:6px;min-height:64px}
 .sb{display:grid;grid-template-columns:74px 1fr 60px;gap:10px;align-items:baseline;font-size:13px}
 .sb .c{font-family:var(--f-mono);color:var(--accent);letter-spacing:.04em}
 .sb .n{font-family:var(--f-body);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb .k{font-family:var(--f-mono);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
 .legend{display:flex;flex-direction:column;gap:13px}
+.readcard{display:flex;flex-direction:column}
+.readcard .legend{flex:1 1 auto;justify-content:space-between}
 .lg{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:12px}
 .lg .gl{display:flex;align-items:center;justify-content:center}
 .lg .tx{font-family:var(--f-body);font-size:14px;color:var(--ink-2);line-height:1.35}
@@ -214,13 +216,13 @@ footer .r{color:var(--ink-2)}
         <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#5fcbe4"/><circle cx="24" cy="11" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
         <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#eafbff"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#5fcbe4" stroke-opacity=".7"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
         <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#5fcbe4" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. A bar flickers when activity reaches it.</span></div>
-        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
+        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" overflow="visible" aria-hidden="true">
           <circle cx="4" cy="15" r="2.2" fill="#eafbff" opacity=".55"/>
-          <circle cx="36" cy="15" r="4.5" fill="#5fcbe4"/>
-          <circle cy="15" r="1.4" fill="#ffc24a" opacity="0"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
-          <circle cy="15" r="2.2" fill="#ffd96b" opacity="0"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
-          <circle cy="15" r="3.4" fill="#fff1c2" style="filter:drop-shadow(0 0 3px #ffd96b)"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
-          <circle cx="36" cy="15" r="4.5" fill="none" stroke="#ffd96b" stroke-width="2"><animate attributeName="r" values="4.5;4.5;12;12" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="29" cy="15" r="4.5" fill="#5fcbe4"/>
+          <circle cy="15" r="1.4" fill="#ffc24a" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="2.2" fill="#ffd96b" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="3.4" fill="#fff1c2" style="filter:drop-shadow(0 0 3px #ffd96b)"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="29" cy="15" r="4.5" fill="none" stroke="#ffd96b" stroke-width="2"><animate attributeName="r" values="4.5;4.5;11.5;11.5" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
         </svg></span><span class="tx"><b>Gold spark = a new patient sample.</b> It travels from the center to its cancer type, then the total goes up.</span></div>
         <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
           <circle cx="22" cy="15" r="5" fill="#5fcbe4"/>
@@ -259,7 +261,7 @@ const BUNDLE = /*__BUNDLE__*/;
     `${fmt(B.meta.totalEvents)} events · OncoTree latest_stable · synthetic sample`;
 
   // ── build hierarchy + radial layout
-  const W=1080,H=1054,cx=540,cy=520;
+  const W=1080; let H=document.getElementById("atlas").clientHeight||1100;
   const root = d3.hierarchy(B.tree);
   const RING=[0,168,248,312,360,396,420];
   const OUT=420;
@@ -294,7 +296,7 @@ const BUNDLE = /*__BUNDLE__*/;
   glow.append("feGaussianBlur").attr("stdDeviation","3.2").attr("result","b");
   const fm=glow.append("feMerge"); fm.append("feMergeNode").attr("in","b"); fm.append("feMergeNode").attr("in","SourceGraphic");
 
-  const g=svg.append("g").attr("transform",`translate(${cx},${cy}) scale(0.885)`);
+  const g=svg.append("g");
   // concentric rings
   g.append("g").selectAll("circle").data(RING.slice(1)).enter().append("circle")
     .attr("class","ringline").attr("r",d=>d);
@@ -343,25 +345,40 @@ const BUNDLE = /*__BUNDLE__*/;
     .attr("cx",d=>Math.sin(d.ang)*(OUT+12+barLen(d.data.n_direct||1))).attr("cy",d=>-Math.cos(d.ang)*(OUT+12+barLen(d.data.n_direct||1)))
     .attr("r",1.3).attr("fill","#bfeefb").attr("opacity",.45);
 
-  // category labels around perimeter
-  const SHORT={"Peripheral Nervous System":"Periph. NS","Bladder/Urinary Tract":"Bladder",
+  // category labels: curved along the outer edge (top half reads clockwise, bottom half flipped upright)
+  const SHORT={"Peripheral Nervous System":"Periph. Nerve","Bladder/Urinary Tract":"Bladder",
     "Ovary/Fallopian Tube":"Ovary","Esophagus/Stomach":"Esophagus","Ampulla of Vater":"Ampulla","Biliary Tract":"Biliary","Head and Neck":"Head & Neck","Adrenal Gland":"Adrenal"};
-  const shown=new Set(); const byBig=root.children.slice().sort((a,b)=>b.data.n_subtree-a.data.n_subtree);
   const angDist=(a,b)=>{const d=Math.abs(a-b)%(2*Math.PI);return Math.min(d,2*Math.PI-d)};
-  byBig.forEach(c=>{ if([...shown].every(o=>angDist(o.ang,c.ang)>=0.118)) shown.add(c); });
-  const labelG=g.append("g");
+  const LR=480, labelG=g.append("g"), lblInfo=[];
   root.children.forEach(c=>{
-    const lr=478, lx=Math.sin(c.ang)*lr, ly=-Math.cos(c.ang)*lr;
-    let deg=Math.atan2(ly,lx)*180/Math.PI, flip=(deg>90||deg<-90), rot=flip?deg+180:deg;
-    // leader
-    labelG.append("line").attr("class","leader").attr("data-root",c.data.code).attr("data-shown",shown.has(c)?1:0).attr("opacity",shown.has(c)?1:0)
-      .attr("x1",Math.sin(c.ang)*(c.rr+nodeR(c)+3)).attr("y1",-Math.cos(c.ang)*(c.rr+nodeR(c)+3))
-      .attr("x2",Math.sin(c.ang)*(lr-10)).attr("y2",-Math.cos(c.ang)*(lr-10));
-    labelG.append("text").attr("class","catlabel").attr("data-root",c.data.code)
-      .attr("transform",`translate(${lx},${ly}) rotate(${rot})`)
-      .attr("text-anchor",flip?"end":"start").attr("dy","0.32em").attr("data-shown",shown.has(c)?1:0).attr("opacity",shown.has(c)?.75:0)
+    const a=c.ang, top=Math.cos(a)>=0, r=top?LR:LR+11, d=0.62;
+    const P=x=>[Math.sin(x)*r,-Math.cos(x)*r];
+    const [x0,y0]=P(top?a-d:a+d), [x1,y1]=P(top?a+d:a-d);
+    defs.append("path").attr("id","lp-"+c.data.code).attr("d",`M${x0},${y0} A${r},${r} 0 0 ${top?1:0} ${x1},${y1}`);
+    const ld=labelG.append("line").attr("class","leader").attr("data-root",c.data.code).attr("opacity",0)
+      .attr("x1",Math.sin(a)*(c.rr+nodeR(c)+3)).attr("y1",-Math.cos(a)*(c.rr+nodeR(c)+3))
+      .attr("x2",Math.sin(a)*(LR-14)).attr("y2",-Math.cos(a)*(LR-14));
+    const tx=labelG.append("text").attr("class","catlabel").attr("data-root",c.data.code).attr("opacity",0);
+    tx.append("textPath").attr("href","#lp-"+c.data.code).attr("startOffset","50%").attr("text-anchor","middle")
       .text(SHORT[c.data.name]||c.data.name);
+    lblInfo.push({c,el:tx.node(),ld:ld.node()});
   });
+  // keep a label only if its arc doesn't collide with a bigger site's label; the spotlit site always wins
+  function cullLabels(spot){
+    const prev=lblInfo.map(o=>o.el.style.fontSize);
+    lblInfo.forEach(o=>o.el.style.fontSize="14.5px");
+    const items=lblInfo.map(o=>{let len=80;try{len=o.el.getComputedTextLength()||80}catch(e){}
+      const isSpot=o.c.data.code===spot; return {o,isSpot,L:isSpot?len*18/14.5:len};});
+    lblInfo.forEach((o,i)=>o.el.style.fontSize=prev[i]);
+    items.sort((a,b)=>(b.isSpot-a.isSpot)||(b.o.c.data.n_subtree-a.o.c.data.n_subtree));
+    const kept=[];
+    items.forEach(it=>{ if(kept.every(k=>angDist(k.o.c.ang,it.o.c.ang)*LR>=(k.L+it.L)/2+14)) kept.push(it); });
+    const ks=new Set(kept.map(k=>k.o.c.data.code));
+    lblInfo.forEach(o=>{const v=ks.has(o.c.data.code)?1:0; o.el.setAttribute("data-shown",v); o.ld.setAttribute("data-shown",v);});
+  }
+  cullLabels(null);
+  labelG.selectAll(".catlabel").attr("opacity",function(){return this.getAttribute("data-shown")==="1"?.75:0});
+  labelG.selectAll(".leader").attr("opacity",function(){return this.getAttribute("data-shown")==="1"?.6:0});
 
   // hub
   g.append("circle").attr("r",104).attr("fill","url(#hub)");
@@ -372,6 +389,23 @@ const BUNDLE = /*__BUNDLE__*/;
   const hubCat=g.append("text").attr("class","hub-cat").attr("dy","52").text("");
 
   const pulseL=g.append("g"); // pulses on top
+
+  // fit the whole atlas (labels at their largest spotlight size) into the space left by the panels
+  function fitAtlas(){
+    H=document.getElementById("atlas").clientHeight||H;
+    svg.attr("viewBox",`0 0 ${W} ${H}`);
+    const lbls=labelG.selectAll(".catlabel").nodes(), prev=lbls.map(n=>n.style.fontSize);
+    lbls.forEach(n=>n.style.fontSize="18px");
+    const bb=g.node().getBBox();
+    lbls.forEach((n,i)=>n.style.fontSize=prev[i]);
+    const halfW=Math.max(-bb.x,bb.x+bb.width), halfH=Math.max(-bb.y,bb.y+bb.height), m=16;
+    const s=Math.min((W/2-m)/halfW,(H/2-m)/halfH);
+    g.attr("transform",`translate(${W/2},${H/2}) scale(${s.toFixed(4)})`);
+  }
+  fitAtlas();
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ cullLabels(curSpot); fitAtlas();
+    labelG.selectAll(".catlabel").attr("opacity",function(){return this.getAttribute("data-root")===curSpot?1:(this.getAttribute("data-shown")==="1"?.5:0)});
+    labelG.selectAll(".leader").attr("opacity",function(){return this.getAttribute("data-root")===curSpot?1:(this.getAttribute("data-shown")==="1"?.35:0)}); });
 
   // ── live counters
   let total=B.meta.totalSamples, evStreamed=0;
@@ -485,10 +519,11 @@ const BUNDLE = /*__BUNDLE__*/;
   // ── spotlight
   const catByName=new Map(B.categories.map(c=>[c.root,c]));
   const level1=root.children.slice().sort((a,b)=>b.data.n_subtree-a.data.n_subtree);
-  let si=0;
+  let si=0, curSpot=null;
   const vbars=document.getElementById("vbars");
   function spotlight(){
     const c=level1[si++ % level1.length], code=c.data.code, set=subtreeCodes.get(code);
+    curSpot=code; cullLabels(code);
     // dim/highlight
     nodeSel.attr("opacity",d=>set.has(d.ancestors().find(a=>a.depth===1).data.code)?1:.42);
     const isOn=function(){return this.getAttribute("data-root")===code};
@@ -509,7 +544,8 @@ const BUNDLE = /*__BUNDLE__*/;
     hubCat.text(c.data.name).attr("opacity",0).transition().duration(400).attr("opacity",1);
     // panel
     const cd=catByName.get(c.data.name);
-    document.getElementById("spot-name").textContent=c.data.name;
+    const sn=document.getElementById("spot-name"); sn.textContent=c.data.name; let fs=40; sn.style.fontSize=fs+"px";
+    while(sn.scrollWidth>sn.clientWidth && fs>24){ fs-=2; sn.style.fontSize=fs+"px"; }
     document.getElementById("spot-samples").textContent=fmt(cd.n_samples);
     document.getElementById("spot-share").textContent=(100*cd.n_samples/B.meta.totalSamples).toFixed(1)+"%";
     document.getElementById("spot-files").textContent=fmt(cd.n_files);
