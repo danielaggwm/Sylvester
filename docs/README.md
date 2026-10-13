@@ -39,7 +39,7 @@ tools/build_site.py        prepared_data -> index.html (standard library only)
 
 ## Updating the data
 
-When the team sends a new raw CSV:
+When the team sends a new raw CSV (run from this `docs/` folder):
 
 ```bash
 python3 ../build_daniela_db.py      # raw CSV -> ../prepared_data
@@ -47,22 +47,19 @@ python3 tools/build_site.py         # prepared_data -> index.html
 ```
 
 `--every N` on `build_site.py` sets how many replay events go into the
-animation loop (default 1 in 48, about 5,000 events / ~12 minutes).
+animation loop (default 1 in 48, about 5,000 events in a 30-minute loop).
 
 ## Publishing on GitHub Pages
 
-```bash
-git init && git add . && git commit -m "Sample Atlas prototype"
-git branch -M main
-git remote add origin https://github.com/<your-user>/sample-atlas.git
-git push -u origin main
-```
+This folder is the only part of the (private) Sylvester repo that gets published.
 
-Then in the repo: **Settings → Pages → Deploy from a branch → main / (root)**.
-The page will be at `https://<your-user>.github.io/sample-atlas/`.
+In the repo: **Settings → Pages → Build and deployment → Deploy from a branch →
+Branch: `main`, folder: `/docs`** → Save.
 
-On the TV, open that URL full-screen in a browser (kiosk mode). The stage
-scales to fit any portrait screen; it also previews on a laptop.
+The site is then at **https://danielaggwm.com/Sylvester/**. Everything outside
+`docs/` (meeting notes, deck, raw and prepared data) stays private.
+
+`.nojekyll` tells Pages to serve the files as-is.
 
 ## Design notes
 
