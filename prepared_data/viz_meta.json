@@ -1,0 +1,51 @@
+{
+  "source_file": "pipeline_events_synthetic.csv",
+  "generated": "2026-10-08 19:04:37",
+  "oncotree_key": "oncotree_lookup.json",
+  "totals": {
+    "events": 248224,
+    "files": 83286,
+    "samples": 36412,
+    "oncotree_codes_used": 351,
+    "level1_categories": 32,
+    "unknown_codes": 0
+  },
+  "time_range_utc": {
+    "start": "2024-01-15 05:00:18+00:00",
+    "end": "2026-10-03 13:38:34+00:00",
+    "span_days": 992.4
+  },
+  "avg_events_per_day": 250.1,
+  "actions": {
+    "landed": "File landed",
+    "QC": "QC passed",
+    "ingested": "Ingested"
+  },
+  "file_types": {
+    "counts": {
+      "BAM": 18588,
+      "FASTQ": 37158,
+      "TSV": 33690,
+      "VCF": 78995,
+      "XML": 79793
+    },
+    "relabel": {
+      "XML": "Epic data"
+    }
+  },
+  "vendors": {
+    "Foundation Medicine": 90483,
+    "Caris": 66101,
+    "Guardant Health": 43004,
+    "NeoGenomics": 40214,
+    "Adaptive": 8422
+  },
+  "sample_created_events": 26155,
+  "samples_without_xml": 9886,
+  "data_quality": {
+    "samples_multi_oncotree": 0,
+    "samples_multi_vendor": 0,
+    "unknown_oncotree_codes": []
+  },
+  "playback_note": "t_norm is each event's position in [0,1] across the real timeline. For a looped TV replay, map t_norm -> loop_seconds (e.g. 0..600 for a 10-min loop). Spacing already reflects real inter-event gaps."
+}

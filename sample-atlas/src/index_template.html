@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sample Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Sample Atlas · vertical kiosk ─────────────────────────────────
+   Layout: fixed 1080×1920 stage, scaled to the viewport. Rows:
+   header · radial atlas · spotlight + how-to-read · footer. */
+:root{
+  --bg:#060a12; --bg-grad:#0a1120; --panel:#0c1526; --panel-2:#0f1b30;
+  --hair-c:rgba(123,167,222,.12); --ring:rgba(120,165,220,.09);
+  --ink:#eaf2fd; --ink-2:#94a8c6; --ink-3:#51637e;
+  --node:#5fcbe4; --node-dim:#2f6f85; --core:#eafbff; --edge:rgba(116,180,230,.13);
+  --accent:#ffc24a; --accent-2:#ff9a3c; --created:#ffd96b; --activity:#55cfe8;
+  --v1:#3987e5; --v2:#d95926; --v3:#199e70; --v4:#c98500; --v5:#d55181;
+  --f-disp:'Rajdhani',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --f-body:'IBM Plex Sans',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:#04070d; color:var(--ink);
+  font-family:var(--f-body); overflow:hidden;
+}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(130% 90% at 50% 0%, #0b1426 0%, #060a12 48%, #04070d 100%);}
+#stage{
+  position:absolute; left:50%; top:50%; width:1080px; height:1920px;
+  transform-origin:center center;
+  background:
+    radial-gradient(90% 55% at 50% 33%, rgba(31,74,130,.22) 0%, rgba(10,18,33,0) 62%),
+    linear-gradient(180deg,#0a1322 0%, #070c17 55%, #05080f 100%);
+  border:1px solid rgba(120,165,220,.10);
+  box-shadow:0 0 120px rgba(0,0,0,.6), inset 0 0 160px rgba(0,0,0,.45);
+  display:grid; grid-template-rows:220px 1160px 1fr 46px; overflow:hidden;
+}
+/* subtle scanline + vignette */
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px);
+  mix-blend-mode:overlay;opacity:.5}
+#stage::before{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 220px 40px rgba(2,5,11,.75)}
+
+/* ── header ── */
+header{padding:30px 46px 0;display:flex;flex-direction:column;gap:18px;z-index:3}
+.brandrow{display:flex;justify-content:space-between;align-items:flex-start}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.42em;color:var(--ink-3);
+  text-transform:uppercase;margin:0 0 6px}
+.wordmark{font-family:var(--f-disp);font-weight:700;font-size:46px;letter-spacing:.14em;
+  text-transform:uppercase;margin:0;line-height:.95;
+  background:linear-gradient(92deg,#eafbff,#8fd6ea 60%,#5fcbe4);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-family:var(--f-mono);font-size:13.5px;letter-spacing:.2em;color:var(--ink-2);margin-top:8px;text-transform:uppercase}
+.live{display:flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:13px;
+  letter-spacing:.26em;color:var(--ink-2);text-transform:uppercase;
+  border:1px solid rgba(255,120,120,.3);border-radius:999px;padding:8px 15px;background:rgba(255,80,80,.06)}
+.live b{width:9px;height:9px;border-radius:50%;background:#ff5a5a;box-shadow:0 0 12px #ff5a5a;
+  animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{border:1px solid var(--hair-c);border-radius:12px;padding:13px 16px;background:linear-gradient(180deg,rgba(18,30,52,.55),rgba(10,18,33,.25))}
+.kpi .v{font-family:var(--f-mono);font-weight:600;font-size:30px;color:var(--ink);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.kpi .l{font-family:var(--f-disp);font-weight:600;font-size:14px;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase;margin-top:3px}
+.kpi.lead .v{color:#9fe6f4}
+
+/* ── atlas ── */
+#atlas{position:relative;z-index:2}
+#atlas svg{display:block;width:1080px;height:1160px}
+.ringline{fill:none;stroke:var(--ring);stroke-width:1}
+.spoke{stroke:rgba(120,165,220,.06);stroke-width:1}
+.link{fill:none;stroke:var(--edge);stroke-width:1;transition:stroke .6s,opacity .6s,stroke-width .6s}
+.node{transition:opacity .55s,fill .55s}
+.node circle{transition:opacity .55s}
+.catlabel{font-family:var(--f-disp);font-weight:600;font-size:14.5px;letter-spacing:.07em;
+  fill:var(--ink-2);text-transform:uppercase;transition:fill .5s,opacity .5s}
+.leader{stroke:rgba(120,165,220,.14);stroke-width:1;transition:stroke .5s,opacity .5s}
+.hub-num{font-family:var(--f-mono);font-weight:600;font-size:40px;fill:var(--core);text-anchor:middle;font-variant-numeric:tabular-nums}
+.hub-lab{font-family:var(--f-disp);font-weight:600;font-size:15px;letter-spacing:.3em;fill:var(--ink-2);text-anchor:middle;text-transform:uppercase}
+.hub-cat{font-family:var(--f-disp);font-weight:700;font-size:19px;letter-spacing:.12em;fill:var(--accent);text-anchor:middle;text-transform:uppercase}
+
+/* ── bottom ── */
+#bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 0;z-index:3}
+.card{border:1px solid var(--hair-c);border-radius:16px;padding:20px 22px;
+  background:linear-gradient(180deg,rgba(16,27,48,.6),rgba(9,16,30,.35));position:relative;overflow:hidden}
+.card h3{margin:0 0 2px;font-family:var(--f-mono);font-size:12px;letter-spacing:.34em;
+  color:var(--ink-3);text-transform:uppercase;font-weight:500}
+.spot-name{font-family:var(--f-disp);font-weight:700;font-size:40px;letter-spacing:.04em;
+  color:var(--accent);text-transform:uppercase;line-height:1.02;margin:6px 0 2px;min-height:44px}
+.spot-stats{display:flex;gap:26px;margin:10px 0 14px}
+.spot-stats .s .v{font-family:var(--f-mono);font-weight:600;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
+.spot-stats .s .l{font-family:var(--f-disp);font-size:12.5px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;margin-top:2px}
+.vbars{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.vbar{display:grid;grid-template-columns:150px 1fr 54px;align-items:center;gap:10px}
+.vbar .nm{font-family:var(--f-body);font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vbar .track{height:9px;border-radius:5px;background:rgba(120,165,220,.09);overflow:hidden}
+.vbar .fill{height:100%;border-radius:5px;transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.vbar .pc{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+
+.subs{display:flex;flex-direction:column;gap:6px}
+.sb{display:grid;grid-template-columns:74px 1fr 60px;gap:10px;align-items:baseline;font-size:13px}
+.sb .c{font-family:var(--f-mono);color:var(--accent);letter-spacing:.04em}
+.sb .n{font-family:var(--f-body);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb .k{font-family:var(--f-mono);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-direction:column;gap:11px}
+.lg{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:12px}
+.lg .gl{display:flex;align-items:center;justify-content:center}
+.lg .tx{font-family:var(--f-body);font-size:13.5px;color:var(--ink-2);line-height:1.25}
+.lg .tx b{color:var(--ink);font-weight:500}
+.dotc{width:14px;height:14px;border-radius:50%}
+.vswatches{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px}
+.vsw{display:flex;align-items:center;gap:7px;font-family:var(--f-body);font-size:12.5px;color:var(--ink-2)}
+.vsw i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.ticker{margin-top:14px;border-top:1px solid var(--hair-c);padding-top:12px;display:flex;flex-direction:column;gap:7px;height:116px;overflow:hidden}
+.tk{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12.5px;animation:tkin .4s ease}
+.tk .ic{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.tk .cd{color:var(--ink);letter-spacing:.04em}
+.tk .vn{color:var(--ink-3);margin-left:auto}
+@keyframes tkin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+footer{grid-row:auto;display:flex;justify-content:space-between;align-items:center;
+  padding:0 48px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;
+  color:var(--ink-3);text-transform:uppercase;z-index:3}
+footer .r{color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.live b{animation:none}}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+  <header>
+    <div class="brandrow">
+      <div>
+        <p class="eyebrow">Clinical Genomics · Real-Time Pipeline</p>
+        <h1 class="wordmark">Sample&nbsp;Atlas</h1>
+        <div class="sub">OncoTree-grouped clinical samples &amp; live ingestion</div>
+      </div>
+      <div class="live"><b></b>Live stream</div>
+    </div>
+    <div class="kpis">
+      <div class="kpi lead"><div class="v" id="k-samples">0</div><div class="l">Patient samples</div></div>
+      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Cancer sites</div></div>
+      <div class="kpi"><div class="v" id="k-files">0</div><div class="l">Files processed</div></div>
+      <div class="kpi"><div class="v" id="k-ev">0</div><div class="l">Events streamed</div></div>
+    </div>
+  </header>
+
+  <div id="atlas"></div>
+
+  <div id="bottom">
+    <div class="card" id="spotcard">
+      <h3>Now in focus</h3>
+      <div class="spot-name" id="spot-name">—</div>
+      <div class="spot-stats">
+        <div class="s"><div class="v" id="spot-samples">—</div><div class="l">Samples</div></div>
+        <div class="s"><div class="v" id="spot-share">—</div><div class="l">of all samples</div></div>
+        <div class="s"><div class="v" id="spot-files">—</div><div class="l">Files</div></div>
+      </div>
+      <h3 style="margin-bottom:10px">Processing lab mix</h3>
+      <div class="vbars" id="vbars"></div>
+      <h3 style="margin:18px 0 8px">Largest subtypes</h3>
+      <div class="subs" id="subs"></div>
+    </div>
+
+    <div class="card">
+      <h3>How to read</h3>
+      <div class="legend" style="margin-top:12px">
+        <div class="lg"><span class="gl"><svg width="30" height="20"><circle cx="9" cy="10" r="4" fill="#5fcbe4"/><circle cx="22" cy="10" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Circle size</b> = clinical samples in that OncoTree type</span></div>
+        <div class="lg"><span class="gl"><span class="dotc" style="background:#ffd96b;box-shadow:0 0 10px #ffd96b"></span></span><span class="tx"><b>Gold pulse</b> = new sample created (Epic / XML ingested)</span></div>
+        <div class="lg"><span class="gl"><span class="dotc" style="background:#55cfe8;box-shadow:0 0 10px #55cfe8"></span></span><span class="tx"><b>Cyan pulse</b> = file activity — landed · QC · ingested</span></div>
+        <div class="lg"><span class="gl"><svg width="30" height="20"><path d="M4 16 A11 11 0 0 1 26 16" fill="none" stroke="#ffc24a" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> sweeps each cancer site and its lab mix</span></div>
+        <div class="lg"><span class="gl"><svg width="30" height="20"><circle cx="15" cy="10" r="2.6" fill="#eafbff"/><circle cx="15" cy="10" r="8.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Center → edge</b> = tissue → subtype; outer bars = samples per subtype</span></div>
+      </div>
+      <div class="vswatches" id="vswatches"></div>
+      <div class="ticker" id="ticker"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Prototype · Vertical display</div>
+    <div class="r" id="foot-src">—</div>
+  </footer>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+const BUNDLE = /*__BUNDLE__*/;
+(function(){
+  const B = BUNDLE, fmt = d3.format(","), reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const VC = ["var(--v1)","var(--v2)","var(--v3)","var(--v4)","var(--v5)"];
+  const VCHEX = ["#3987e5","#d95926","#199e70","#c98500","#d55181"];
+
+  // scale stage to viewport
+  const stage = document.getElementById("stage");
+  function fit(){ const s=Math.min(innerWidth/1080, innerHeight/1920);
+    stage.style.transform=`translate(-50%,-50%) scale(${s})`; }
+  addEventListener("resize",fit); fit();
+
+  // ── header kpis
+  document.getElementById("k-cats").textContent = B.meta.nCategories;
+  document.getElementById("k-files").textContent = fmt(B.meta.totalFiles);
+  document.getElementById("foot-src").textContent =
+    `${fmt(B.meta.totalEvents)} events · OncoTree latest_stable · synthetic sample`;
+
+  // ── build hierarchy + radial layout
+  const W=1080,H=1160,cx=540,cy=578;
+  const root = d3.hierarchy(B.tree);
+  const RING=[0,168,248,312,360,396,420];
+  const OUT=420;
+  const rOf = d=> d===0?0 : RING[Math.min(d,RING.length-1)];
+  const cluster = d3.cluster().size([2*Math.PI,1]).separation((a,b)=>(a.parent===b.parent?1:1.35));
+  cluster(root);
+  const maxSub = d3.max(root.descendants().filter(d=>d.depth>0), d=>d.data.n_subtree||1);
+  const sizeScale = d3.scaleSqrt().domain([1,maxSub]).range([1.6,16.5]).clamp(true);
+  const nodeR = d=> d.depth===0?0 : sizeScale(d.data.n_subtree||1);
+  root.each(n=>{ n.ang=n.x; n.rr=rOf(n.depth);
+    n.px=Math.sin(n.ang)*n.rr; n.py=-Math.cos(n.ang)*n.rr; });
+
+  // code -> node ; level1 -> subtree code set + angular extent
+  const codeMap=new Map(); root.each(n=>codeMap.set(n.data.code,n));
+  const subtreeCodes=new Map(), extent=new Map();
+  root.children.forEach(c=>{ const s=new Set(); let a0=Infinity,a1=-Infinity;
+    c.descendants().forEach(d=>{ s.add(d.data.code); a0=Math.min(a0,d.ang); a1=Math.max(a1,d.ang); });
+    subtreeCodes.set(c.data.code,s); extent.set(c.data.code,[a0,a1]); });
+
+  // ── svg scaffold
+  const svg=d3.select("#atlas").append("svg").attr("viewBox",`0 0 ${W} ${H}`);
+  const defs=svg.append("defs");
+  const hg=defs.append("radialGradient").attr("id","hub");
+  hg.append("stop").attr("offset","0%").attr("stop-color","#123049").attr("stop-opacity",.95);
+  hg.append("stop").attr("offset","70%").attr("stop-color","#0b1a2c").attr("stop-opacity",.9);
+  hg.append("stop").attr("offset","100%").attr("stop-color","#0b1a2c").attr("stop-opacity",0);
+  const ng=defs.append("radialGradient").attr("id","nodeg");
+  ng.append("stop").attr("offset","0%").attr("stop-color","#bfeefb");
+  ng.append("stop").attr("offset","55%").attr("stop-color","#5fcbe4");
+  ng.append("stop").attr("offset","100%").attr("stop-color","#2f8aa6");
+  const glow=defs.append("filter").attr("id","glow").attr("x","-80%").attr("y","-80%").attr("width","260%").attr("height","260%");
+  glow.append("feGaussianBlur").attr("stdDeviation","3.2").attr("result","b");
+  const fm=glow.append("feMerge"); fm.append("feMergeNode").attr("in","b"); fm.append("feMergeNode").attr("in","SourceGraphic");
+
+  const g=svg.append("g").attr("transform",`translate(${cx},${cy}) scale(0.885)`);
+  // concentric rings
+  g.append("g").selectAll("circle").data(RING.slice(1)).enter().append("circle")
+    .attr("class","ringline").attr("r",d=>d);
+  // faint spokes at level-1 boundaries
+  g.append("g").selectAll("line").data(root.children).enter().append("line")
+    .attr("class","spoke")
+    .attr("x1",d=>Math.sin(d.ang-Math.PI/B.meta.nCategories)*112)
+    .attr("y1",d=>-Math.cos(d.ang-Math.PI/B.meta.nCategories)*112)
+    .attr("x2",d=>Math.sin(d.ang-Math.PI/B.meta.nCategories)*462)
+    .attr("y2",d=>-Math.cos(d.ang-Math.PI/B.meta.nCategories)*462);
+
+  // wedge (spotlight) layer
+  const wedge=g.append("path").attr("fill","rgba(255,194,74,.07)").attr("stroke","rgba(255,194,74,.22)").attr("stroke-width",1).attr("opacity",0);
+  const arcGen=(a0,a1)=>d3.arc()({innerRadius:104,outerRadius:466,startAngle:a0-0.03,endAngle:a1+0.03});
+
+  // links
+  function linkPath(d){const s=d.source,t=d.target;
+    const x1=Math.sin(s.ang)*s.rr,y1=-Math.cos(s.ang)*s.rr;
+    const x2=Math.sin(t.ang)*t.rr,y2=-Math.cos(t.ang)*t.rr;
+    const rm=(s.rr+t.rr)/2,cxp=Math.sin(t.ang)*rm,cyp=-Math.cos(t.ang)*rm;
+    return `M${x1},${y1}Q${cxp},${cyp} ${x2},${y2}`;}
+  const linkSel=g.append("g").selectAll("path").data(root.links()).enter().append("path")
+    .attr("class","link").attr("d",linkPath)
+    .attr("data-root",d=>d.target.ancestors().find(a=>a.depth===1)?.data.code||"");
+
+  // nodes
+  const nodeSel=g.append("g").selectAll("g").data(root.descendants().filter(d=>d.depth>0)).enter()
+    .append("g").attr("class","node").attr("transform",d=>`translate(${d.px},${d.py})`)
+    .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code);
+  nodeSel.append("circle").attr("r",d=>nodeR(d))
+    .attr("fill",d=>d.depth===1?"url(#nodeg)":"#4fb4cf")
+    .attr("opacity",d=>d.depth===1?.96:.66)
+    .attr("filter",d=>d.depth===1?"url(#glow)":null);
+
+  // outer data band: one radial bar per subtype, length = samples coded to it
+  const leaves=root.leaves();
+  const barLen=d3.scaleLog().domain([1,d3.max(leaves,d=>d.data.n_direct||1)]).range([3,30]).clamp(true);
+  const barSel=g.append("g").selectAll("line").data(leaves).enter().append("line")
+    .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code)
+    .attr("x1",d=>Math.sin(d.ang)*(OUT+9)).attr("y1",d=>-Math.cos(d.ang)*(OUT+9))
+    .attr("x2",d=>Math.sin(d.ang)*(OUT+9+barLen(d.data.n_direct||1))).attr("y2",d=>-Math.cos(d.ang)*(OUT+9+barLen(d.data.n_direct||1)))
+    .attr("stroke","#5fcbe4").attr("stroke-width",1.6).attr("stroke-linecap","round").attr("opacity",.4);
+  const tipSel=g.append("g").selectAll("circle").data(leaves).enter().append("circle")
+    .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code)
+    .attr("cx",d=>Math.sin(d.ang)*(OUT+12+barLen(d.data.n_direct||1))).attr("cy",d=>-Math.cos(d.ang)*(OUT+12+barLen(d.data.n_direct||1)))
+    .attr("r",1.3).attr("fill","#bfeefb").attr("opacity",.45);
+
+  // category labels around perimeter
+  const SHORT={"Peripheral Nervous System":"Periph. NS","Bladder/Urinary Tract":"Bladder",
+    "Ovary/Fallopian Tube":"Ovary","Esophagus/Stomach":"Esophagus","Ampulla of Vater":"Ampulla","Biliary Tract":"Biliary","Head and Neck":"Head & Neck","Adrenal Gland":"Adrenal"};
+  const shown=new Set(); const byBig=root.children.slice().sort((a,b)=>b.data.n_subtree-a.data.n_subtree);
+  const angDist=(a,b)=>{const d=Math.abs(a-b)%(2*Math.PI);return Math.min(d,2*Math.PI-d)};
+  byBig.forEach(c=>{ if([...shown].every(o=>angDist(o.ang,c.ang)>=0.118)) shown.add(c); });
+  const labelG=g.append("g");
+  root.children.forEach(c=>{
+    const lr=478, lx=Math.sin(c.ang)*lr, ly=-Math.cos(c.ang)*lr;
+    let deg=Math.atan2(ly,lx)*180/Math.PI, flip=(deg>90||deg<-90), rot=flip?deg+180:deg;
+    // leader
+    labelG.append("line").attr("class","leader").attr("data-root",c.data.code).attr("data-shown",shown.has(c)?1:0).attr("opacity",shown.has(c)?1:0)
+      .attr("x1",Math.sin(c.ang)*(c.rr+nodeR(c)+3)).attr("y1",-Math.cos(c.ang)*(c.rr+nodeR(c)+3))
+      .attr("x2",Math.sin(c.ang)*(lr-10)).attr("y2",-Math.cos(c.ang)*(lr-10));
+    labelG.append("text").attr("class","catlabel").attr("data-root",c.data.code)
+      .attr("transform",`translate(${lx},${ly}) rotate(${rot})`)
+      .attr("text-anchor",flip?"end":"start").attr("dy","0.32em").attr("data-shown",shown.has(c)?1:0).attr("opacity",shown.has(c)?.75:0)
+      .text(SHORT[c.data.name]||c.data.name);
+  });
+
+  // hub
+  g.append("circle").attr("r",104).attr("fill","url(#hub)");
+  g.append("circle").attr("r",92).attr("fill","none").attr("stroke","rgba(120,180,230,.25)").attr("stroke-width",1);
+  g.append("circle").attr("r",99).attr("fill","none").attr("stroke","rgba(120,180,230,.12)").attr("stroke-width",1);
+  const hubNum=g.append("text").attr("class","hub-num").attr("dy","-2").text("0");
+  g.append("text").attr("class","hub-lab").attr("dy","20").text("Patient samples");
+  const hubCat=g.append("text").attr("class","hub-cat").attr("dy","52").text("");
+
+  const pulseL=g.append("g"); // pulses on top
+
+  // ── live counters
+  let total=B.meta.totalSamples, evStreamed=0;
+  const kS=document.getElementById("k-samples"), kE=document.getElementById("k-ev");
+  function setTotal(v){ hubNum.text(fmt(v)); kS.textContent=fmt(v); }
+  setTotal(total);
+  // animate kpis in
+  d3.select(kS).transition().duration(1400).tween("t",function(){const i=d3.interpolateNumber(0,total);return t=>kS.textContent=fmt(Math.round(i(t)))});
+  d3.select("#k-files").transition().duration(1400).tween("t",function(){const i=d3.interpolateNumber(0,B.meta.totalFiles);return t=>document.getElementById("k-files").textContent=fmt(Math.round(i(t)))});
+
+  // ── pulses
+  function pulse(node,role){
+    const col=role?"#ffd96b":"#55cfe8";
+    pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+1.5)
+      .attr("fill","none").attr("stroke",col).attr("stroke-width",role?2.3:1.4).attr("opacity",role?.95:.7)
+      .transition().duration(role?1100:800).ease(d3.easeCubicOut)
+      .attr("r",nodeR(node)+(role?34:17)).attr("opacity",0).attr("stroke-width",.4).remove();
+    if(role){
+      // traveling particle from hub
+      if(!reduce){pulseL.append("circle").attr("r",2.7).attr("fill","#ffe9a6").attr("cx",0).attr("cy",0).attr("opacity",.95)
+        .transition().duration(560).ease(d3.easeCubicInOut).attr("cx",node.px).attr("cy",node.py).attr("opacity",.15).remove();}
+      // node flash
+      pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
+        .attr("fill","#fff3c9").attr("opacity",.9).transition().duration(650).attr("opacity",0).attr("r",nodeR(node)).remove();
+      total++; setTotal(total);
+      d3.select(kS).interrupt();
+    }
+  }
+
+  // ── ticker
+  const tick=document.getElementById("ticker");
+  function pushTicker(e){
+    const row=document.createElement("div"); row.className="tk";
+    const role=e[1], col=role?"#ffd96b":"#55cfe8";
+    row.innerHTML=`<span class="ic" style="background:${col};box-shadow:0 0 8px ${col}"></span>`+
+      `<span class="cd">${role?"NEW SAMPLE":"file"} · ${e[0]}</span>`+
+      `<span class="vn">${B.vendors[e[2]]}</span>`;
+    tick.prepend(row); while(tick.children.length>5) tick.lastChild.remove();
+  }
+
+  // ── event loop
+  let ei=0;
+  function step(){
+    const e=B.events[ei++ % B.events.length], n=codeMap.get(e[0]);
+    if(n){ pulse(n,e[1]); pushTicker(e); }
+    evStreamed++; kE.textContent=fmt(evStreamed);
+  }
+  if(!reduce) setInterval(step,150); else setInterval(step,900);
+
+  // ── vendor swatches (legend)
+  const vsw=document.getElementById("vswatches");
+  B.vendors.forEach((v,i)=>{const s=document.createElement("div");s.className="vsw";
+    s.innerHTML=`<i style="background:${VCHEX[i]}"></i>${v}`;vsw.appendChild(s);});
+
+  // ── spotlight
+  const catByName=new Map(B.categories.map(c=>[c.root,c]));
+  const level1=root.children.slice().sort((a,b)=>b.data.n_subtree-a.data.n_subtree);
+  let si=0;
+  const vbars=document.getElementById("vbars");
+  function spotlight(){
+    const c=level1[si++ % level1.length], code=c.data.code, set=subtreeCodes.get(code);
+    // dim/highlight
+    nodeSel.attr("opacity",d=>set.has(d.ancestors().find(a=>a.depth===1).data.code)?1:.42);
+    const isOn=function(){return this.getAttribute("data-root")===code};
+    barSel.attr("stroke",function(){return isOn.call(this)?"#ffc24a":"#5fcbe4"}).attr("opacity",function(){return isOn.call(this)?.95:.3});
+    tipSel.attr("fill",function(){return isOn.call(this)?"#ffe3a0":"#bfeefb"}).attr("opacity",function(){return isOn.call(this)?1:.35});
+    nodeSel.select("circle").attr("fill",d=>{
+      const inSet=set.has(d.ancestors().find(a=>a.depth===1).data.code);
+      if(!inSet) return d.depth===1?"url(#nodeg)":"#4fb4cf";
+      return d.depth===1?"#ffd27a":"#ffc24a";});
+    linkSel.attr("opacity",function(){return this.getAttribute("data-root")===code?.95:.32})
+      .attr("stroke",function(){return this.getAttribute("data-root")===code?"rgba(255,194,74,.5)":"var(--edge)"});
+    labelG.selectAll(".catlabel").attr("fill",function(){return this.getAttribute("data-root")===code?"#ffd27a":"var(--ink-3)"})
+      .attr("opacity",function(){return this.getAttribute("data-root")===code?1:(this.getAttribute("data-shown")==="1"?.5:0)})
+      .style("font-size",function(){return this.getAttribute("data-root")===code?"18px":"14.5px"});
+    labelG.selectAll(".leader").attr("opacity",function(){return this.getAttribute("data-root")===code?1:(this.getAttribute("data-shown")==="1"?.35:0)})
+      .attr("stroke",function(){return this.getAttribute("data-root")===code?"rgba(255,194,74,.6)":"rgba(120,165,220,.14)"});
+    const ex=extent.get(code); wedge.attr("d",arcGen(ex[0],ex[1])).attr("opacity",1);
+    hubCat.text(c.data.name).attr("opacity",0).transition().duration(400).attr("opacity",1);
+    // panel
+    const cd=catByName.get(c.data.name);
+    document.getElementById("spot-name").textContent=c.data.name;
+    document.getElementById("spot-samples").textContent=fmt(cd.n_samples);
+    document.getElementById("spot-share").textContent=(100*cd.n_samples/B.meta.totalSamples).toFixed(1)+"%";
+    document.getElementById("spot-files").textContent=fmt(cd.n_files);
+    const maxv=d3.max(B.vendors,v=>cd.vendors[v]||0)||1;
+    vbars.innerHTML="";
+    B.vendors.forEach((v,i)=>{const n=cd.vendors[v]||0;
+      const row=document.createElement("div");row.className="vbar";
+      row.innerHTML=`<span class="nm">${v}</span><div class="track"><div class="fill" style="width:0;background:${VCHEX[i]}"></div></div><span class="pc">${fmt(n)}</span>`;
+      vbars.appendChild(row);
+      requestAnimationFrame(()=>row.querySelector(".fill").style.width=(100*n/maxv)+"%");});
+    const subs=c.descendants().filter(d=>d.depth>1).sort((a,b)=>(b.data.n_direct||0)-(a.data.n_direct||0)).slice(0,3);
+    document.getElementById("subs").innerHTML=subs.map(s=>`<div class="sb"><span class="c">${s.data.code}</span><span class="n">${s.data.name}</span><span class="k">${fmt(s.data.n_direct||0)}</span></div>`).join("");
+  }
+  spotlight(); setInterval(spotlight, reduce?9000:5600);
+})();
+</script>
+</body>
+</html>

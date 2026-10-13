@@ -1,0 +1,355 @@
+code,name,level,parent,mainType,tissue,color,root_code,root_name,path_names,n_samples_direct,n_samples_subtree
+ADRENAL_GLAND,Adrenal Gland,1,TISSUE,Adrenal Gland Cancer,Adrenal Gland,Purple,ADRENAL_GLAND,Adrenal Gland,Adrenal Gland,20,108
+AMPULLA_OF_VATER,Ampulla of Vater,1,TISSUE,Ampullary Carcinoma,Ampulla of Vater,Purple,AMPULLA_OF_VATER,Ampulla of Vater,Ampulla of Vater,20,82
+BILIARY_TRACT,Biliary Tract,1,TISSUE,Biliary Tract Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract,299,319
+BLADDER,Bladder/Urinary Tract,1,TISSUE,Bladder/Urinary Tract Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract,210,1200
+BONE,Bone,1,TISSUE,Bone Cancer,Bone,White,BONE,Bone,Bone,55,288
+BOWEL,Bowel,1,TISSUE,Bowel Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel,471,2645
+BRAIN,CNS/Brain,1,TISSUE,CNS/Brain Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain,163,854
+BREAST,Breast,1,TISSUE,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast,1103,6160
+CERVIX,Cervix,1,TISSUE,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix,77,426
+EYE,Eye,1,TISSUE,Eye Cancer,Eye,Green,EYE,Eye,Eye,78,119
+HEAD_NECK,Head and Neck,1,TISSUE,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck,290,1619
+KIDNEY,Kidney,1,TISSUE,Kidney Cancer,Kidney,Orange,KIDNEY,Kidney,Kidney,247,1208
+LIVER,Liver,1,TISSUE,Liver Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver,132,852
+LUNG,Lung,1,TISSUE,Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung,682,3918
+LYMPH,Lymphoid,1,TISSUE,Lymphatic Cancer,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid,584,3254
+MYELOID,Myeloid,1,TISSUE,Blood Cancer,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid,361,1964
+OTHER,Other,1,TISSUE,Other Cancer,Other,Black,OTHER,Other,Other,61,348
+OVARY,Ovary/Fallopian Tube,1,TISSUE,Ovarian/Fallopian Tube Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube,170,870
+PANCREAS,Pancreas,1,TISSUE,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas,181,1072
+PENIS,Penis,1,TISSUE,Penile Cancer,Penis,Blue,PENIS,Penis,Penis,7,52
+PERITONEUM,Peritoneum,1,TISSUE,Peritoneal Cancer,Peritoneum,Green,PERITONEUM,Peritoneum,Peritoneum,38,114
+PLEURA,Pleura,1,TISSUE,Pleural Cancer,Pleura,Blue,PLEURA,Pleura,Pleura,36,133
+PNS,Peripheral Nervous System,1,TISSUE,Peripheral Nervous System Cancer,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System,35,121
+PROSTATE,Prostate,1,TISSUE,Prostate Cancer,Prostate,Cyan,PROSTATE,Prostate,Prostate,501,2935
+SKIN,Skin,1,TISSUE,Skin Cancer,Skin,Black,SKIN,Skin,Skin,291,1782
+SOFT_TISSUE,Soft Tissue,1,TISSUE,Soft Tissue Cancer,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue,123,685
+STOMACH,Esophagus/Stomach,1,TISSUE,Esophageal/Stomach Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach,139,882
+TESTIS,Testis,1,TISSUE,Testicular Cancer,Testis,Red,TESTIS,Testis,Testis,46,211
+THYMUS,Thymus,1,TISSUE,Thymic Cancer,Thymus,Purple,THYMUS,Thymus,Thymus,66,68
+THYROID,Thyroid,1,TISSUE,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid,171,949
+UTERUS,Uterus,1,TISSUE,Uterine Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus,188,1035
+VULVA,Vulva/Vagina,1,TISSUE,Vulvar/Vaginal Cancer,Vulva/Vagina,Purple,VULVA,Vulva/Vagina,Vulva/Vagina,26,139
+ACA,Adrenocortical Adenoma,2,ADRENAL_GLAND,Adrenocortical Adenoma,Adrenal Gland,Purple,ADRENAL_GLAND,Adrenal Gland,Adrenal Gland > Adrenocortical Adenoma,1,1
+ACC,Adrenocortical Carcinoma,2,ADRENAL_GLAND,Adrenocortical Carcinoma,Adrenal Gland,Purple,ADRENAL_GLAND,Adrenal Gland,Adrenal Gland > Adrenocortical Carcinoma,57,57
+ADMA,Adamantinoma,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Adamantinoma,1,1
+ADPA,Aggressive Digital Papillary Adenocarcinoma,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Aggressive Digital Papillary Adenocarcinoma,1,1
+AFH,Angiomatoid Fibrous Histiocytoma,2,SOFT_TISSUE,Angiomatoid Fibrous Histiocytoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Angiomatoid Fibrous Histiocytoma,1,1
+AGA,Anal Gland Adenocarcinoma,2,BOWEL,Anal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Anal Gland Adenocarcinoma,2,2
+AIS,Adenocarcinoma In Situ,2,OTHER,Adenocarcinoma In Situ,Other,Black,OTHER,Other,Other > Adenocarcinoma In Situ,1,1
+AMPCA,Ampullary Carcinoma,2,AMPULLA_OF_VATER,Ampullary Cancer,Ampulla of Vater,Purple,AMPULLA_OF_VATER,Ampulla of Vater,Ampulla of Vater > Ampullary Carcinoma,60,62
+ANGS,Angiosarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Angiosarcoma,10,10
+ANSC,Anal Squamous Cell Carcinoma,2,BOWEL,Anal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Anal Squamous Cell Carcinoma,80,80
+APAD,Appendiceal Adenocarcinoma,2,BOWEL,Appendiceal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Appendiceal Adenocarcinoma,33,33
+ARCH,Adenocarcinoma in Retrorectal Cystic Hamartoma,2,OTHER,Adenocarcinoma in Retrorectal Cystic Hamartoma,Other,Black,OTHER,Other,Other > Adenocarcinoma in Retrorectal Cystic Hamartoma,1,1
+BCC,Basal Cell Carcinoma,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Basal Cell Carcinoma,116,116
+BCCP,Basal Cell Carcinoma of Prostate,2,PROSTATE,Prostate Cancer,Prostate,Cyan,PROSTATE,Prostate,Prostate > Basal Cell Carcinoma of Prostate,1,1
+BFN,Breast Fibroepithelial Neoplasms,2,BREAST,Breast Sarcoma,Breast,HotPink,BREAST,Breast,Breast > Breast Fibroepithelial Neoplasms,4,4
+BLAD,Bladder Adenocarcinoma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Bladder Adenocarcinoma,22,22
+BLCA,Bladder Urothelial Carcinoma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Bladder Urothelial Carcinoma,862,862
+BLSC,Bladder Squamous Cell Carcinoma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Bladder Squamous Cell Carcinoma,23,23
+BNNOS,"Breast Neoplasm, NOS",2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,"Breast > Breast Neoplasm, NOS",1,1
+BRCA,Invasive Breast Carcinoma,2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma,1668,4850
+CCSK,Clear Cell Sarcoma of Kidney,2,KIDNEY,Clear Cell Sarcoma of Kidney,Kidney,Orange,KIDNEY,Kidney,Kidney > Clear Cell Sarcoma of Kidney,1,1
+CEAD,Cervical Adenocarcinoma,2,CERVIX,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Adenocarcinoma,40,77
+CEAS,Cervical Adenosquamous Carcinoma,2,CERVIX,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Adenosquamous Carcinoma,2,2
+CESC,Cervical Squamous Cell Carcinoma,2,CERVIX,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Squamous Cell Carcinoma,269,269
+CHBL,Chondroblastoma,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Chondroblastoma,4,4
+CHS,Chondrosarcoma,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Chondrosarcoma,45,48
+CMC,Medullary Carcinoma of the Colon,2,BOWEL,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Medullary Carcinoma of the Colon,20,20
+COADREAD,Colorectal Adenocarcinoma,2,BOWEL,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma,714,1985
+CSCC,Cutaneous Squamous Cell Carcinoma,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Cutaneous Squamous Cell Carcinoma,194,194
+CSCLC,Combined Small Cell Lung Carcinoma,2,LUNG,Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Combined Small Cell Lung Carcinoma,1,1
+CUP,Cancer of Unknown Primary,2,OTHER,Cancer of Unknown Primary,Other,Black,OTHER,Other,Other > Cancer of Unknown Primary,100,266
+DCIS,Breast Ductal Carcinoma In Situ,2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Breast Ductal Carcinoma In Situ,138,140
+DES,Desmoid/Aggressive Fibromatosis,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Desmoid/Aggressive Fibromatosis,15,15
+DIFG,Diffuse Glioma,2,BRAIN,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Diffuse Glioma,422,458
+DTE,Desmoplastic Trichoepithelioma,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Desmoplastic Trichoepithelioma,2,2
+EGC,Esophagogastric Adenocarcinoma,2,STOMACH,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma,236,598
+EHAE,Epithelioid Hemangioendothelioma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Epithelioid Hemangioendothelioma,1,1
+EMBT,Embryonal Tumor,2,BRAIN,Embryonal Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Embryonal Tumor,17,20
+EMPD,Extramammary Paget Disease,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Extramammary Paget Disease,6,6
+ENCG,Encapsulated Glioma,2,BRAIN,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Encapsulated Glioma,7,9
+EPDCA,Esophageal Poorly Differentiated Carcinoma,2,STOMACH,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophageal Poorly Differentiated Carcinoma,4,4
+EPMT,Ependymomal Tumor,2,BRAIN,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Ependymomal Tumor,20,21
+ES,Ewing Sarcoma,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Ewing Sarcoma,41,41
+ESCC,Esophageal Squamous Cell Carcinoma,2,STOMACH,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophageal Squamous Cell Carcinoma,140,140
+FIBS,Fibrosarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Fibrosarcoma,1,1
+FLC,Fibrolamellar Carcinoma,2,LIVER,Hepatobiliary Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver > Fibrolamellar Carcinoma,3,3
+GCTB,Giant Cell Tumor of Bone,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Giant Cell Tumor of Bone,17,17
+GINET,Gastrointestinal Neuroendocrine Tumors,2,BOWEL,Gastrointestinal Neuroendocrine Tumor,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Gastrointestinal Neuroendocrine Tumors,48,49
+GINETES,Gastrointestinal Neuroendocrine Tumors of the Esophagus/Stomach,2,STOMACH,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Gastrointestinal Neuroendocrine Tumors of the Esophagus/Stomach,1,1
+GIST,Gastrointestinal Stromal Tumor,2,SOFT_TISSUE,Gastrointestinal Stromal Tumor,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Gastrointestinal Stromal Tumor,129,129
+GNBL,Ganglioneuroblastoma,2,PNS,Peripheral Nervous System,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System > Ganglioneuroblastoma,9,9
+GTD,Gestational Trophoblastic Disease,2,UTERUS,Gestational Trophoblastic Disease,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Gestational Trophoblastic Disease,1,1
+HCC,Hepatocellular Carcinoma,2,LIVER,Hepatobiliary Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver > Hepatocellular Carcinoma,709,709
+HNMUCM,Head and Neck Mucosal Melanoma,2,HEAD_NECK,Melanoma,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Mucosal Melanoma,9,9
+HNSC,Head and Neck Squamous Cell Carcinoma,2,HEAD_NECK,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma,484,1214
+IBC,Inflammatory Breast Cancer,2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Inflammatory Breast Cancer,7,7
+ICPN,Intracholecystic Papillary Neoplasm,2,BILIARY_TRACT,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intracholecystic Papillary Neoplasm,5,6
+IMTL,Inflammatory Myofibroblastic Lung Tumor,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Inflammatory Myofibroblastic Lung Tumor,4,4
+IPN,Intraductal Papillary Neoplasm of the Bile Duct,2,BILIARY_TRACT,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intraductal Papillary Neoplasm of the Bile Duct,4,14
+LAIS,Lung Adenocarcinoma In Situ,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Lung Adenocarcinoma In Situ,1,1
+LAM,Pulmonary Lymphangiomyomatosis,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Pulmonary Lymphangiomyomatosis,7,7
+LATL,Lymphoid Atypical,2,LYMPH,"Lymphatic Cancer, NOS",Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Atypical,20,20
+LBGN,Lymphoid Benign,2,LYMPH,"Lymphatic Cancer, NOS",Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Benign,10,10
+LCIS,Breast Lobular Carcinoma In Situ,2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Breast Lobular Carcinoma In Situ,25,25
+LGT,Lacrimal Gland Tumor,2,EYE,Lacrimal Gland Tumor,Eye,Green,EYE,Eye,Eye > Lacrimal Gland Tumor,1,1
+LIAD,Hepatocellular Adenoma,2,LIVER,Hepatobiliary Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver > Hepatocellular Adenoma,1,1
+LIHB,Hepatoblastoma,2,LIVER,Hepatobiliary Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver > Hepatoblastoma,5,5
+LIMNET,Malignant Nonepithelial Tumor of the Liver,2,LIVER,Hepatobiliary Cancer,Liver,MediumSeaGreen,LIVER,Liver,Liver > Malignant Nonepithelial Tumor of the Liver,1,1
+LIPO,Liposarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Liposarcoma,51,132
+LMS,Leiomyosarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Leiomyosarcoma,113,113
+LNET,Lung Neuroendocrine Tumor,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Lung Neuroendocrine Tumor,85,183
+LNM,Lymphoid Neoplasm,2,LYMPH,"Lymphatic Cancer, NOS",Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm,953,2640
+MATPL,Myeloid Atypical,2,MYELOID,"Blood Cancer, NOS",Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Atypical,1,1
+MBC,Metaplastic Breast Cancer,2,BREAST,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Metaplastic Breast Cancer,26,27
+MBGN,Myeloid Benign,2,MYELOID,"Blood Cancer, NOS",Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Benign,8,8
+MBT,Miscellaneous Brain Tumor,2,BRAIN,Miscellaneous Brain Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Miscellaneous Brain Tumor,0,1
+MCC,Merkel Cell Carcinoma,2,SKIN,"Skin Cancer, Non-Melanoma",Skin,Black,SKIN,Skin,Skin > Merkel Cell Carcinoma,32,32
+MEL,Melanoma,2,SKIN,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma,457,1140
+MFH,Undifferentiated Pleomorphic Sarcoma/Malignant Fibrous Histiocytoma/High-Grade Spindle Cell Sarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Undifferentiated Pleomorphic Sarcoma/Malignant Fibrous Histiocytoma/High-Grade Spindle Cell Sarcoma,63,63
+MIXED,Mixed Cancer Types,2,OTHER,Cancer of Unknown Primary,Other,Black,OTHER,Other,Other > Mixed Cancer Types,19,19
+MNGT,Meningothelial Tumor,2,BRAIN,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Meningothelial Tumor,68,155
+MNM,Myeloid Neoplasm,2,MYELOID,"Blood Cancer, NOS",Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm,552,1594
+MRT,Rhabdoid Cancer,2,KIDNEY,Rhabdoid Cancer,Kidney,Orange,KIDNEY,Kidney,Kidney > Rhabdoid Cancer,3,3
+NBL,Neuroblastoma,2,PNS,Peripheral Nervous System,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System > Neuroblastoma,51,51
+NPC,Nasopharyngeal Carcinoma,2,HEAD_NECK,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Nasopharyngeal Carcinoma,39,39
+NSCLC,Non-Small Cell Lung Cancer,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer,1044,3018
+NSGCT,Non-Seminomatous Germ Cell Tumor,2,TESTIS,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Non-Seminomatous Germ Cell Tumor,37,83
+NST,Nerve Sheath Tumor,2,PNS,Nerve Sheath Tumor,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System > Nerve Sheath Tumor,16,26
+OAT,Oncocytic Adenoma of the Thyroid,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Oncocytic Adenoma of the Thyroid,5,5
+OGCT,Ovarian Germ Cell Tumor,2,OVARY,Germ Cell Tumor,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Germ Cell Tumor,3,3
+OM,Ocular Melanoma,2,EYE,Melanoma,Eye,Green,EYE,Eye,Eye > Ocular Melanoma,6,20
+OS,Osteosarcoma,2,BONE,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma,108,122
+OUTT,Other Uterine Tumor,2,UTERUS,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Other Uterine Tumor,8,8
+OVT,Ovarian Epithelial Tumor,2,OVARY,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor,237,695
+PAAD,Pancreatic Adenocarcinoma,2,PANCREAS,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Pancreatic Adenocarcinoma,792,792
+PAASC,Adenosquamous Carcinoma of the Pancreas,2,PANCREAS,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Adenosquamous Carcinoma of the Pancreas,6,6
+PACT,Cystic Tumor of the Pancreas,2,PANCREAS,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Cystic Tumor of the Pancreas,24,35
+PANET,Pancreatic Neuroendocrine Tumor,2,PANCREAS,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Pancreatic Neuroendocrine Tumor,57,57
+PBS,Breast Sarcoma,2,BREAST,Breast Sarcoma,Breast,HotPink,BREAST,Breast,Breast > Breast Sarcoma,3,3
+PEMESO,Peritoneal Mesothelioma,2,PERITONEUM,Mesothelioma,Peritoneum,Green,PERITONEUM,Peritoneum,Peritoneum > Peritoneal Mesothelioma,74,74
+PHC,Pheochromocytoma,2,ADRENAL_GLAND,Pheochromocytoma,Adrenal Gland,Purple,ADRENAL_GLAND,Adrenal Gland,Adrenal Gland > Pheochromocytoma,30,30
+PINT,Pineal Tumor,2,BRAIN,Pineal Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Pineal Tumor,1,1
+PLMESO,Pleural Mesothelioma,2,PLEURA,Mesothelioma,Pleura,Blue,PLEURA,Pleura,Pleura > Pleural Mesothelioma,87,97
+PPB,Pleuropulmonary Blastoma,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Pleuropulmonary Blastoma,1,1
+PRAD,Prostate Adenocarcinoma,2,PROSTATE,Prostate Cancer,Prostate,Cyan,PROSTATE,Prostate,Prostate > Prostate Adenocarcinoma,2421,2421
+PRNE,Prostate Neuroendocrine Carcinoma,2,PROSTATE,Prostate Cancer,Prostate,Cyan,PROSTATE,Prostate,Prostate > Prostate Neuroendocrine Carcinoma,1,1
+PRSCC,Prostate Small Cell Carcinoma,2,PROSTATE,Prostate Cancer,Prostate,Cyan,PROSTATE,Prostate,Prostate > Prostate Small Cell Carcinoma,11,11
+PSCC,Penile Squamous Cell Carcinoma,2,PENIS,Penile Cancer,Penis,Blue,PENIS,Penis,Penis > Penile Squamous Cell Carcinoma,39,45
+PSEC,Peritoneal Serous Carcinoma,2,PERITONEUM,"Peritoneal Cancer, NOS",Peritoneum,Green,PERITONEUM,Peritoneum,Peritoneum > Peritoneal Serous Carcinoma,2,2
+RBL,Retinoblastoma,2,EYE,Retinoblastoma,Eye,Green,EYE,Eye,Eye > Retinoblastoma,20,20
+RCC,Renal Cell Carcinoma,2,KIDNEY,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma,341,948
+RMS,Rhabdomyosarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Rhabdomyosarcoma,10,11
+SACA,Salivary Carcinoma,2,HEAD_NECK,Salivary Gland Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Salivary Carcinoma,61,66
+SARCL,Sarcomatoid Carcinoma of the Lung,2,LUNG,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Sarcomatoid Carcinoma of the Lung,21,21
+SARCNOS,"Sarcoma, NOS",2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,"Soft Tissue > Sarcoma, NOS",48,48
+SBC,Small Bowel Cancer,2,BOWEL,Small Bowel Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Small Bowel Cancer,1,1
+SBL,Sialoblastoma,2,HEAD_NECK,Sialoblastoma,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Sialoblastoma,1,1
+SCB,Sarcomatoid Carcinoma of the Urinary Bladder,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Sarcomatoid Carcinoma of the Urinary Bladder,2,2
+SCBC,Small Cell Bladder Cancer,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Small Cell Bladder Cancer,7,7
+SCST,Sex Cord Stromal Tumor,2,OVARY,Sex Cord Stromal Tumor,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Sex Cord Stromal Tumor,2,2
+SELT,Sellar Tumor,2,BRAIN,Sellar Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Sellar Tumor,25,26
+SEM,Seminoma,2,TESTIS,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Seminoma,78,78
+SIC,Small Intestinal Carcinoma,2,BOWEL,Small Bowel Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Small Intestinal Carcinoma,4,4
+SPN,Solid Pseudopapillary Neoplasm of the Pancreas,2,PANCREAS,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Solid Pseudopapillary Neoplasm of the Pancreas,1,1
+SYNS,Synovial Sarcoma,2,SOFT_TISSUE,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Synovial Sarcoma,38,38
+TET,Thymic Epithelial Tumor,2,THYMUS,Thymic Tumor,Thymus,Purple,THYMUS,Thymus,Thymus > Thymic Epithelial Tumor,2,2
+THAP,Anaplastic Thyroid Cancer,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Anaplastic Thyroid Cancer,24,24
+THHC,Hurthle Cell Thyroid Cancer,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Hurthle Cell Thyroid Cancer,18,18
+THME,Medullary Thyroid Cancer,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Medullary Thyroid Cancer,34,34
+THPD,Poorly Differentiated Thyroid Cancer,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Poorly Differentiated Thyroid Cancer,1,1
+TMESO,Testicular Mesothelioma,2,TESTIS,Mesothelioma,Testis,Red,TESTIS,Testis,Testis > Testicular Mesothelioma,4,4
+UCA,Urethral Cancer,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Urethral Cancer,5,5
+UCEC,Endometrial Carcinoma,2,UTERUS,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma,269,811
+UESL,Undifferentiated Embryonal Sarcoma of the Liver,2,LIVER,Undifferentiated Embryonal Sarcoma of the Liver,Liver,MediumSeaGreen,LIVER,Liver,Liver > Undifferentiated Embryonal Sarcoma of the Liver,1,1
+UPA,Urothelial Papilloma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Urothelial Papilloma,1,1
+URCA,Urachal Carcinoma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Urachal Carcinoma,1,1
+USARC,Uterine Sarcoma/Mesenchymal,2,UTERUS,Uterine Sarcoma,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Uterine Sarcoma/Mesenchymal,26,27
+UTUC,Upper Tract Urothelial Carcinoma,2,BLADDER,Bladder Cancer,Bladder/Urinary Tract,Yellow,BLADDER,Bladder/Urinary Tract,Bladder/Urinary Tract > Upper Tract Urothelial Carcinoma,67,67
+VGCE,Villoglandular Adenocarcinoma of the Cervix,2,CERVIX,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Villoglandular Adenocarcinoma of the Cervix,1,1
+VMA,Mucinous Adenocarcinoma of the Vulva/Vagina,2,VULVA,Vulvar Carcinoma,Vulva/Vagina,Purple,VULVA,Vulva/Vagina,Vulva/Vagina > Mucinous Adenocarcinoma of the Vulva/Vagina,1,1
+VMM,Mucosal Melanoma of the Vulva/Vagina,2,VULVA,Melanoma,Vulva/Vagina,Purple,VULVA,Vulva/Vagina,Vulva/Vagina > Mucosal Melanoma of the Vulva/Vagina,7,7
+VSC,Squamous Cell Carcinoma of the Vulva/Vagina,2,VULVA,Vaginal Cancer,Vulva/Vagina,Purple,VULVA,Vulva/Vagina,Vulva/Vagina > Squamous Cell Carcinoma of the Vulva/Vagina,105,105
+WDTC,Well-Differentiated Thyroid Cancer,2,THYROID,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Well-Differentiated Thyroid Cancer,250,696
+WT,Wilms' Tumor,2,KIDNEY,Wilms Tumor,Kidney,Orange,KIDNEY,Kidney,Kidney > Wilms' Tumor,9,9
+ACBC,Adenoid Cystic Breast Cancer,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Adenoid Cystic Breast Cancer,3,3
+ACRM,Acral Melanoma,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Acral Melanoma,52,52
+ACYC,Adenoid Cystic Carcinoma,3,SACA,Salivary Gland Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Salivary Carcinoma > Adenoid Cystic Carcinoma,2,2
+ADIFG,Adult-Type Diffuse Glioma,3,DIFG,"Gliomas, Glioneuronal Tumors, and Neuronal Tumors",CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Diffuse Glioma > Adult-Type Diffuse Glioma,15,24
+ADNOS,"Adenocarcinoma, NOS",3,CUP,Cancer of Unknown Primary,Other,Black,OTHER,Other,"Other > Cancer of Unknown Primary > Adenocarcinoma, NOS",55,55
+AML,Acute Myeloid Leukemia,3,MNM,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia,660,684
+APE,Anaplastic Ependymoma,3,EPMT,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Ependymomal Tumor > Anaplastic Ependymoma,1,1
+APTAD,Atypical Pituitary Adenoma,3,SELT,Sellar Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Sellar Tumor > Atypical Pituitary Adenoma,1,1
+BLL,B-Lymphoblastic Leukemia/Lymphoma,3,LNM,B-Lymphoblastic Leukemia/Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > B-Lymphoblastic Leukemia/Lymphoma,113,116
+BPDCN,Blastic Plasmacytoid Dendritic Cell Neoplasm,3,MNM,Blastic Plasmacytoid Dendritic Cell Neoplasm,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Blastic Plasmacytoid Dendritic Cell Neoplasm,1,1
+BPSCC,Basaloid Penile Squamous Cell Carcinoma,3,PSCC,Penile Cancer,Penis,Blue,PENIS,Penis,Penis > Penile Squamous Cell Carcinoma > Basaloid Penile Squamous Cell Carcinoma,2,2
+BRCANOS,"Breast Invasive Cancer, NOS",3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,"Breast > Invasive Breast Carcinoma > Breast Invasive Cancer, NOS",4,4
+BRCNOS,"Breast Invasive Carcinoma, NOS",3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,"Breast > Invasive Breast Carcinoma > Breast Invasive Carcinoma, NOS",164,164
+BRSRCC,Breast Carcinoma with Signet Ring,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Breast Carcinoma with Signet Ring,1,1
+CAIS,Colon Adenocarcinoma In Situ,3,COADREAD,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma > Colon Adenocarcinoma In Situ,2,2
+CCOV,Clear Cell Ovarian Cancer,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Clear Cell Ovarian Cancer,44,44
+CCRCC,Renal Clear Cell Carcinoma,3,RCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Clear Cell Carcinoma,509,521
+CECC,Cervical Clear Cell Carcinoma,3,CEAD,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Adenocarcinoma > Cervical Clear Cell Carcinoma,1,1
+CEEN,Cervical Endometrioid Carcinoma,3,CEAD,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Adenocarcinoma > Cervical Endometrioid Carcinoma,3,3
+CHOL,Cholangiocarcinoma,3,IPN,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intraductal Papillary Neoplasm of the Bile Duct > Cholangiocarcinoma,5,10
+CHOM,Chordoid Meningioma,3,MNGT,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Meningothelial Tumor > Chordoid Meningioma,10,10
+CHOS,Chondroblastic Osteosarcoma,3,OS,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma > Chondroblastic Osteosarcoma,1,1
+COAD,Colon Adenocarcinoma,3,COADREAD,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma > Colon Adenocarcinoma,889,889
+CSNOS,"Breast Invasive Carcinosarcoma, NOS",3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,"Breast > Invasive Breast Carcinoma > Breast Invasive Carcinosarcoma, NOS",1,1
+CUPNOS,"Cancer of Unknown Primary, NOS",3,CUP,Cancer of Unknown Primary,Other,Black,OTHER,Other,"Other > Cancer of Unknown Primary > Cancer of Unknown Primary, NOS",76,76
+DDLS,Dedifferentiated Liposarcoma,3,LIPO,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Liposarcoma > Dedifferentiated Liposarcoma,45,45
+DESM,Desmoplastic Melanoma,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Desmoplastic Melanoma,29,29
+ECAD,Endocervical Adenocarcinoma,3,CEAD,Cervical Cancer,Cervix,Teal,CERVIX,Cervix,Cervix > Cervical Adenocarcinoma > Endocervical Adenocarcinoma,33,33
+EMBC,Epithelial Type Metaplastic Breast Cancer,3,MBC,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Metaplastic Breast Cancer > Epithelial Type Metaplastic Breast Cancer,1,1
+EMBCA,Embryonal Carcinoma,3,NSGCT,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Non-Seminomatous Germ Cell Tumor > Embryonal Carcinoma,18,18
+EOV,Endometrioid Ovarian Cancer,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Endometrioid Ovarian Cancer,43,43
+ESCA,Esophageal Adenocarcinoma,3,EGC,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Esophageal Adenocarcinoma,112,112
+GBC,Gallbladder Cancer,3,ICPN,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intracholecystic Papillary Neoplasm > Gallbladder Cancer,1,1
+GCTSTM,Germ Cell Tumor with Somatic-Type Malignancy,3,NSGCT,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Non-Seminomatous Germ Cell Tumor > Germ Cell Tumor with Somatic-Type Malignancy,4,4
+GEJ,Adenocarcinoma of the Gastroesophageal Junction,3,EGC,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Adenocarcinoma of the Gastroesophageal Junction,57,57
+GNOS,"Glioma, NOS",3,DIFG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,"CNS/Brain > Diffuse Glioma > Glioma, NOS",2,2
+HDCN,Histiocytic and Dendritic Cell Neoplasms,3,MNM,Histiocytosis,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Histiocytic and Dendritic Cell Neoplasms,1,1
+HGGNOS,"High-Grade Glioma, NOS",3,DIFG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,"CNS/Brain > Diffuse Glioma > High-Grade Glioma, NOS",6,6
+HL,Hodgkin Lymphoma,3,LNM,Hodgkin Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Hodgkin Lymphoma,140,195
+HMBL,Hemangioblastoma,3,MBT,Miscellaneous Brain Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Miscellaneous Brain Tumor > Hemangioblastoma,1,1
+HNSCUP,Head and Neck Squamous Cell Carcinoma of Unknown Primary,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Head and Neck Squamous Cell Carcinoma of Unknown Primary,22,22
+HPHSC,Hypopharynx Squamous Cell Carcinoma,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Hypopharynx Squamous Cell Carcinoma,6,6
+IAMPCA,Intestinal Ampullary Carcinoma,3,AMPCA,Ampullary Cancer,Ampulla of Vater,Purple,AMPULLA_OF_VATER,Ampulla of Vater,Ampulla of Vater > Ampullary Carcinoma > Intestinal Ampullary Carcinoma,1,1
+IDC,Breast Invasive Ductal Carcinoma,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Breast Invasive Ductal Carcinoma,2505,2505
+ILC,Breast Invasive Lobular Carcinoma,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Breast Invasive Lobular Carcinoma,422,422
+IMMC,Breast Invasive Mixed Mucinous Carcinoma,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Breast Invasive Mixed Mucinous Carcinoma,4,4
+IPMN,Intraductal Papillary Mucinous Neoplasm,3,PACT,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Cystic Tumor of the Pancreas > Intraductal Papillary Mucinous Neoplasm,10,10
+ITPN,Intraductal Tubulopapillary Neoplasm,3,PACT,Pancreatic Cancer,Pancreas,Purple,PANCREAS,Pancreas,Pancreas > Cystic Tumor of the Pancreas > Intraductal Tubulopapillary Neoplasm,1,1
+LCLC,Large Cell Lung Carcinoma,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > Large Cell Lung Carcinoma,1,1
+LGCOS,Low-Grade Central Osteosarcoma,3,OS,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma > Low-Grade Central Osteosarcoma,1,1
+LUAD,Lung Adenocarcinoma,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > Lung Adenocarcinoma,1559,1559
+LUCA,Lung Carcinoid,3,LNET,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Lung Neuroendocrine Tumor > Lung Carcinoid,10,10
+LUNE,Large Cell Neuroendocrine Carcinoma,3,LNET,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Lung Neuroendocrine Tumor > Large Cell Neuroendocrine Carcinoma,10,10
+LUPC,Pleomorphic Carcinoma of the Lung,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > Pleomorphic Carcinoma of the Lung,2,2
+LUSC,Lung Squamous Cell Carcinoma,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > Lung Squamous Cell Carcinoma,402,402
+LXSC,Larynx Squamous Cell Carcinoma,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Larynx Squamous Cell Carcinoma,162,162
+MACR,Mucinous Adenocarcinoma of the Colon and Rectum,3,COADREAD,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma > Mucinous Adenocarcinoma of the Colon and Rectum,28,28
+MAMPCA,Mixed Ampullary Carcinoma,3,AMPCA,Ampullary Cancer,Ampulla of Vater,Purple,AMPULLA_OF_VATER,Ampulla of Vater,Ampulla of Vater > Ampullary Carcinoma > Mixed Ampullary Carcinoma,1,1
+MBL,Medulloblastoma,3,EMBT,Embryonal Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Embryonal Tumor > Medulloblastoma,2,2
+MCD,Mastocytosis,3,MNM,Mastocytosis,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Mastocytosis,11,12
+MCHS,Mesenchymal Chondrosarcoma,3,CHS,Bone Cancer,Bone,White,BONE,Bone,Bone > Chondrosarcoma > Mesenchymal Chondrosarcoma,3,3
+MDLC,Breast Mixed Ductal and Lobular Carcinoma,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Breast Mixed Ductal and Lobular Carcinoma,75,75
+MDS,Myelodysplastic Syndromes,3,MNM,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes,166,179
+MDS/MPN,Myelodysplastic/Myeloproliferative Neoplasms,3,MNM,Myelodysplastic/Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic/Myeloproliferative Neoplasms,0,1
+MGCT,Mixed Germ Cell Tumor,3,NSGCT,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Non-Seminomatous Germ Cell Tumor > Mixed Germ Cell Tumor,23,23
+MLNER,Myeloid/Lymphoid Neoplasms with Eosinophilia and Rearrangement of  PDGFRA/PDGFRB or FGFR1 or with PCM1-JAK2,3,MNM,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloid/Lymphoid Neoplasms with Eosinophilia and Rearrangement of  PDGFRA/PDGFRB or FGFR1 or with PCM1-JAK2,2,2
+MNG,Meningioma,3,MNGT,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Meningothelial Tumor > Meningioma,74,74
+MOV,Mucinous Ovarian Cancer,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Mucinous Ovarian Cancer,52,52
+MPN,Myeloproliferative Neoplasms,3,MNM,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms,104,161
+MPNST,Malignant Peripheral Nerve Sheath Tumor,3,NST,Nerve Sheath Tumor,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System > Nerve Sheath Tumor > Malignant Peripheral Nerve Sheath Tumor,6,6
+MPNWP,Myeloproliferative Workup,3,MNM,Myeloproliferative Workup,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Workup,1,1
+MRLS,Myxoid/Round-Cell Liposarcoma,3,LIPO,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Liposarcoma > Myxoid/Round-Cell Liposarcoma,1,1
+MUP,Melanoma of Unknown Primary,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Melanoma of Unknown Primary,16,16
+NCCRCC,Renal Non-Clear Cell Carcinoma,3,RCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Non-Clear Cell Carcinoma,54,76
+NETNOS,"Neuroendocrine Tumor, NOS",3,CUP,Cancer of Unknown Primary,Other,Black,OTHER,Other,"Other > Cancer of Unknown Primary > Neuroendocrine Tumor, NOS",2,2
+NHL,Non-Hodgkin Lymphoma,3,LNM,Non-Hodgkin Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma,814,1362
+NRCC,NUTM1 Renal Cell Carcinoma,3,RCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > NUTM1 Renal Cell Carcinoma,10,10
+NUTCL,NUT Carcinoma of the Lung,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > NUT Carcinoma of the Lung,1,1
+OCSC,Oral Cavity Squamous Cell Carcinoma,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Oral Cavity Squamous Cell Carcinoma,272,272
+OPHSC,Oropharynx Squamous Cell Carcinoma,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Oropharynx Squamous Cell Carcinoma,267,267
+OSMAD,Ovarian Seromucinous Adenoma,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Ovarian Seromucinous Adenoma,1,1
+PAC,Polymorphous Adenocarcinoma,3,SACA,Salivary Gland Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Salivary Carcinoma > Polymorphous Adenocarcinoma,3,3
+PAOS,Parosteal Osteosarcoma,3,OS,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma > Parosteal Osteosarcoma,8,8
+PAST,Pilocytic Astrocytoma,3,ENCG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Encapsulated Glioma > Pilocytic Astrocytoma,2,2
+PD,Paget Disease of the Nipple,3,DCIS,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Breast Ductal Carcinoma In Situ > Paget Disease of the Nipple,2,2
+PDC,"Poorly Differentiated Carcinoma, NOS",3,CUP,Cancer of Unknown Primary,Other,Black,OTHER,Other,"Other > Cancer of Unknown Primary > Poorly Differentiated Carcinoma, NOS",15,15
+PDIFHG,Pediatric-Type Diffuse High-Grade Glioma,3,DIFG,"Gliomas, Glioneuronal Tumors, and Neuronal Tumors",CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Diffuse Glioma > Pediatric-Type Diffuse High-Grade Glioma,2,2
+PDIFLG,Pediatric-Type Diffuse Low-Grade Glioma,3,DIFG,"Gliomas, Glioneuronal Tumors, and Neuronal Tumors",CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Diffuse Glioma > Pediatric-Type Diffuse Low-Grade Glioma,2,2
+PLBMESO,"Pleural Mesothelioma, Biphasic Type",3,PLMESO,Mesothelioma,Pleura,Blue,PLEURA,Pleura,"Pleura > Pleural Mesothelioma > Pleural Mesothelioma, Biphasic Type",6,6
+PLEMESO,"Pleural Mesothelioma, Epithelioid Type",3,PLMESO,Mesothelioma,Pleura,Blue,PLEURA,Pleura,"Pleura > Pleural Mesothelioma > Pleural Mesothelioma, Epithelioid Type",3,3
+PLLS,Pleomorphic Liposarcoma,3,LIPO,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Liposarcoma > Pleomorphic Liposarcoma,6,6
+PLSMESO,"Pleural Mesothelioma, Sarcomatoid Type",3,PLMESO,Mesothelioma,Pleura,Blue,PLEURA,Pleura,"Pleura > Pleural Mesothelioma > Pleural Mesothelioma, Sarcomatoid Type",1,1
+PNET,Primitive Neuroectodermal Tumor,3,EMBT,Embryonal Tumor,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Embryonal Tumor > Primitive Neuroectodermal Tumor,1,1
+READ,Rectal Adenocarcinoma,3,COADREAD,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma > Rectal Adenocarcinoma,351,351
+RWDNET,Well-Differentiated Neuroendocrine Tumor of the Rectum,3,GINET,Gastrointestinal Neuroendocrine Tumor,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Gastrointestinal Neuroendocrine Tumors > Well-Differentiated Neuroendocrine Tumor of the Rectum,1,1
+SBMOV,"Serous Borderline Ovarian Tumor, Micropapillary",3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,"Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Serous Borderline Ovarian Tumor, Micropapillary",10,10
+SCCNOS,"Squamous Cell Carcinoma, NOS",3,CUP,Cancer of Unknown Primary,Other,Black,OTHER,Other,"Other > Cancer of Unknown Primary > Squamous Cell Carcinoma, NOS",18,18
+SCCO,Small Cell Carcinoma of the Ovary,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Small Cell Carcinoma of the Ovary,2,2
+SCHW,Schwannoma,3,NST,Nerve Sheath Tumor,Peripheral Nervous System,Gray,PNS,Peripheral Nervous System,Peripheral Nervous System > Nerve Sheath Tumor > Schwannoma,4,4
+SCLC,Small Cell Lung Cancer,3,LNET,Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Lung Neuroendocrine Tumor > Small Cell Lung Cancer,78,78
+SCRMS,Spindle Cell Rhabdomyosarcoma,3,RMS,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Rhabdomyosarcoma > Spindle Cell Rhabdomyosarcoma,1,1
+SECOS,Secondary Osteosarcoma,3,OS,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma > Secondary Osteosarcoma,2,2
+SFTCNS,Solitary Fibrous Tumor of the Central Nervous System,3,MNGT,CNS Cancer,CNS/Brain,Gray,BRAIN,CNS/Brain,CNS/Brain > Meningothelial Tumor > Solitary Fibrous Tumor of the Central Nervous System,3,3
+SGTTL,Salivary Gland-Type Tumor of the Lung,3,NSCLC,Non-Small Cell Lung Cancer,Lung,Gainsboro,LUNG,Lung,Lung > Non-Small Cell Lung Cancer > Salivary Gland-Type Tumor of the Lung,9,9
+SKCM,Cutaneous Melanoma,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Cutaneous Melanoma,580,580
+SKCN,Congenital Nevus,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Congenital Nevus,1,1
+SKLMM,Lentigo Maligna Melanoma,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Lentigo Maligna Melanoma,3,3
+SNSC,Sinonasal Squamous Cell Carcinoma,3,HNSC,Head and Neck Cancer,Head and Neck,DarkRed,HEAD_NECK,Head and Neck,Head and Neck > Head and Neck Squamous Cell Carcinoma > Sinonasal Squamous Cell Carcinoma,1,1
+SOC,Serous Ovarian Cancer,3,OVT,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Serous Ovarian Cancer,184,306
+SPC,Solid Papillary Carcinoma of the Breast,3,BRCA,Breast Cancer,Breast,HotPink,BREAST,Breast,Breast > Invasive Breast Carcinoma > Solid Papillary Carcinoma of the Breast,3,3
+SPZM,Spitzoid Melanoma,3,MEL,Melanoma,Skin,Black,SKIN,Skin,Skin > Melanoma > Spitzoid Melanoma,2,2
+SRCCR,Signet Ring Cell Adenocarcinoma of the Colon and Rectum,3,COADREAD,Colorectal Cancer,Bowel,SaddleBrown,BOWEL,Bowel,Bowel > Colorectal Adenocarcinoma > Signet Ring Cell Adenocarcinoma of the Colon and Rectum,1,1
+STAD,Stomach Adenocarcinoma,3,EGC,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Stomach Adenocarcinoma,161,193
+TEOS,Telangiectatic Osteosarcoma,3,OS,Bone Cancer,Bone,White,BONE,Bone,Bone > Osteosarcoma > Telangiectatic Osteosarcoma,2,2
+THFO,Follicular Thyroid Cancer,3,WDTC,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Well-Differentiated Thyroid Cancer > Follicular Thyroid Cancer,50,50
+THPA,Papillary Thyroid Cancer,3,WDTC,Thyroid Cancer,Thyroid,Teal,THYROID,Thyroid,Thyroid > Well-Differentiated Thyroid Cancer > Papillary Thyroid Cancer,396,396
+TLL,T-Lymphoblastic Leukemia/Lymphoma,3,LNM,T-Lymphoblastic Leukemia/Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > T-Lymphoblastic Leukemia/Lymphoma,14,14
+TT,Teratoma,3,NSGCT,Germ Cell Tumor,Testis,Red,TESTIS,Testis,Testis > Non-Seminomatous Germ Cell Tumor > Teratoma,1,1
+UASC,Uterine Adenosquamous Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Adenosquamous Carcinoma,9,9
+UCS,Uterine Carcinosarcoma/Uterine Malignant Mixed Mullerian Tumor,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Carcinosarcoma/Uterine Malignant Mixed Mullerian Tumor,62,62
+UDDC,Uterine Dedifferentiated Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Dedifferentiated Carcinoma,1,1
+UEC,Uterine Endometrioid Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Endometrioid Carcinoma,327,327
+UM,Uveal Melanoma,3,OM,Melanoma,Eye,Green,EYE,Eye,Eye > Ocular Melanoma > Uveal Melanoma,14,14
+UMNC,Uterine Mesonephric Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Mesonephric Carcinoma,2,2
+UPECOMA,Uterine Perivascular Epithelioid Cell Tumor,3,USARC,Uterine Sarcoma,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Uterine Sarcoma/Mesenchymal > Uterine Perivascular Epithelioid Cell Tumor,1,1
+USC,Uterine Serous Carcinoma/Uterine Papillary Serous Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Serous Carcinoma/Uterine Papillary Serous Carcinoma,138,138
+UUC,Uterine Undifferentiated Carcinoma,3,UCEC,Endometrial Cancer,Uterus,PeachPuff,UTERUS,Uterus,Uterus > Endometrial Carcinoma > Uterine Undifferentiated Carcinoma,3,3
+VPSCC,Verrucous Penile Squamous Cell Carcinoma,3,PSCC,Penile Cancer,Penis,Blue,PENIS,Penis,Penis > Penile Squamous Cell Carcinoma > Verrucous Penile Squamous Cell Carcinoma,3,3
+WDLS,Well-Differentiated Liposarcoma,3,LIPO,Soft Tissue Sarcoma,Soft Tissue,LightYellow,SOFT_TISSUE,Soft Tissue,Soft Tissue > Liposarcoma > Well-Differentiated Liposarcoma,29,29
+WPSCC,Warty Penile Squamous Cell Carcinoma,3,PSCC,Penile Cancer,Penis,Blue,PENIS,Penis,Penis > Penile Squamous Cell Carcinoma > Warty Penile Squamous Cell Carcinoma,1,1
+AMLMRC,AML with Myelodysplasia-Related Changes,4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > AML with Myelodysplasia-Related Changes,12,12
+AMLNOS,"AML, NOS",4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,"Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > AML, NOS",0,1
+AMLRGA,AML with Recurrent Genetic Abnormalities,4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > AML with Recurrent Genetic Abnormalities,2,2
+ASTR,"Astrocytoma, IDH-Mutant",4,ADIFG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,"CNS/Brain > Diffuse Glioma > Adult-Type Diffuse Glioma > Astrocytoma, IDH-Mutant",6,6
+BLLNOS,"B-Lymphoblastic Leukemia/Lymphoma, NOS",4,BLL,B-Lymphoblastic Leukemia/Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,"Lymphoid > Lymphoid Neoplasm > B-Lymphoblastic Leukemia/Lymphoma > B-Lymphoblastic Leukemia/Lymphoma, NOS",3,3
+CELNOS,"Chronic Eosinophilic Leukemia, NOS",4,MPN,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,"Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms > Chronic Eosinophilic Leukemia, NOS",1,1
+CHL,Classical Hodgkin Lymphoma,4,HL,Hodgkin Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Hodgkin Lymphoma > Classical Hodgkin Lymphoma,52,53
+CHRCC,Chromophobe Renal Cell Carcinoma,4,NCCRCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Non-Clear Cell Carcinoma > Chromophobe Renal Cell Carcinoma,4,4
+CML,Chronic Myelogenous Leukemia,4,MPN,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms > Chronic Myelogenous Leukemia,24,24
+DSTAD,Diffuse Type Stomach Adenocarcinoma,4,STAD,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Stomach Adenocarcinoma > Diffuse Type Stomach Adenocarcinoma,17,17
+EHCH,Extrahepatic Cholangiocarcinoma,4,CHOL,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intraductal Papillary Neoplasm of the Bile Duct > Cholangiocarcinoma > Extrahepatic Cholangiocarcinoma,2,2
+ET,Essential Thrombocythemia,4,MPN,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms > Essential Thrombocythemia,15,15
+GB,"Glioblastoma, IDH-Wildtype",4,ADIFG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,"CNS/Brain > Diffuse Glioma > Adult-Type Diffuse Glioma > Glioblastoma, IDH-Wildtype",1,1
+HGSOC,High-Grade Serous Ovarian Cancer,4,SOC,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Serous Ovarian Cancer > High-Grade Serous Ovarian Cancer,114,114
+IHCH,Intrahepatic Cholangiocarcinoma,4,CHOL,Hepatobiliary Cancer,Biliary Tract,Green,BILIARY_TRACT,Biliary Tract,Biliary Tract > Intraductal Papillary Neoplasm of the Bile Duct > Cholangiocarcinoma > Intrahepatic Cholangiocarcinoma,3,3
+ISTAD,Intestinal Type Stomach Adenocarcinoma,4,STAD,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Stomach Adenocarcinoma > Intestinal Type Stomach Adenocarcinoma,14,14
+JMML,Juvenile Myelomonocytic Leukemia,4,MDS/MPN,Myelodysplastic/Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic/Myeloproliferative Neoplasms > Juvenile Myelomonocytic Leukemia,1,1
+LGSOC,Low-Grade Serous Ovarian Cancer,4,SOC,Ovarian Cancer,Ovary/Fallopian Tube,LightBlue,OVARY,Ovary/Fallopian Tube,Ovary/Fallopian Tube > Ovarian Epithelial Tumor > Serous Ovarian Cancer > Low-Grade Serous Ovarian Cancer,8,8
+MBN,Mature B-Cell Neoplasms,4,NHL,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms,397,504
+MCSL,Mast Cell Sarcoma,4,MCD,Mastocytosis,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Mastocytosis > Mast Cell Sarcoma,1,1
+MDSID5Q,MDS with Isolated Del(5q),4,MDS,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes > MDS with Isolated Del(5q),2,2
+MDSMD,MDS with Multilineage Dysplasia,4,MDS,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes > MDS with Multilineage Dysplasia,1,1
+MDSRS,MDS with Ring Sideroblasts,4,MDS,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes > MDS with Ring Sideroblasts,2,2
+MDSU,"MDS, Unclassifiable",4,MDS,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,"Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes > MDS, Unclassifiable",1,1
+MPRDS,Myeloid Proliferations Related to Down Syndrome,4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > Myeloid Proliferations Related to Down Syndrome,1,1
+MS,Myeloid Sarcoma,4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > Myeloid Sarcoma,7,7
+MTNN,Mature T and NK Neoplasms,4,NHL,Mature T and NK Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature T and NK Neoplasms,43,44
+NLPHL,Nodular Lymphocyte-Predominant Hodgkin Lymphoma,4,HL,Hodgkin Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Hodgkin Lymphoma > Nodular Lymphocyte-Predominant Hodgkin Lymphoma,2,2
+ODG,"Oligodendroglioma, IDH-mutant, and 1p/19q-Codeleted",4,ADIFG,Glioma,CNS/Brain,Gray,BRAIN,CNS/Brain,"CNS/Brain > Diffuse Glioma > Adult-Type Diffuse Glioma > Oligodendroglioma, IDH-mutant, and 1p/19q-Codeleted",2,2
+PMF,Primary Myelofibrosis,4,MPN,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms > Primary Myelofibrosis,7,7
+PRCC,Papillary Renal Cell Carcinoma,4,NCCRCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Non-Clear Cell Carcinoma > Papillary Renal Cell Carcinoma,16,16
+PV,Polycythemia Vera,4,MPN,Myeloproliferative Neoplasms,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myeloproliferative Neoplasms > Polycythemia Vera,10,10
+RAML,Renal Angiomyolipoma,4,NCCRCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Non-Clear Cell Carcinoma > Renal Angiomyolipoma,1,1
+RCYC,Refractory Cytopenia of Childhood,4,MDS,Myelodysplastic Syndromes,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Myelodysplastic Syndromes > Refractory Cytopenia of Childhood,7,7
+SCCRCC,Renal Clear Cell Carcinoma with Sarcomatoid Features,4,CCRCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Clear Cell Carcinoma > Renal Clear Cell Carcinoma with Sarcomatoid Features,12,12
+TMN,Therapy-Related Myeloid Neoplasms,4,AML,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > Therapy-Related Myeloid Neoplasms,1,1
+TSTAD,Tubular Stomach Adenocarcinoma,4,STAD,Esophagogastric Cancer,Esophagus/Stomach,LightSkyBlue,STOMACH,Esophagus/Stomach,Esophagus/Stomach > Esophagogastric Adenocarcinoma > Stomach Adenocarcinoma > Tubular Stomach Adenocarcinoma,1,1
+URCC,Unclassified Renal Cell Carcinoma,4,NCCRCC,Renal Cell Carcinoma,Kidney,Orange,KIDNEY,Kidney,Kidney > Renal Cell Carcinoma > Renal Non-Clear Cell Carcinoma > Unclassified Renal Cell Carcinoma,1,1
+ABL,Acute Basophilic Leukemia,5,AMLNOS,Leukemia,Myeloid,LightSalmon,MYELOID,Myeloid,"Myeloid > Myeloid Neoplasm > Acute Myeloid Leukemia > AML, NOS > Acute Basophilic Leukemia",1,1
+ALKLBCL,ALK Positive Large B-Cell Lymphoma,5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > ALK Positive Large B-Cell Lymphoma,2,2
+CLLSLL,Chronic Lymphocytic Leukemia/Small Lymphocytic Lymphoma,5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Chronic Lymphocytic Leukemia/Small Lymphocytic Lymphoma,15,15
+DLBCLNOS,"Diffuse Large B-Cell Lymphoma, NOS",5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,"Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Diffuse Large B-Cell Lymphoma, NOS",47,48
+FL,Follicular Lymphoma,5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Follicular Lymphoma,13,13
+LRCHL,Lymphocyte-Rich Classical Hodgkin Lymphoma,5,CHL,Hodgkin Lymphoma,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Hodgkin Lymphoma > Classical Hodgkin Lymphoma > Lymphocyte-Rich Classical Hodgkin Lymphoma,1,1
+MCL,Mantle Cell Lymphoma,5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Mantle Cell Lymphoma,2,2
+PCM,Plasma Cell Myeloma,5,MBN,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Plasma Cell Myeloma,27,27
+SEBVTLC,Systemic EBV Positive T-Cell Lymphoma of Childhood,5,MTNN,Mature T and NK Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature T and NK Neoplasms > Systemic EBV Positive T-Cell Lymphoma of Childhood,1,1
+ABC,Activated B-cell Type,6,DLBCLNOS,Mature B-Cell Neoplasms,Lymphoid,LimeGreen,LYMPH,Lymphoid,"Lymphoid > Lymphoid Neoplasm > Non-Hodgkin Lymphoma > Mature B-Cell Neoplasms > Diffuse Large B-Cell Lymphoma, NOS > Activated B-cell Type",1,1
