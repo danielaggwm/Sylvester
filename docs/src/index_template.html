@@ -171,9 +171,9 @@ footer .r{color:var(--ink-2)}
       <div class="hdr-right">
         <div class="modes" role="group" aria-label="Animation timing">
           <button class="mode" id="m-even" type="button" aria-pressed="true">Even pace</button>
-            <span class="info" tabindex="0" aria-label="About even pace">i<span class="tip" role="tooltip"><b>Even pace.</b> Events play one at a time at a steady rhythm (about 3 per second), so each one is easy to follow. The events and their order are real; only the spacing between them is evened out.</span></span>
+            <span class="info" tabindex="0" aria-label="About even pace">i<span class="tip" role="tooltip" id="tip-even"></span></span>
           <button class="mode" id="m-real" type="button" aria-pressed="false">Real timing</button>
-            <span class="info" tabindex="0" aria-label="About real timing">i<span class="tip" role="tooltip"><b>Real timing.</b> Events keep the real gaps between them from the pipeline log. About 2.7 years of activity is compressed into a 30-minute loop, so one day takes about 2 seconds. Overnight batches arrive as bursts; the hours between batches and the weekends go quiet.</span></span>
+            <span class="info" tabindex="0" aria-label="About real timing">i<span class="tip" role="tooltip" id="tip-real"></span></span>
         </div>
         <div class="clock">
           <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
@@ -215,7 +215,7 @@ footer .r{color:var(--ink-2)}
       <div class="legend" style="margin-top:12px">
         <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#5fcbe4"/><circle cx="24" cy="11" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
         <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#eafbff"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#5fcbe4" stroke-opacity=".7"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
-        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#5fcbe4" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. A bar flickers when activity reaches it.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#5fcbe4" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. It flickers on activity and grows when a new sample arrives.</span></div>
         <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" overflow="visible" aria-hidden="true">
           <circle cx="4" cy="15" r="2.2" fill="#eafbff" opacity=".55"/>
           <circle cx="29" cy="15" r="4.5" fill="#5fcbe4"/>
@@ -223,7 +223,7 @@ footer .r{color:var(--ink-2)}
           <circle cy="15" r="2.2" fill="#ffd96b" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
           <circle cy="15" r="3.4" fill="#fff1c2" style="filter:drop-shadow(0 0 3px #ffd96b)"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
           <circle cx="29" cy="15" r="4.5" fill="none" stroke="#ffd96b" stroke-width="2"><animate attributeName="r" values="4.5;4.5;11.5;11.5" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
-        </svg></span><span class="tx"><b>Gold spark = a new patient sample.</b> It travels from the center to its cancer type, then the total goes up.</span></div>
+        </svg></span><span class="tx"><b>Gold spark = a new patient sample.</b> It travels from the center to its cancer type; the circle grows and the total goes up.</span></div>
         <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
           <circle cx="22" cy="15" r="5" fill="#5fcbe4"/>
           <circle cx="22" cy="15" r="5" fill="none" stroke="#55cfe8" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
@@ -257,8 +257,13 @@ const BUNDLE = /*__BUNDLE__*/;
   // ── header kpis
   document.getElementById("k-cats").textContent = B.meta.nCategories;
   document.getElementById("k-files").textContent = fmt(B.meta.totalFiles);
+  const M=B.meta, nd=d3.utcFormat("%b %-d, %Y"), D0=new Date(M.tStart), D1=new Date(M.tEnd);
   document.getElementById("foot-src").textContent =
-    `${fmt(B.meta.totalEvents)} events · OncoTree latest_stable · synthetic sample`;
+    `Replaying last ${Math.round(M.windowDays)} days · ${fmt(M.eventsInWindow)} events · synthetic sample`;
+  const perEv=((M.loopMin*60)/M.eventsInWindow).toFixed(1), perDay=(M.loopMin*60)/M.windowDays;
+  const perDayTxt=perDay>=90?`${(perDay/60).toFixed(1).replace(/\.0$/,"")} minutes`:`${Math.round(perDay)} seconds`;
+  document.getElementById("tip-even").innerHTML=`<b>Even pace.</b> The ${fmt(M.eventsInWindow)} events from the last ${Math.round(M.windowDays)} days play one at a time, about one every ${perEv} s, so each one is easy to follow. The events and their order are real; only the spacing is evened out.`;
+  document.getElementById("tip-real").innerHTML=`<b>Real timing.</b> The same events keep their real gaps from the pipeline log. ${nd(D0)} – ${nd(D1)} plays in a ${M.loopMin}-minute loop, so one day takes about ${perDayTxt}. Overnight batches arrive as bursts; quiet hours and weekends go still. Circles start at their size on ${nd(D0)} and grow to today's totals.`;
 
   // ── build hierarchy + radial layout
   const W=1080; let H=document.getElementById("atlas").clientHeight||1100;
@@ -270,12 +275,17 @@ const BUNDLE = /*__BUNDLE__*/;
   cluster(root);
   const maxSub = d3.max(root.descendants().filter(d=>d.depth>0), d=>d.data.n_subtree||1);
   const sizeScale = d3.scaleSqrt().domain([1,maxSub]).range([1.6,16.5]).clamp(true);
-  const nodeR = d=> d.depth===0?0 : sizeScale(d.data.n_subtree||1);
+  const nodeR = d=> d.depth===0?0 : sizeScale(Math.max(1,d.liveSub||0));
   root.each(n=>{ n.ang=n.x; n.rr=rOf(n.depth);
     n.px=Math.sin(n.ang)*n.rr; n.py=-Math.cos(n.ang)*n.rr; });
 
   // code -> node ; level1 -> subtree code set + angular extent
   const codeMap=new Map(); root.each(n=>codeMap.set(n.data.code,n));
+  // live sample counts: start at the state before the replay window, grow as samples arrive
+  const live=new Map();
+  function resetCounts(){ live.clear(); Object.entries(B.base||{}).forEach(([k,v])=>live.set(k,v));
+    root.eachAfter(n=>{ n.liveSub=(live.get(n.data.code)||0)+(n.children?d3.sum(n.children,c=>c.liveSub):0); }); }
+  resetCounts();
   const subtreeCodes=new Map(), extent=new Map();
   root.children.forEach(c=>{ const s=new Set(); let a0=Infinity,a1=-Infinity;
     c.descendants().forEach(d=>{ s.add(d.data.code); a0=Math.min(a0,d.ang); a1=Math.max(a1,d.ang); });
@@ -334,15 +344,16 @@ const BUNDLE = /*__BUNDLE__*/;
   // outer data band: one radial bar per subtype, length = samples coded to it
   const leaves=root.leaves();
   const barLen=d3.scaleLog().domain([1,d3.max(leaves,d=>d.data.n_direct||1)]).range([3,30]).clamp(true);
+  const barL=d=>{const v=live.get(d.data.code)||0; return v<1?0:barLen(v);};
   const barSel=g.append("g").selectAll("line").data(leaves).enter().append("line")
     .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code)
     .attr("x1",d=>Math.sin(d.ang)*(OUT+9)).attr("y1",d=>-Math.cos(d.ang)*(OUT+9))
-    .attr("x2",d=>Math.sin(d.ang)*(OUT+9+barLen(d.data.n_direct||1))).attr("y2",d=>-Math.cos(d.ang)*(OUT+9+barLen(d.data.n_direct||1)))
+    .attr("x2",d=>Math.sin(d.ang)*(OUT+9+barL(d))).attr("y2",d=>-Math.cos(d.ang)*(OUT+9+barL(d)))
     .attr("stroke","#5fcbe4").attr("stroke-width",1.6).attr("stroke-linecap","round").attr("opacity",.4);
   const leafByCode=new Map(leaves.map(d=>[d.data.code,d]));
   const tipSel=g.append("g").selectAll("circle").data(leaves).enter().append("circle")
     .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code)
-    .attr("cx",d=>Math.sin(d.ang)*(OUT+12+barLen(d.data.n_direct||1))).attr("cy",d=>-Math.cos(d.ang)*(OUT+12+barLen(d.data.n_direct||1)))
+    .attr("cx",d=>Math.sin(d.ang)*(OUT+12+barL(d))).attr("cy",d=>-Math.cos(d.ang)*(OUT+12+barL(d)))
     .attr("r",1.3).attr("fill","#bfeefb").attr("opacity",.45);
 
   // category labels: curved along the outer edge (top half reads clockwise, bottom half flipped upright)
@@ -408,7 +419,7 @@ const BUNDLE = /*__BUNDLE__*/;
     labelG.selectAll(".leader").attr("opacity",function(){return this.getAttribute("data-root")===curSpot?1:(this.getAttribute("data-shown")==="1"?.35:0)}); });
 
   // ── live counters
-  let total=B.meta.totalSamples, evStreamed=0;
+  let total=B.meta.baseSamples??B.meta.totalSamples, evStreamed=0, gen=0;
   const kS=document.getElementById("k-samples"), kE=document.getElementById("k-ev");
   function setTotal(v){ hubNum.text(fmt(v)); kS.textContent=fmt(v); }
   setTotal(total);
@@ -423,7 +434,7 @@ const BUNDLE = /*__BUNDLE__*/;
   // flicker the outer bar of a specific diagnosis
   function flickerBar(code,role){
     const d=leafByCode.get(code); if(!d) return;
-    const L=barLen(d.data.n_direct||1), [x1,y1]=PT(d,OUT+9), [x2,y2]=PT(d,OUT+9+L+6);
+    const L=barL(d), [x1,y1]=PT(d,OUT+9), [x2,y2]=PT(d,OUT+9+L+6);
     pulseL.append("line").attr("x1",x1).attr("y1",y1).attr("x2",x2).attr("y2",y2)
       .attr("stroke",role?"#ffe7a3":"#b6f2ff").attr("stroke-width",role?4:3).attr("stroke-linecap","round")
       .attr("opacity",1).style("filter","drop-shadow(0 0 4px "+(role?"#ffd96b":"#55cfe8")+")")
@@ -440,18 +451,40 @@ const BUNDLE = /*__BUNDLE__*/;
 
   // gold spark: a new sample leaves the center and joins its cancer type
   const SPARK_MS=reduce?0:1500;
-  function arrive(node,code){
+  const circleBy=new Map(), barBy=new Map(), tipBy=new Map();
+  nodeSel.each(function(d){ circleBy.set(d.data.code,d3.select(this).select("circle")); });
+  barSel.each(function(d){ barBy.set(d.data.code,d3.select(this)); });
+  tipSel.each(function(d){ tipBy.set(d.data.code,d3.select(this)); });
+  function drawBar(d,dur){
+    const L=barL(d);
+    (barBy.get(d.data.code)).transition().duration(dur).attr("x2",Math.sin(d.ang)*(OUT+9+L)).attr("y2",-Math.cos(d.ang)*(OUT+9+L));
+    (tipBy.get(d.data.code)).transition().duration(dur).attr("cx",Math.sin(d.ang)*(OUT+12+L)).attr("cy",-Math.cos(d.ang)*(OUT+12+L));
+  }
+  function grow(code){
+    const n=codeMap.get(code); if(!n) return;
+    live.set(code,(live.get(code)||0)+1);
+    n.ancestors().forEach(a=>{ a.liveSub=(a.liveSub||0)+1;
+      const c=circleBy.get(a.data.code); if(c) c.transition().duration(600).ease(d3.easeBackOut).attr("r",nodeR(a)); });
+    if(barBy.has(code)) drawBar(n,600);
+  }
+  function restartLoop(){
+    gen++; resetCounts(); total=B.meta.baseSamples??total; setTotal(total);
+    nodeSel.select("circle").transition().duration(1500).attr("r",d=>nodeR(d));
+    leaves.forEach(d=>drawBar(d,1500));
+  }
+  function arrive(node,code,g0){
+    if(g0!==gen) return;
     pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
       .attr("fill","#fff3c9").attr("opacity",.95).transition().duration(700).attr("opacity",0).attr("r",nodeR(node)).remove();
     pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
       .attr("fill","none").attr("stroke","#ffd96b").attr("stroke-width",2.4).attr("opacity",.95)
       .transition().duration(1300).ease(d3.easeCubicOut)
       .attr("r",nodeR(node)+38).attr("opacity",0).attr("stroke-width",.4).remove();
-    flickerBar(code,1);
+    flickerBar(code,1); grow(code);
     total++; setTotal(total); d3.select(kS).interrupt();
   }
   function spark(node,code){
-    if(!SPARK_MS){ arrive(node,code); return; }
+    const g0=gen; if(!SPARK_MS){ arrive(node,code,g0); return; }
     // comet = head + 4 fading followers on the same path, each slightly behind
     const trail=[{r:4.6,o:1,lag:0,f:"#fff1c2"},{r:3.6,o:.6,lag:55,f:"#ffd96b"},{r:2.9,o:.4,lag:110,f:"#ffd96b"},{r:2.2,o:.25,lag:170,f:"#ffc24a"},{r:1.6,o:.14,lag:240,f:"#ffc24a"}];
     trail.forEach((p,i)=>{
@@ -459,7 +492,7 @@ const BUNDLE = /*__BUNDLE__*/;
       if(i===0) c.style("filter","drop-shadow(0 0 6px #ffd96b)");
       c.transition().delay(p.lag).duration(0).attr("opacity",p.o)
        .transition().duration(SPARK_MS).ease(d3.easeCubicInOut).attr("cx",node.px).attr("cy",node.py)
-       .on("end",function(){ if(i===0) arrive(node,code); })
+       .on("end",function(){ if(i===0) arrive(node,code,g0); })
        .transition().duration(160).attr("opacity",0).remove();
     });
   }
@@ -485,24 +518,26 @@ const BUNDLE = /*__BUNDLE__*/;
     clockEl.textContent=`${fDay.format(d)} · ${fTime.format(d)} ET`; progEl.style.width=(tn*100).toFixed(2)+"%"; }
 
   // ── event engine: two timing modes over the same event list
-  const N=B.events.length, LOOP_MS=30*60*1000, EVEN_MS=reduce?900:LOOP_MS/N;
-  let mode="even", ei=0, acc=0, vt=B.events[0][3], lastTs=null;
+  const N=B.events.length, LOOP_MS=(B.meta.loopMin||30)*60*1000, EVEN_MS=reduce?900:LOOP_MS/N;
+  let mode="even", ei=0, acc=0, vt=B.events[0][3], lastTs=null, holdUntil=0;
   function fire(){
     const e=B.events[ei]; ei=(ei+1)%N;
     const n=codeMap.get(e[0]);
     if(n){ if(e[1]) spark(n,e[0]); else { fileRipple(n); flickerBar(e[0],0); } pushTicker(e); }
     evStreamed++; kE.textContent=fmt(evStreamed); setClock(e[3]);
-    if(ei===0) vt=B.events[0][3];
+    if(ei===0) holdUntil=performance.now()+SPARK_MS+1900;   // let the last sparks land, show today's total, then start over
   }
   function frame(ts){
     if(lastTs===null) lastTs=ts;
     const dt=Math.min(ts-lastTs,250); lastTs=ts;
+    if(holdUntil){ if(ts<holdUntil){ requestAnimationFrame(frame); return; }
+      holdUntil=0; vt=B.events[0][3]; acc=0; restartLoop(); }
     if(mode==="even"){
-      acc+=dt; let k=0; while(acc>=EVEN_MS && k<3){ fire(); acc-=EVEN_MS; k++; }
+      acc+=dt; let k=0; while(acc>=EVEN_MS && k<3 && !holdUntil){ fire(); acc-=EVEN_MS; k++; }
       if(acc>EVEN_MS*3) acc=0;
     } else {
       vt+=dt/LOOP_MS; let k=0;
-      while(k<20 && B.events[ei][3]<=vt){ const wrap=(ei===N-1); fire(); k++; if(wrap) break; }
+      while(k<20 && !holdUntil && B.events[ei][3]<=vt){ fire(); k++; }
     }
     requestAnimationFrame(frame);
   }
@@ -546,8 +581,8 @@ const BUNDLE = /*__BUNDLE__*/;
     const cd=catByName.get(c.data.name);
     const sn=document.getElementById("spot-name"); sn.textContent=c.data.name; let fs=40; sn.style.fontSize=fs+"px";
     while(sn.scrollWidth>sn.clientWidth && fs>24){ fs-=2; sn.style.fontSize=fs+"px"; }
-    document.getElementById("spot-samples").textContent=fmt(cd.n_samples);
-    document.getElementById("spot-share").textContent=(100*cd.n_samples/B.meta.totalSamples).toFixed(1)+"%";
+    document.getElementById("spot-samples").textContent=fmt(c.liveSub);
+    document.getElementById("spot-share").textContent=(100*c.liveSub/total).toFixed(1)+"%";
     document.getElementById("spot-files").textContent=fmt(cd.n_files);
     const maxv=d3.max(B.vendors,v=>cd.vendors[v]||0)||1;
     vbars.innerHTML="";
@@ -556,8 +591,8 @@ const BUNDLE = /*__BUNDLE__*/;
       row.innerHTML=`<span class="nm">${v}</span><div class="track"><div class="fill" style="width:0;background:${VCHEX[i]}"></div></div><span class="pc">${fmt(n)}</span>`;
       vbars.appendChild(row);
       requestAnimationFrame(()=>row.querySelector(".fill").style.width=(100*n/maxv)+"%");});
-    const subs=c.descendants().filter(d=>d.depth>1).sort((a,b)=>(b.data.n_direct||0)-(a.data.n_direct||0)).slice(0,3);
-    document.getElementById("subs").innerHTML=subs.map(s=>`<div class="sb"><span class="c">${s.data.code}</span><span class="n">${s.data.name}</span><span class="k">${fmt(s.data.n_direct||0)}</span></div>`).join("");
+    const subs=c.descendants().filter(d=>d.depth>1).sort((a,b)=>(live.get(b.data.code)||0)-(live.get(a.data.code)||0)).slice(0,3);
+    document.getElementById("subs").innerHTML=subs.map(s=>`<div class="sb"><span class="c">${s.data.code}</span><span class="n">${s.data.name}</span><span class="k">${fmt(live.get(s.data.code)||0)}</span></div>`).join("");
   }
   spotlight(); setInterval(spotlight, reduce?9000:5600);
 })();
