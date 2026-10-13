@@ -39,7 +39,7 @@ body{
     linear-gradient(180deg,#0a1322 0%, #070c17 55%, #05080f 100%);
   border:1px solid rgba(120,165,220,.10);
   box-shadow:0 0 120px rgba(0,0,0,.6), inset 0 0 160px rgba(0,0,0,.45);
-  display:grid; grid-template-rows:220px 1160px 1fr 46px; overflow:hidden;
+  display:grid; grid-template-rows:286px 1054px minmax(0,1fr) 46px; overflow:hidden;
 }
 /* subtle scanline + vignette */
 #stage::after{content:"";position:absolute;inset:0;pointer-events:none;
@@ -49,7 +49,7 @@ body{
   box-shadow:inset 0 0 220px 40px rgba(2,5,11,.75)}
 
 /* ── header ── */
-header{padding:30px 46px 0;display:flex;flex-direction:column;gap:18px;z-index:3}
+header{padding:30px 46px 0;display:flex;flex-direction:column;gap:14px;z-index:3}
 .brandrow{display:flex;justify-content:space-between;align-items:flex-start}
 .eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.42em;color:var(--ink-3);
   text-transform:uppercase;margin:0 0 6px}
@@ -72,7 +72,7 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:18px;z-index:3
 
 /* ── atlas ── */
 #atlas{position:relative;z-index:2}
-#atlas svg{display:block;width:1080px;height:1160px}
+#atlas svg{display:block;width:1080px;height:1054px}
 .ringline{fill:none;stroke:var(--ring);stroke-width:1}
 .spoke{stroke:rgba(120,165,220,.06);stroke-width:1}
 .link{fill:none;stroke:var(--edge);stroke-width:1;transition:stroke .6s,opacity .6s,stroke-width .6s}
@@ -86,7 +86,8 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:18px;z-index:3
 .hub-cat{font-family:var(--f-disp);font-weight:700;font-size:19px;letter-spacing:.12em;fill:var(--accent);text-anchor:middle;text-transform:uppercase}
 
 /* ── bottom ── */
-#bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 0;z-index:3}
+#bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 0;z-index:3;min-height:0}
+#bottom>.card{min-height:0}
 .card{border:1px solid var(--hair-c);border-radius:16px;padding:20px 22px;
   background:linear-gradient(180deg,rgba(16,27,48,.6),rgba(9,16,30,.35));position:relative;overflow:hidden}
 .card h3{margin:0 0 2px;font-family:var(--f-mono);font-size:12px;letter-spacing:.34em;
@@ -108,27 +109,51 @@ header{padding:30px 46px 0;display:flex;flex-direction:column;gap:18px;z-index:3
 .sb .c{font-family:var(--f-mono);color:var(--accent);letter-spacing:.04em}
 .sb .n{font-family:var(--f-body);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb .k{font-family:var(--f-mono);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
-.legend{display:flex;flex-direction:column;gap:11px}
-.lg{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:12px}
+.legend{display:flex;flex-direction:column;gap:13px}
+.lg{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:12px}
 .lg .gl{display:flex;align-items:center;justify-content:center}
-.lg .tx{font-family:var(--f-body);font-size:13.5px;color:var(--ink-2);line-height:1.25}
+.lg .tx{font-family:var(--f-body);font-size:14px;color:var(--ink-2);line-height:1.35}
 .lg .tx b{color:var(--ink);font-weight:500}
 .dotc{width:14px;height:14px;border-radius:50%}
-.vswatches{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px}
-.vsw{display:flex;align-items:center;gap:7px;font-family:var(--f-body);font-size:12.5px;color:var(--ink-2)}
-.vsw i{width:11px;height:11px;border-radius:3px;display:inline-block}
-.ticker{margin-top:14px;border-top:1px solid var(--hair-c);padding-top:12px;display:flex;flex-direction:column;gap:7px;height:116px;overflow:hidden}
-.tk{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12.5px;animation:tkin .4s ease}
-.tk .ic{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-.tk .cd{color:var(--ink);letter-spacing:.04em}
-.tk .vn{color:var(--ink-3);margin-left:auto}
-@keyframes tkin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.evstrip{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:center;gap:14px;height:54px;
+  border:1px solid var(--hair-c);border-radius:12px;padding:0 14px;background:linear-gradient(180deg,rgba(18,30,52,.45),rgba(10,18,33,.2))}
+.es-lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.3em;line-height:1.5;color:var(--ink-3);text-transform:uppercase}
+.ticker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;overflow:hidden;height:100%}
+.tk{display:grid;grid-template-columns:9px minmax(0,1fr);column-gap:10px;align-content:center;padding:0 14px;
+  border-left:1px solid var(--hair-c);font-family:var(--f-mono);animation:tkin .45s ease;min-width:0}
+.tk .ic{width:9px;height:9px;border-radius:50%;grid-row:1 / span 2;align-self:center}
+.tk .cd{font-size:12.5px;color:var(--ink);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk .vn{font-size:11.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+@keyframes tkin{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
 
 footer{grid-row:auto;display:flex;justify-content:space-between;align-items:center;
   padding:0 48px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;
   color:var(--ink-3);text-transform:uppercase;z-index:3}
 footer .r{color:var(--ink-2)}
-@media (prefers-reduced-motion:reduce){.live b{animation:none}}
+/* timing control + pipeline clock */
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-top:4px}
+.modes{display:flex;align-items:center;gap:6px;border:1px solid var(--hair-c);border-radius:999px;padding:3px 12px 3px 3px;background:rgba(12,21,38,.7)}
+.modes .info{margin-right:6px}
+.mode{display:flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px;cursor:pointer;
+  font-family:var(--f-disp);font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+  border:0;background:transparent;transition:background .25s,color .25s}
+.mode[aria-pressed="true"]{background:rgba(95,203,228,.16);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(95,203,228,.35)}
+.mode:focus-visible,.info:focus-visible{outline:2px solid var(--activity);outline-offset:2px}
+.info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
+  border:1px solid rgba(148,168,198,.5);font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ink-2);text-transform:none;letter-spacing:0;cursor:help}
+.tip{display:none;position:absolute;top:30px;right:-12px;width:330px;z-index:30;text-align:left;
+  background:#0d182b;border:1px solid rgba(95,203,228,.35);border-radius:12px;padding:14px 16px;
+  font-family:var(--f-body);font-weight:400;font-size:13.5px;line-height:1.45;color:var(--ink);letter-spacing:0;text-transform:none;
+  box-shadow:0 12px 40px rgba(0,0,0,.55)}
+.tip b{color:var(--activity);font-weight:500}
+.info:hover .tip,.info:focus .tip{display:block}
+.clock{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:330px}
+.clock .ct{display:flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.clock .ct .lb{color:var(--ink-3);letter-spacing:.22em;text-transform:uppercase;font-size:11.5px}
+.clock .ct b{width:8px;height:8px;border-radius:50%;background:#ff5a5a;box-shadow:0 0 10px #ff5a5a;animation:blink 1.6s infinite}
+.prog{width:330px;height:3px;border-radius:2px;background:rgba(120,165,220,.12);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f8aa6,#5fcbe4)}
+@media (prefers-reduced-motion:reduce){.live b,.clock .ct b{animation:none}}
 </style>
 </head>
 <body>
@@ -141,13 +166,28 @@ footer .r{color:var(--ink-2)}
         <h1 class="wordmark">Sample&nbsp;Atlas</h1>
         <div class="sub">OncoTree-grouped clinical samples &amp; live ingestion</div>
       </div>
-      <div class="live"><b></b>Live stream</div>
+      <div class="hdr-right">
+        <div class="modes" role="group" aria-label="Animation timing">
+          <button class="mode" id="m-even" type="button" aria-pressed="true">Even pace</button>
+            <span class="info" tabindex="0" aria-label="About even pace">i<span class="tip" role="tooltip"><b>Even pace.</b> Events play one at a time at a steady rhythm (about 3 per second), so each one is easy to follow. The events and their order are real; only the spacing between them is evened out.</span></span>
+          <button class="mode" id="m-real" type="button" aria-pressed="false">Real timing</button>
+            <span class="info" tabindex="0" aria-label="About real timing">i<span class="tip" role="tooltip"><b>Real timing.</b> Events keep the real gaps between them from the pipeline log. About 2.7 years of activity is compressed into a 30-minute loop, so one day takes about 2 seconds. Overnight batches arrive as bursts; the hours between batches and the weekends go quiet.</span></span>
+        </div>
+        <div class="clock">
+          <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
+          <div class="prog"><i id="prog"></i></div>
+        </div>
+      </div>
     </div>
     <div class="kpis">
       <div class="kpi lead"><div class="v" id="k-samples">0</div><div class="l">Patient samples</div></div>
-      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Cancer sites</div></div>
+      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Body sites</div></div>
       <div class="kpi"><div class="v" id="k-files">0</div><div class="l">Files processed</div></div>
       <div class="kpi"><div class="v" id="k-ev">0</div><div class="l">Events streamed</div></div>
+    </div>
+    <div class="evstrip" aria-live="off">
+      <div class="es-lab">Latest<br>events</div>
+      <div class="ticker" id="ticker"></div>
     </div>
   </header>
 
@@ -168,17 +208,26 @@ footer .r{color:var(--ink-2)}
       <div class="subs" id="subs"></div>
     </div>
 
-    <div class="card">
+    <div class="card readcard">
       <h3>How to read</h3>
       <div class="legend" style="margin-top:12px">
-        <div class="lg"><span class="gl"><svg width="30" height="20"><circle cx="9" cy="10" r="4" fill="#5fcbe4"/><circle cx="22" cy="10" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Circle size</b> = clinical samples in that OncoTree type</span></div>
-        <div class="lg"><span class="gl"><span class="dotc" style="background:#ffd96b;box-shadow:0 0 10px #ffd96b"></span></span><span class="tx"><b>Gold pulse</b> = new sample created (Epic / XML ingested)</span></div>
-        <div class="lg"><span class="gl"><span class="dotc" style="background:#55cfe8;box-shadow:0 0 10px #55cfe8"></span></span><span class="tx"><b>Cyan pulse</b> = file activity — landed · QC · ingested</span></div>
-        <div class="lg"><span class="gl"><svg width="30" height="20"><path d="M4 16 A11 11 0 0 1 26 16" fill="none" stroke="#ffc24a" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> sweeps each cancer site and its lab mix</span></div>
-        <div class="lg"><span class="gl"><svg width="30" height="20"><circle cx="15" cy="10" r="2.6" fill="#eafbff"/><circle cx="15" cy="10" r="8.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Center → edge</b> = tissue → subtype; outer bars = samples per subtype</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#5fcbe4"/><circle cx="24" cy="11" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#eafbff"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#5fcbe4" stroke-opacity=".7"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#5fcbe4" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. A bar flickers when activity reaches it.</span></div>
+        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
+          <circle cx="4" cy="15" r="2.2" fill="#eafbff" opacity=".55"/>
+          <circle cx="36" cy="15" r="4.5" fill="#5fcbe4"/>
+          <circle cy="15" r="1.4" fill="#ffc24a" opacity="0"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="2.2" fill="#ffd96b" opacity="0"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="3.4" fill="#fff1c2" style="filter:drop-shadow(0 0 3px #ffd96b)"><animate attributeName="cx" values="4;36;36" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="36" cy="15" r="4.5" fill="none" stroke="#ffd96b" stroke-width="2"><animate attributeName="r" values="4.5;4.5;12;12" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Gold spark = a new patient sample.</b> It travels from the center to its cancer type, then the total goes up.</span></div>
+        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
+          <circle cx="22" cy="15" r="5" fill="#5fcbe4"/>
+          <circle cx="22" cy="15" r="5" fill="none" stroke="#55cfe8" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Blue ripple = a file update</b> for an existing sample: received, quality-checked, or loaded.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#ffc24a" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time; its details are on the left.</span></div>
       </div>
-      <div class="vswatches" id="vswatches"></div>
-      <div class="ticker" id="ticker"></div>
     </div>
   </div>
 
@@ -210,7 +259,7 @@ const BUNDLE = /*__BUNDLE__*/;
     `${fmt(B.meta.totalEvents)} events · OncoTree latest_stable · synthetic sample`;
 
   // ── build hierarchy + radial layout
-  const W=1080,H=1160,cx=540,cy=578;
+  const W=1080,H=1054,cx=540,cy=520;
   const root = d3.hierarchy(B.tree);
   const RING=[0,168,248,312,360,396,420];
   const OUT=420;
@@ -288,6 +337,7 @@ const BUNDLE = /*__BUNDLE__*/;
     .attr("x1",d=>Math.sin(d.ang)*(OUT+9)).attr("y1",d=>-Math.cos(d.ang)*(OUT+9))
     .attr("x2",d=>Math.sin(d.ang)*(OUT+9+barLen(d.data.n_direct||1))).attr("y2",d=>-Math.cos(d.ang)*(OUT+9+barLen(d.data.n_direct||1)))
     .attr("stroke","#5fcbe4").attr("stroke-width",1.6).attr("stroke-linecap","round").attr("opacity",.4);
+  const leafByCode=new Map(leaves.map(d=>[d.data.code,d]));
   const tipSel=g.append("g").selectAll("circle").data(leaves).enter().append("circle")
     .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code)
     .attr("cx",d=>Math.sin(d.ang)*(OUT+12+barLen(d.data.n_direct||1))).attr("cy",d=>-Math.cos(d.ang)*(OUT+12+barLen(d.data.n_direct||1)))
@@ -332,49 +382,105 @@ const BUNDLE = /*__BUNDLE__*/;
   d3.select(kS).transition().duration(1400).tween("t",function(){const i=d3.interpolateNumber(0,total);return t=>kS.textContent=fmt(Math.round(i(t)))});
   d3.select("#k-files").transition().duration(1400).tween("t",function(){const i=d3.interpolateNumber(0,B.meta.totalFiles);return t=>document.getElementById("k-files").textContent=fmt(Math.round(i(t)))});
 
-  // ── pulses
-  function pulse(node,role){
-    const col=role?"#ffd96b":"#55cfe8";
-    pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+1.5)
-      .attr("fill","none").attr("stroke",col).attr("stroke-width",role?2.3:1.4).attr("opacity",role?.95:.7)
-      .transition().duration(role?1100:800).ease(d3.easeCubicOut)
-      .attr("r",nodeR(node)+(role?34:17)).attr("opacity",0).attr("stroke-width",.4).remove();
-    if(role){
-      // traveling particle from hub
-      if(!reduce){pulseL.append("circle").attr("r",2.7).attr("fill","#ffe9a6").attr("cx",0).attr("cy",0).attr("opacity",.95)
-        .transition().duration(560).ease(d3.easeCubicInOut).attr("cx",node.px).attr("cy",node.py).attr("opacity",.15).remove();}
-      // node flash
-      pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
-        .attr("fill","#fff3c9").attr("opacity",.9).transition().duration(650).attr("opacity",0).attr("r",nodeR(node)).remove();
-      total++; setTotal(total);
-      d3.select(kS).interrupt();
-    }
+  // ── animation layers
+  const sparkL=g.append("g");      // new-sample sparks travel above everything
+  const PT=(n,r)=>[Math.sin(n.ang)*r,-Math.cos(n.ang)*r];
+
+  // flicker the outer bar of a specific diagnosis
+  function flickerBar(code,role){
+    const d=leafByCode.get(code); if(!d) return;
+    const L=barLen(d.data.n_direct||1), [x1,y1]=PT(d,OUT+9), [x2,y2]=PT(d,OUT+9+L+6);
+    pulseL.append("line").attr("x1",x1).attr("y1",y1).attr("x2",x2).attr("y2",y2)
+      .attr("stroke",role?"#ffe7a3":"#b6f2ff").attr("stroke-width",role?4:3).attr("stroke-linecap","round")
+      .attr("opacity",1).style("filter","drop-shadow(0 0 4px "+(role?"#ffd96b":"#55cfe8")+")")
+      .transition().duration(role?1300:950).ease(d3.easeCubicIn).attr("opacity",0).remove();
   }
 
-  // ── ticker
+  // blue ripple: a file moved through the pipeline
+  function fileRipple(node){
+    pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+1.5)
+      .attr("fill","none").attr("stroke","#55cfe8").attr("stroke-width",1.3).attr("opacity",.6)
+      .transition().duration(950).ease(d3.easeCubicOut)
+      .attr("r",nodeR(node)+15).attr("opacity",0).attr("stroke-width",.4).remove();
+  }
+
+  // gold spark: a new sample leaves the center and joins its cancer type
+  const SPARK_MS=reduce?0:1500;
+  function arrive(node,code){
+    pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
+      .attr("fill","#fff3c9").attr("opacity",.95).transition().duration(700).attr("opacity",0).attr("r",nodeR(node)).remove();
+    pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
+      .attr("fill","none").attr("stroke","#ffd96b").attr("stroke-width",2.4).attr("opacity",.95)
+      .transition().duration(1300).ease(d3.easeCubicOut)
+      .attr("r",nodeR(node)+38).attr("opacity",0).attr("stroke-width",.4).remove();
+    flickerBar(code,1);
+    total++; setTotal(total); d3.select(kS).interrupt();
+  }
+  function spark(node,code){
+    if(!SPARK_MS){ arrive(node,code); return; }
+    // comet = head + 4 fading followers on the same path, each slightly behind
+    const trail=[{r:4.6,o:1,lag:0,f:"#fff1c2"},{r:3.6,o:.6,lag:55,f:"#ffd96b"},{r:2.9,o:.4,lag:110,f:"#ffd96b"},{r:2.2,o:.25,lag:170,f:"#ffc24a"},{r:1.6,o:.14,lag:240,f:"#ffc24a"}];
+    trail.forEach((p,i)=>{
+      const c=sparkL.append("circle").attr("r",p.r).attr("fill",p.f).attr("opacity",0).attr("cx",0).attr("cy",0);
+      if(i===0) c.style("filter","drop-shadow(0 0 6px #ffd96b)");
+      c.transition().delay(p.lag).duration(0).attr("opacity",p.o)
+       .transition().duration(SPARK_MS).ease(d3.easeCubicInOut).attr("cx",node.px).attr("cy",node.py)
+       .on("end",function(){ if(i===0) arrive(node,code); })
+       .transition().duration(160).attr("opacity",0).remove();
+    });
+  }
+
+  // ── latest events list (fills the card; only whole rows are kept)
   const tick=document.getElementById("ticker");
   function pushTicker(e){
     const row=document.createElement("div"); row.className="tk";
     const role=e[1], col=role?"#ffd96b":"#55cfe8";
     row.innerHTML=`<span class="ic" style="background:${col};box-shadow:0 0 8px ${col}"></span>`+
-      `<span class="cd">${role?"NEW SAMPLE":"file"} · ${e[0]}</span>`+
+      `<span class="cd">${role?"NEW SAMPLE":"File update"} · ${e[0]}</span>`+
       `<span class="vn">${B.vendors[e[2]]}</span>`;
-    tick.prepend(row); while(tick.children.length>5) tick.lastChild.remove();
+    tick.prepend(row);
+    while(tick.children.length>4) tick.lastElementChild.remove();
   }
 
-  // ── event loop
-  let ei=0;
-  function step(){
-    const e=B.events[ei++ % B.events.length], n=codeMap.get(e[0]);
-    if(n){ pulse(n,e[1]); pushTicker(e); }
-    evStreamed++; kE.textContent=fmt(evStreamed);
-  }
-  if(!reduce) setInterval(step,150); else setInterval(step,900);
+  // ── pipeline clock
+  const t0=Date.parse(B.meta.tStart), t1=Date.parse(B.meta.tEnd);
+  const fDay=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",weekday:"short",month:"short",day:"numeric",year:"numeric"});
+  const fTime=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",hour12:false});
+  const clockEl=document.getElementById("clock-date"), progEl=document.getElementById("prog");
+  function setClock(tn){ const d=new Date(t0+tn*(t1-t0));
+    clockEl.textContent=`${fDay.format(d)} · ${fTime.format(d)} ET`; progEl.style.width=(tn*100).toFixed(2)+"%"; }
 
-  // ── vendor swatches (legend)
-  const vsw=document.getElementById("vswatches");
-  B.vendors.forEach((v,i)=>{const s=document.createElement("div");s.className="vsw";
-    s.innerHTML=`<i style="background:${VCHEX[i]}"></i>${v}`;vsw.appendChild(s);});
+  // ── event engine: two timing modes over the same event list
+  const N=B.events.length, LOOP_MS=30*60*1000, EVEN_MS=reduce?900:LOOP_MS/N;
+  let mode="even", ei=0, acc=0, vt=B.events[0][3], lastTs=null;
+  function fire(){
+    const e=B.events[ei]; ei=(ei+1)%N;
+    const n=codeMap.get(e[0]);
+    if(n){ if(e[1]) spark(n,e[0]); else { fileRipple(n); flickerBar(e[0],0); } pushTicker(e); }
+    evStreamed++; kE.textContent=fmt(evStreamed); setClock(e[3]);
+    if(ei===0) vt=B.events[0][3];
+  }
+  function frame(ts){
+    if(lastTs===null) lastTs=ts;
+    const dt=Math.min(ts-lastTs,250); lastTs=ts;
+    if(mode==="even"){
+      acc+=dt; let k=0; while(acc>=EVEN_MS && k<3){ fire(); acc-=EVEN_MS; k++; }
+      if(acc>EVEN_MS*3) acc=0;
+    } else {
+      vt+=dt/LOOP_MS; let k=0;
+      while(k<20 && B.events[ei][3]<=vt){ const wrap=(ei===N-1); fire(); k++; if(wrap) break; }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  setClock(B.events[0][3]);
+
+  if(reduce) document.querySelectorAll(".lg svg").forEach(s=>s.pauseAnimations&&s.pauseAnimations());
+  const bEven=document.getElementById("m-even"), bReal=document.getElementById("m-real");
+  function setMode(m){ mode=m; bEven.setAttribute("aria-pressed",m==="even"); bReal.setAttribute("aria-pressed",m==="real");
+    if(m==="real") vt=B.events[ei][3]-1e-6; else acc=0; }
+  bEven.addEventListener("click",()=>setMode("even"));
+  bReal.addEventListener("click",()=>setMode("real"));
 
   // ── spotlight
   const catByName=new Map(B.categories.map(c=>[c.root,c]));

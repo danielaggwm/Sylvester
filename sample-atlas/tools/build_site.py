@@ -52,14 +52,16 @@ def build(data_dir, every):
             if i % every:
                 continue
             events.append([row["oncotree_code"], 1 if row["event_role"] == "sample_created" else 0,
-                           vidx.get(row["vendor_name"], 0)])
+                           vidx.get(row["vendor_name"], 0), round(float(row["t_norm"]), 6)])
 
     bundle = {
         "meta": {"totalSamples": meta["totals"]["samples"], "totalEvents": meta["totals"]["events"],
                  "totalFiles": meta["totals"]["files"], "codesUsed": meta["totals"]["oncotree_codes_used"],
                  "nCategories": meta["totals"]["level1_categories"],
                  "spanDays": meta["time_range_utc"]["span_days"],
-                 "dateStart": meta["time_range_utc"]["start"][:10], "dateEnd": meta["time_range_utc"]["end"][:10]},
+                 "dateStart": meta["time_range_utc"]["start"][:10], "dateEnd": meta["time_range_utc"]["end"][:10],
+                 "tStart": meta["time_range_utc"]["start"].replace(" ", "T"),
+                 "tEnd": meta["time_range_utc"]["end"].replace(" ", "T")},
         "vendors": vendors, "vendorTotals": meta["vendors"],
         "tree": tree, "categories": cats, "events": events,
     }

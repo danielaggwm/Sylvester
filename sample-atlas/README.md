@@ -12,12 +12,22 @@ its processing-lab mix.
 
 | Element | Meaning |
 |---|---|
-| Circle size | clinical samples in that OncoTree type (subtree total) |
-| Gold pulse + particle from center | new clinical sample created (Epic / XML file ingested); the total ticks up |
-| Cyan pulse | file activity: landed, QC, or ingested |
-| Outer bars | samples coded directly to each subtype (log scale) |
-| Gold wedge / "Now in focus" | rotating spotlight, one cancer site every ~5.6 s |
-| Ticker | the most recent events in the loop |
+| Circle size | patient samples in that cancer type (OncoTree type and everything under it) |
+| Rings | inner ring = body site where the cancer starts (e.g. Lung); further out = more specific diagnoses (e.g. Lung Adenocarcinoma) |
+| Outer bars | one per specific diagnosis; length = samples coded to it (log scale); flickers when an event reaches it |
+| Gold spark | a new patient sample (Epic / XML ingested) travels from the center to its cancer type; the total goes up on arrival |
+| Blue ripple | a file update for an existing sample: received, quality-checked, or loaded |
+| Gold wedge / "Now in focus" | rotating spotlight, one body site every ~5.6 s, with its lab mix and largest diagnoses |
+| Pipeline time | the date/time (ET) of the event being shown, with a progress bar through the loop |
+
+## Timing modes
+
+Both modes play the same ~5,000 events in the same order over a 30-minute loop.
+
+- **Even pace** (default): one event every ~0.35 s, so each is easy to follow.
+- **Real timing**: keeps the real gaps between events (≈2.7 years compressed into 30 minutes, about 2 s per day). Overnight batches show up as bursts; quiet hours and weekends go still.
+
+Hover the ⓘ next to each button for the same explanation on screen.
 
 ## Repo layout
 
