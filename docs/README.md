@@ -17,7 +17,7 @@ its processing-lab mix.
 | Outer bars | one per specific diagnosis; length = samples coded to it (log scale); flickers when an event reaches it |
 | Gold spark | a new patient sample (Epic / XML ingested) travels from the center to its cancer type; the total goes up on arrival |
 | Blue ripple | a file update for an existing sample: received, quality-checked, or loaded |
-| Gold wedge / "Now in focus" | rotating spotlight, one body site every ~5.6 s, with its lab mix and largest diagnoses |
+| Gold wedge / "Now in focus" | spotlight that moves clockwise around the circle, one body site every ~5.6 s, with its lab mix and largest diagnoses |
 | Pipeline time | the date/time (ET) of the event being shown, with a progress bar through the 30-day window |
 
 ## What plays: the last 30 days

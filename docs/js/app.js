@@ -309,7 +309,7 @@
 
   // ── spotlight
   const catByName=new Map(B.categories.map(c=>[c.root,c]));
-  const level1=root.children.slice().sort((a,b)=>b.data.n_subtree-a.data.n_subtree);
+  const level1=root.children.slice().sort((a,b)=>a.ang-b.ang);   // clockwise from 12 o'clock, following the circle
   let si=0, curSpot=null;
   const vbars=document.getElementById("vbars");
   function spotlight(){
