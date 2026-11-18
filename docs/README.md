@@ -13,34 +13,31 @@ its processing-lab mix.
 | Element | Meaning |
 |---|---|
 | Circle size | patient samples in that cancer type (OncoTree type and everything under it) |
-| Rings | inner ring = body site where the cancer starts (e.g. Lung); further out = more specific diagnoses (e.g. Lung Adenocarcinoma) |
+| Rings | three OncoTree levels: inner ring = body site where the cancer starts (e.g. Lung); further out = more specific diagnoses (e.g. Lung Adenocarcinoma). Codes deeper than level 3 count toward their level-3 parent (set by `MAX_DEPTH` in `js/app.js`) |
 | Outer bars | one per specific diagnosis; length = samples coded to it (log scale); flickers when an event reaches it |
-| Gold spark | a new patient sample (Epic / XML ingested) travels from the center to its cancer type; the total goes up on arrival |
-| Blue ripple | a file update for an existing sample: received, quality-checked, or loaded |
-| Gold wedge / "Now in focus" | spotlight that moves clockwise around the circle, one body site every ~5.6 s, with its lab mix and largest diagnoses |
-| Pipeline time | the date/time (ET) of the event being shown, with a progress bar through the 30-day window |
+| Orange spark | a new patient sample (Epic / XML ingested) travels from the center to its cancer type; the total goes up on arrival |
+| Green ripple | a file update for an existing sample: received, quality-checked, or loaded |
+| Orange wedge / "Now in focus" | spotlight that moves clockwise around the circle, one body site every ~5.6 s, with its lab mix and largest diagnoses |
+| Pipeline time | the date/time (ET) being replayed, with a 7-day timeline: one segment per day, the current day in orange |
+| Weekly growth (above the circle) | a loading line from the total on the first day (left) to today's total (right); it fills as new samples arrive, and "+N new" counts samples added so far |
+| All-time files processed | every file in the pipeline log since it began; fixed, not just the replay week |
+| Total (center) | all patient samples; the site in focus is named underneath |
 
-## What plays: the last 30 days
+## What plays: the last 7 days, real timing
 
-The page replays the most recent 30 days of the pipeline log (every event, no sampling).
-Circles, bars and the sample counter start at their state on the first day of that window
-and grow by one for each new sample that arrives, ending exactly at today's totals
-(currently 35,879 → 36,412). At the end of the loop the final total holds for a moment,
-then everything eases back to the starting state and the window plays again.
+The page replays the last 7 calendar days of the pipeline log (every event, no sampling):
+the six full days before the latest event's day, plus that day up to the latest event.
+Days are cut at midnight ET; the window and its dates show at the top right.
+
+Events keep their real gaps, compressed into a 5-minute loop (one day ≈ 45 s), so overnight
+batches arrive as bursts and quiet hours and weekends go still. Circles, bars and the total
+start at their state on the first day and grow by one for each new sample that arrives,
+ending exactly at today's totals. At the end of the loop the final total holds for a moment,
+then everything eases back and the week plays again.
 
 A sample "arrives" at its *sample created* event (XML / Epic file ingested). Samples with
 no such event in the log arrive at their first file instead (open question for the
 pipeline team).
-
-## Timing modes
-
-Both modes play the same events in the same order over a 30-minute loop.
-
-- **Even pace** (default): one event about every 0.5 s, so each is easy to follow.
-- **Real timing**: keeps the real gaps between events; one day ≈ 1 minute. Overnight
-  batches show up as bursts; quiet hours and weekends go still.
-
-Hover the ⓘ next to each button for the same explanation on screen.
 
 ## Repo layout
 
@@ -64,8 +61,8 @@ python3 ../build_daniela_db.py      # raw CSV -> ../prepared_data
 python3 tools/build_site.py         # prepared_data -> data/bundle.js
 ```
 
-`build_site.py` options: `--days N` sets the replay window (default 30) and
-`--loop-min M` how long it takes to play once (default 30).
+`build_site.py` options: `--days N` sets the replay window in calendar days (default 7) and
+`--loop-min M` how long it takes to play once (default 5).
 
 ## Publishing on GitHub Pages
 
@@ -81,6 +78,7 @@ The site is then at **https://danielaggwm.com/Sylvester/**. Everything outside
 
 ## Design notes
 
-- Fonts: Rajdhani (display), IBM Plex Mono (figures), IBM Plex Sans (text), via Google Fonts.
-- Vendor colors use a validated categorical palette (all colorblind and contrast checks pass on the dark surface); every vendor color is also labeled.
+- Look: warm cream ground, University of Miami green (#005030) and orange (#F47321, #C35009 for text) accents, dark grey type, Sylvester logo (`assets/sylvester-logo.png`). Every color is a token at the top of `css/style.css`; `js/app.js` reads those tokens, so a palette change happens in one place.
+- Fonts: Poppins (titles and figures), Barlow Semi Condensed (labels), IBM Plex Sans (text), IBM Plex Mono (codes), via Google Fonts.
+- Processing-lab bars use a single green; each bar is labeled with its lab name.
 - Respects `prefers-reduced-motion` (slower loop, no particles).

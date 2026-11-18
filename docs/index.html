@@ -6,7 +6,7 @@
 <title>Sample Atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Barlow+Semi+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,28 +14,27 @@
 
   <header>
     <div class="brandrow">
-      <div>
-        <p class="eyebrow">Clinical Genomics · Real-Time Pipeline</p>
-        <h1 class="wordmark">Sample&nbsp;Atlas</h1>
-        <div class="sub">OncoTree-grouped clinical samples &amp; live ingestion</div>
+      <img class="logo" src="assets/sylvester-logo.png" alt="Sylvester Comprehensive Cancer Center, University of Miami Health System">
+      <div class="window">
+        <span class="lb">Replaying the last 7 days</span>
+        <span class="dt" id="win-dates">—</span>
       </div>
-      <div class="hdr-right">
-        <div class="modes" role="group" aria-label="Animation timing">
-          <button class="mode" id="m-even" type="button" aria-pressed="true">Even pace</button>
-            <span class="info" tabindex="0" aria-label="About even pace">i<span class="tip" role="tooltip" id="tip-even"></span></span>
-          <button class="mode" id="m-real" type="button" aria-pressed="false">Real timing</button>
-            <span class="info" tabindex="0" aria-label="About real timing">i<span class="tip" role="tooltip" id="tip-real"></span></span>
-        </div>
-        <div class="clock">
-          <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
-          <div class="prog"><i id="prog"></i></div>
-        </div>
+    </div>
+    <div class="rule"></div>
+    <div class="titlerow">
+      <div>
+        <h1 class="wordmark">Sample Atlas</h1>
+        <div class="sub">Clinical genomics · OncoTree samples</div>
+      </div>
+      <div class="clock">
+        <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
+        <div class="timeline" id="timeline"></div>
       </div>
     </div>
     <div class="kpis">
       <div class="kpi lead"><div class="v" id="k-samples">0</div><div class="l">Patient samples</div></div>
-      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Body sites</div></div>
-      <div class="kpi"><div class="v" id="k-files">0</div><div class="l">Files processed</div></div>
+      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Total body sites</div></div>
+      <div class="kpi"><div class="v" id="k-files">0</div><div class="l">All-time files processed</div></div>
       <div class="kpi"><div class="v" id="k-ev">0</div><div class="l">Events streamed</div></div>
     </div>
     <div class="evstrip" aria-live="off">
@@ -43,6 +42,15 @@
       <div class="ticker" id="ticker"></div>
     </div>
   </header>
+
+  <div id="growth" aria-label="Total patient samples through the replay week">
+    <div class="gr-cap"><span>Total patient samples · last 7 days</span><b id="gr-delta">+0 new</b></div>
+    <div class="gr-row">
+      <div class="gr-end"><span class="l" id="gr-start-l">—</span><span class="v" id="gr-start">—</span></div>
+      <div class="gr-track"><i id="gr-fill"></i></div>
+      <div class="gr-end"><span class="v" id="gr-end">—</span><span class="l" id="gr-end-l">—</span></div>
+    </div>
+  </div>
 
   <div id="atlas"></div>
 
@@ -64,30 +72,26 @@
     <div class="card readcard">
       <h3>How to read</h3>
       <div class="legend" style="margin-top:12px">
-        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#5fcbe4"/><circle cx="24" cy="11" r="8" fill="#5fcbe4"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
-        <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#eafbff"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#5fcbe4" stroke-opacity=".7"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#2f6f85"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
-        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#5fcbe4" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. It flickers on activity and grows when a new sample arrives.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#2E6B50"/><circle cx="24" cy="11" r="8" fill="#2E6B50"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#005030"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#528067"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#9DBBA9"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#86A795" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. It flickers on activity and grows when a new sample arrives.</span></div>
         <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" overflow="visible" aria-hidden="true">
-          <circle cx="4" cy="15" r="2.2" fill="#eafbff" opacity=".55"/>
-          <circle cx="29" cy="15" r="4.5" fill="#5fcbe4"/>
-          <circle cy="15" r="1.4" fill="#ffc24a" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
-          <circle cy="15" r="2.2" fill="#ffd96b" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
-          <circle cy="15" r="3.4" fill="#fff1c2" style="filter:drop-shadow(0 0 3px #ffd96b)"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
-          <circle cx="29" cy="15" r="4.5" fill="none" stroke="#ffd96b" stroke-width="2"><animate attributeName="r" values="4.5;4.5;11.5;11.5" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
-        </svg></span><span class="tx"><b>Gold spark = a new patient sample.</b> It travels from the center to its cancer type; the circle grows and the total goes up.</span></div>
+          <circle cx="4" cy="15" r="2.2" fill="#9AA3AA" opacity=".6"/>
+          <circle cx="29" cy="15" r="4.5" fill="#2E6B50"/>
+          <circle cy="15" r="1.4" fill="#FBCCA9" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="2.2" fill="#F8A06A" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="3.4" fill="#F47321"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="29" cy="15" r="4.5" fill="none" stroke="#F47321" stroke-width="2"><animate attributeName="r" values="4.5;4.5;11.5;11.5" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Orange spark = a new patient sample.</b> It travels from the center to its cancer type; the circle grows and the total goes up.</span></div>
         <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
-          <circle cx="22" cy="15" r="5" fill="#5fcbe4"/>
-          <circle cx="22" cy="15" r="5" fill="none" stroke="#55cfe8" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
-        </svg></span><span class="tx"><b>Blue ripple = a file update</b> for an existing sample: received, quality-checked, or loaded.</span></div>
-        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#ffc24a" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time; its details are on the left.</span></div>
+          <circle cx="22" cy="15" r="5" fill="#2E6B50"/>
+          <circle cx="22" cy="15" r="5" fill="none" stroke="#005030" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Green ripple = a file update</b> for an existing sample: received, quality-checked, or loaded.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#F47321" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time; its details are on the left.</span></div>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div>Prototype · Vertical display</div>
-    <div class="r" id="foot-src">—</div>
-  </footer>
 
 </div></div>
 

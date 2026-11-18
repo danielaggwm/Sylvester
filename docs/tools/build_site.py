@@ -6,10 +6,13 @@ build_site.py — rebuild the Sample Atlas data file (data/bundle.js) from the
 The page itself is static: index.html (markup), css/style.css (styles) and
 js/app.js (visualization). Only data/bundle.js changes when the data does.
 
-The page replays the most recent N days of the pipeline log. Every event
-in that window plays (no sampling). Circles, bars and the sample counter
-start at the state *before* the window and grow by one for each sample
-that arrives during it, ending exactly at today's totals.
+The page replays the most recent N calendar days of the pipeline log
+(default 7: the six full days before the last event's day, plus that day
+up to the last event), in real timing: the real gaps between events are
+kept, compressed into a short loop. Every event in that window plays (no
+sampling). Circles, bars and the sample counter start at the state
+*before* the window and grow by one for each sample that arrives during
+it, ending exactly at today's totals. Days are cut at midnight US Eastern.
 
 When does a sample "arrive"? At its "sample created" event (its XML /
 Epic file is ingested). Samples that never get one in the log arrive at
@@ -17,13 +20,13 @@ their first file event instead (open question for the pipeline team).
 
 USAGE (from the docs/ folder):
     python3 tools/build_site.py
-    python3 tools/build_site.py --days 30 --loop-min 30
+    python3 tools/build_site.py --days 7 --loop-min 5
 
     --data      folder with viz_tree_counts.json, viz_meta.json,
                 viz_category_summary.csv, viz_events_replay.csv
                 (default: ../prepared_data)
-    --days      replay window: the last N days of the log (default 30)
-    --loop-min  minutes the window takes to play once on screen (default 30)
+    --days      replay window: the last N calendar days of the log (default 7)
+    --loop-min  minutes the window takes to play once on screen (default 5)
 
 Full refresh when new raw data arrives:
     python3 ../build_daniela_db.py      # raw CSV -> ../prepared_data
@@ -33,6 +36,11 @@ Standard library only.
 import argparse, csv, json, os, sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
+try:
+    from zoneinfo import ZoneInfo
+    ET = ZoneInfo("America/New_York")
+except Exception:                      # very old Python: fall back to a fixed offset
+    ET = timezone(timedelta(hours=-5))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
@@ -87,9 +95,12 @@ def build(data_dir, days, loop_min):
     arrival = {s: created_idx.get(s, first_idx[s]) for s in first_idx}
     arrival_events = set(arrival.values())
 
-    # replay window = last N days of the log
+    # replay window = last N calendar days (ET) of the log, ending at the last event
     t_end = rows[-1][0]
-    t_start = max(rows[0][0], t_end - timedelta(days=days))
+    last_day = t_end.astimezone(ET).date()
+    first_day = last_day - timedelta(days=int(days) - 1)
+    midnight = lambda d: datetime(d.year, d.month, d.day, tzinfo=ET)
+    t_start = max(rows[0][0], midnight(first_day))
     w0 = next(i for i, r in enumerate(rows) if r[0] >= t_start)
     span = (t_end - t_start).total_seconds() or 1.0
 
@@ -102,6 +113,15 @@ def build(data_dir, days, loop_min):
         events.append([code, 1 if i in arrival_events else 0, v,
                        round((ts - t_start).total_seconds() / span, 6)])
 
+    # day segments for the on-screen timeline: [date, start, end] as fractions of the window
+    day_marks = []
+    d = t_start.astimezone(ET).date()
+    while d <= last_day:
+        a, b = max(t_start, midnight(d)), min(t_end, midnight(d + timedelta(days=1)))
+        day_marks.append([d.isoformat(), round((a - t_start).total_seconds() / span, 6),
+                          round((b - t_start).total_seconds() / span, 6)])
+        d += timedelta(days=1)
+
     n_new = sum(e[1] for e in events)
     no_xml = sum(1 for s in first_idx if s not in created_idx)
     bundle = {
@@ -112,7 +132,8 @@ def build(data_dir, days, loop_min):
                  "eventsInWindow": len(events), "windowDays": round(span / 86400, 1),
                  "loopMin": loop_min, "samplesWithoutXml": no_xml,
                  "tStart": iso(t_start), "tEnd": iso(t_end),
-                 "dateStart": iso(t_start)[:10], "dateEnd": iso(t_end)[:10]},
+                 "dateStart": t_start.astimezone(ET).date().isoformat(),
+                 "dateEnd": last_day.isoformat(), "days": day_marks},
         "vendors": vendors, "vendorTotals": meta["vendors"],
         "tree": tree, "categories": cats, "events": events, "base": dict(base),
     }
@@ -129,7 +150,7 @@ def build(data_dir, days, loop_min):
     size = os.path.getsize(out_path)
     m = bundle["meta"]
     print(f"Built {out_path}  ({size:,} bytes)")
-    print(f"  window {m['dateStart']} -> {m['dateEnd']} ({m['windowDays']} days) in a {loop_min}-min loop")
+    print(f"  window {m['dateStart']} -> {m['dateEnd']} ({len(day_marks)} calendar days) in a {loop_min}-min loop")
     print(f"  events={m['eventsInWindow']:,}  samples: start {m['baseSamples']:,} + new {n_new:,} = {m['baseSamples'] + n_new:,} "
           f"(total {m['totalSamples']:,})")
 
@@ -137,7 +158,7 @@ def build(data_dir, days, loop_min):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Rebuild Sample Atlas data/bundle.js from prepared_data.")
     ap.add_argument("--data", default=os.path.join(REPO, "..", "prepared_data"))
-    ap.add_argument("--days", type=float, default=30)
-    ap.add_argument("--loop-min", type=float, default=30)
+    ap.add_argument("--days", type=int, default=7)
+    ap.add_argument("--loop-min", type=float, default=5)
     a = ap.parse_args()
-    build(os.path.abspath(a.data), max(0.5, a.days), max(1.0, a.loop_min))
+    build(os.path.abspath(a.data), max(1, a.days), max(1.0, a.loop_min))
