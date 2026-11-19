@@ -152,9 +152,9 @@
   labelG.selectAll(".catlabel").attr("opacity",function(){return this.getAttribute("data-shown")==="1"?.85:0});
 
   // hub
-  g.append("circle").attr("r",HUB_R).attr("fill",P.surface).attr("filter","url(#lift)");
-  g.append("circle").attr("r",HUB_R).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",1);
-  g.append("circle").attr("r",HUB_R-9).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",.75).attr("stroke-dasharray","1.5 3.5");
+  g.append("circle").attr("class","hubc").attr("r",HUB_R).attr("fill",P.surface).attr("filter","url(#lift)");
+  g.append("circle").attr("class","hubc").attr("r",HUB_R).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",1);
+  g.append("circle").attr("class","hubc").attr("r",HUB_R-9).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",.75).attr("stroke-dasharray","1.5 3.5");
   g.append("text").attr("class","hub-tot").attr("y",-46).text("Total");
   const hubNum=g.append("text").attr("class","hub-num").attr("y",-8).text("0");
   g.append("text").attr("class","hub-lab").attr("y",13).text("Patient samples");
@@ -251,15 +251,19 @@
     leaves.forEach(d=>drawBar(d,1500));
     growthReset();
   }
-  function arrive(node,code,g0){
-    if(g0!==gen) return;
+  // a new sample lands on its cancer type (k = how far the view is zoomed in, so the effects keep their on-screen size)
+  function landFx(node,code,k=1){
     pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
       .attr("fill",P.created).attr("opacity",.28).transition().duration(700).attr("opacity",0).attr("r",nodeR(node)).remove();
     pulseL.append("circle").attr("cx",node.px).attr("cy",node.py).attr("r",nodeR(node)+2)
-      .attr("fill","none").attr("stroke",P.created).attr("stroke-width",2.2).attr("opacity",.9)
+      .attr("fill","none").attr("stroke",P.created).attr("stroke-width",2.2/k).attr("opacity",.9)
       .transition().duration(1300).ease(d3.easeCubicOut)
-      .attr("r",nodeR(node)+38).attr("opacity",0).attr("stroke-width",.4).remove();
+      .attr("r",nodeR(node)+38/k).attr("opacity",0).attr("stroke-width",.4/k).remove();
     flickerBar(code,1); grow(code);
+  }
+  function arrive(node,code,g0){
+    if(g0!==gen) return;
+    landFx(node,code);
     total++; setTotal(total); d3.select(kS).interrupt();
   }
   function spark(node,code){
@@ -331,9 +335,11 @@
     evStreamed++; kE.textContent=fmt(evStreamed);
     if(ei===N) holdUntil=(lastTs??performance.now())+SPARK_MS+4500;   // let the last sparks land, show today's total, then start over
   }
+  let paused=false;   // true while a body site is zoomed in: the main loop holds still and picks up afterwards
   function frame(ts){
     if(lastTs===null) lastTs=ts;
     const dt=Math.min(ts-lastTs,250); lastTs=ts;
+    if(paused){ requestAnimationFrame(frame); return; }
     if(holdUntil){ if(ts<holdUntil){ growthTick(); requestAnimationFrame(frame); return; }
       holdUntil=0; ei=0; vt=0; restartLoop(); }
     vt=Math.min(1,vt+dt/LOOP_MS); setClock(vt);
@@ -387,5 +393,147 @@
     const subs=c.descendants().filter(d=>d.depth>1).sort((a,b)=>(live.get(b.data.code)||0)-(live.get(a.data.code)||0)).slice(0,3);
     document.getElementById("subs").innerHTML=subs.map(s=>`<div class="sb"><span class="c">${s.data.code}</span><span class="n">${s.data.name}</span><span class="k">${fmt(live.get(s.data.code)||0)}</span></div>`).join("");
   }
-  spotlight(); setInterval(spotlight, reduce?9000:5600);
+
+  // ── site zoom: the most active body sites get a close-up replay of their week
+  // The top ZOOM_TOP sites by events in the window are zoomed when the spotlight reaches them.
+  // The main loop pauses, the rest of the atlas fades, and that site's week replays with one even beat
+  // per event; then the view eases back and the main loop resumes exactly where it stopped.
+  const ZOOM_TOP=5, ZOOM_IN_MS=1700, ZOOM_REPLAY_MS=15000, ZOOM_HOLD_MS=3200, ZOOM_OUT_MS=1400;
+  const ZOOM_TOP_PAD=215, ZOOM_BOT_PAD=120;   // room for the headline above and the subtype cards below the zoomed wedge
+  const rootOf=code=>{ const n=codeMap.get(code), a=n&&n.ancestors().find(x=>x.depth===1); return a?a.data.code:null; };
+  const siteEvents=new Map(root.children.map(c=>[c.data.code,[]]));
+  B.events.forEach(e=>{ const r=rootOf(e[0]); if(r) siteEvents.get(r).push(e); });
+  const newIn=evs=>evs.reduce((n,e)=>n+e[1],0);
+  const zoomRank=new Map(level1.slice()
+    .filter(c=>siteEvents.get(c.data.code).length>0)
+    .sort((a,b)=>{ const ea=siteEvents.get(a.data.code), eb=siteEvents.get(b.data.code);
+      return (eb.length-ea.length)||(newIn(eb)-newIn(ea))||(b.data.n_subtree-a.data.n_subtree); })
+    .slice(0,ZOOM_TOP).map((c,i)=>[c.data.code,i+1]));
+  // the subtypes (below the body site itself) that grew most this week
+  function topSubtypes(code){
+    const m=new Map();
+    siteEvents.get(code).forEach(e=>{ const n=codeMap.get(e[0]); if(!n||n.depth<2) return;
+      const o=m.get(e[0])||{code:e[0],name:n.data.name,nNew:0,ev:0}; o.ev++; o.nNew+=e[1]; m.set(e[0],o); });
+    return [...m.values()].sort((a,b)=>(b.nNew-a.nNew)||(b.ev-a.ev)).slice(0,3);
+  }
+
+  const zui=document.getElementById("zoomui"), zsubs=document.getElementById("zsubs");
+  const zEl=id=>document.getElementById(id), wait=ms=>new Promise(r=>setTimeout(r,ms));
+  const plural=(n,one,many)=>n===1?one:many;
+  document.getElementById("z-days").textContent=days.length;
+
+  // the transform that fits a site's wedge into the space between the headline and the subtype cards
+  function zoomTransform(c,gapUp){
+    const [a0,a1]=extent.get(c.data.code), pts=[];
+    for(let i=0;i<=10;i++){ const a=a0-.03+(a1-a0+.06)*i/10;
+      [HUB_R,OUT+52].forEach(r=>pts.push([Math.sin(a)*r,-Math.cos(a)*r])); }
+    const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]), pad=24;
+    const x0=d3.min(xs)-pad, x1=d3.max(xs)+pad, y0=d3.min(ys)-pad, y1=d3.max(ys)+pad;
+    const availTop=ZOOM_TOP_PAD-gapUp, availH=H-ZOOM_BOT_PAD-availTop, s=Math.min((W-90)/(x1-x0), availH/(y1-y0), 3.2);
+    return {s, tx:W/2-s*(x0+x1)/2, ty:availTop+availH/2-s*(y0+y1)/2};
+  }
+
+  // a compact comet from the inner end of the wedge to the sample's cancer type
+  function zoomSpark(node,code,from,k,onLand){
+    const trail=[{r:4.6,o:1,lag:0,f:P.created},{r:3.6,o:.6,lag:55,f:P.created2},{r:2.8,o:.4,lag:110,f:P.created3}];
+    trail.forEach((p,i)=>{
+      const c=sparkL.append("circle").attr("r",p.r/Math.sqrt(k)).attr("fill",p.f).attr("opacity",0).attr("cx",from[0]).attr("cy",from[1]);
+      if(i===0) c.attr("stroke",P.surface).attr("stroke-width",1.2/k);
+      c.transition().delay(p.lag).duration(0).attr("opacity",p.o)
+       .transition().duration(700).ease(d3.easeCubicInOut).attr("cx",node.px).attr("cy",node.py)
+       .on("end",function(){ if(i===0){ landFx(node,code,k); onLand(); } })
+       .transition().duration(140).attr("opacity",0).remove();
+    });
+  }
+
+  async function zoomSite(c){
+    const code=c.data.code, evs=siteEvents.get(code), rank=zoomRank.get(code), subs=topSubtypes(code);
+    const fadeSel=g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel,.link,.node");
+    // hold the main loop right away; sparks already in flight finish landing while the view starts to zoom
+    paused=true;
+    const snap={live:null, sub:new Map()};
+    const home=g.attr("transform"), s0=+(/scale\(([\d.]+)\)/.exec(home)||[0,1])[1];
+    // the rows that fade out (KPIs, events log, weekly counter) leave a band under the title: the zoom uses it
+    const atlasEl=document.getElementById("atlas"), titleRow=document.querySelector(".titlerow");
+    const gapUp=Math.max(0,atlasEl.offsetTop-(titleRow.offsetTop+titleRow.offsetHeight)-72);
+    zui.style.top=(8-gapUp)+"px";
+    const Z=zoomTransform(c,gapUp), k=Z.s/s0;
+    const apex=[Math.sin(c.la)*HUB_R,-Math.cos(c.la)*HUB_R];
+    try{
+      // zoom in: everything outside the site fades; the site rewinds to its state before the week
+      fadeSel.filter(function(){ return this.getAttribute("data-root")!==code; }).classed("zout",true);
+      linkSel.filter(d=>d.source.depth===0).classed("zout",true);
+      barSel.filter(function(){ return this.getAttribute("data-root")!==code; }).classed("zout",true);
+      tipSel.filter(function(){ return this.getAttribute("data-root")!==code; }).classed("zout",true);
+      g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel").classed("zout",true);
+      sparkL.classed("zout",true); pulseL.classed("zout",true);   // sparks/pulses of the paused loop must not show during the zoom-in
+      stage.classList.add("zoomed");   // the events log and sample counter fade too: they are paused behind the zoom
+      g.transition().duration(ZOOM_IN_MS).ease(d3.easeCubicInOut).attr("transform",`translate(${Z.tx},${Z.ty}) scale(${Z.s})`);
+      // headline + subtype cards
+      zEl("z-eyebrow").textContent=`#${rank} most active body site of the week`;
+      zEl("z-site").textContent=c.data.name;
+      const setHead=(nNew,nEv)=>{ zEl("z-new").textContent=fmt(nNew); zEl("z-ev").textContent=fmt(nEv); };
+      setHead(0,0);
+      const sub=new Map(subs.map(o=>[o.code,Object.assign({},o,{nNew:0,ev:0,el:null})]));
+      zsubs.innerHTML=subs.map(o=>`<div class="zs" data-c="${o.code}"><div class="c">${o.code}</div><div class="n">${o.name}</div>`+
+        `<div class="k"><b class="a">+0</b> new · <b class="b">0</b> events</div></div>`).join("");
+      zsubs.querySelectorAll(".zs").forEach(el=>sub.get(el.dataset.c).el=el);
+      const paintSub=o=>{ if(!o) return; o.el.querySelector(".a").textContent="+"+fmt(o.nNew); o.el.querySelector(".b").textContent=fmt(o.ev); };
+      zui.classList.remove("final"); zui.classList.add("on"); if(subs.length) zsubs.classList.add("on");
+      // once the last in-flight spark has landed, remember where every circle stood, then rewind the site to the start of the week
+      await wait(SPARK_MS+350);
+      sparkL.selectAll("*").interrupt().remove(); pulseL.selectAll("*").interrupt().remove();
+      sparkL.classed("zout",false); pulseL.classed("zout",false);
+      snap.live=new Map(live); root.each(n=>snap.sub.set(n,n.liveSub));
+      resetCounts();
+      nodeSel.select("circle").transition().duration(500).attr("r",d=>nodeR(d));
+      leaves.forEach(d=>drawBar(d,500));
+      await wait(600);
+      // fast replay: one even beat per event across the week; the header clock sweeps the days with it
+      let cNew=0, cEv=0;
+      const beat=ZOOM_REPLAY_MS/Math.max(evs.length,1);
+      await new Promise(done=>{ let i=0; const tm=d3.timer(el=>{
+        while(i<evs.length && i*beat<=el){
+          const e=evs[i++], n=codeMap.get(e[0]), o=sub.get(e[0]);
+          cEv++; setHead(cNew,cEv); if(o){ o.ev++; paintSub(o); }
+          if(!n) continue;
+          if(e[1]) zoomSpark(n,e[0],apex,k,()=>{ cNew++; setHead(cNew,cEv); if(o){ o.nNew++; paintSub(o); } });
+          else { fileRipple(n); flickerBar(e[0],0); }
+        }
+        if(i>=evs.length){ tm.stop(); done(); } }); });
+      await wait(950);              // the last sparks finish landing so the numbers are final
+      zui.classList.add("final");   // then underline them for the closing hold
+      await wait(ZOOM_HOLD_MS);
+    } finally {
+      zui.classList.remove("final");
+      // zoom out: restore the main loop's state exactly as it was, and bring the atlas back
+      zui.classList.remove("on"); zsubs.classList.remove("on");
+      await wait(150);                    // the text has started to fade; the zoom-out follows right behind it
+      stage.classList.remove("zoomed");   // events log, counter and timeline return together with the atlas
+      if(snap.live){ live.clear(); snap.live.forEach((v,key)=>live.set(key,v)); root.each(n=>{ n.liveSub=snap.sub.get(n); }); }
+      nodeSel.select("circle").transition().duration(ZOOM_OUT_MS).attr("r",d=>nodeR(d));
+      leaves.forEach(d=>drawBar(d,ZOOM_OUT_MS));
+      g.transition().duration(ZOOM_OUT_MS).ease(d3.easeCubicOut).attr("transform",home);
+      const back=g.selectAll(".zout");
+      back.classed("zback",true).classed("zout",false);
+      setTimeout(()=>back.classed("zback",false),700);
+      sparkL.classed("zout",false); pulseL.classed("zout",false);
+      setClock(vt);
+      await wait(ZOOM_OUT_MS+150);
+      paused=false;
+    }
+  }
+
+  // spotlight scheduler: every site gets its short spotlight; a top site is zoomed into after a moment
+  function cycle(){
+    spotlight();
+    const c=level1.find(x=>x.data.code===curSpot);
+    if(!reduce && c && zoomRank.has(curSpot)){
+      (async()=>{
+        try{ await zoomSite(c); }catch(err){ console.error(err); paused=false; stage.classList.remove("zoomed"); }
+        setTimeout(cycle,1200);
+      })();
+    } else setTimeout(cycle, reduce?9000:5600);
+  }
+  cycle();
 })();

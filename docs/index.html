@@ -53,16 +53,26 @@
     </div>
   </div>
 
-  <div id="atlas"></div>
+  <div id="atlas">
+    <div id="zoomui" aria-live="off">
+      <div class="z-eyebrow" id="z-eyebrow"></div>
+      <p class="z-headline">In the last <span id="z-days">7</span> days, <b id="z-site"></b> collected</p>
+      <div class="z-stats">
+        <div class="zst"><b id="z-new">0</b><span>New samples</span></div>
+        <div class="zst"><b id="z-ev">0</b><span>Pipeline events</span></div>
+      </div>
+    </div>
+    <div id="zsubs" aria-live="off"></div>
+  </div>
 
   <div id="bottom">
     <div class="card" id="spotcard">
       <h3>Now in focus</h3>
       <div class="spot-name" id="spot-name">—</div>
       <div class="spot-stats">
-        <div class="s"><div class="v" id="spot-samples">—</div><div class="l">Samples</div></div>
+        <div class="s"><div class="v" id="spot-samples">—</div><div class="l">Total samples</div></div>
         <div class="s"><div class="v" id="spot-share">—</div><div class="l">of all samples</div></div>
-        <div class="s"><div class="v" id="spot-files">—</div><div class="l">Files</div></div>
+        <div class="s"><div class="v" id="spot-files">—</div><div class="l">Total files</div></div>
       </div>
       <h3 style="margin-bottom:10px">Processing lab mix</h3>
       <div class="vbars" id="vbars"></div>
@@ -93,6 +103,7 @@
     </div>
   </div>
 
+  <div class="credit">Visualization by Daniela Gonzalez from the Sylvester Data Science Team</div>
 
 </div></div>
 

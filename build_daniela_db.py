@@ -115,6 +115,34 @@ def build(raw_path, key_path, out_dir):
     log(f"Read {len(rows):,} events")
     rows.sort(key=lambda r: r["_ts"])
 
+    # ---- STRICT XML RULE (confirmed by the team) ----
+    # A sample only exists in the visualization if the log contains an
+    # ingested XML (Epic data) event for it: that event is the sample's
+    # creation. Samples with no such event are excluded entirely (counts,
+    # tree, categories, replay), and are reported in viz_meta.json under
+    # data_quality. Any such gaps in the synthetic data are expected;
+    # the rule stays strict regardless.
+    xml_samples = {r["clinical_sample_id"] for r in rows
+                   if r["file_type"] == "XML" and r["action"] == "ingested"}
+    all_samples = {r["clinical_sample_id"] for r in rows}
+    excluded_samples = sorted(all_samples - xml_samples)
+    excluded_events = sum(1 for r in rows if r["clinical_sample_id"] not in xml_samples)
+    if excluded_samples:
+        log(f"STRICT XML RULE: excluding {len(excluded_samples):,} sample(s) with no ingested "
+            f"XML event ({excluded_events:,} events). e.g. {excluded_samples[:3]}")
+    rows = [r for r in rows if r["clinical_sample_id"] in xml_samples]
+    if not rows:
+        sys.exit("ERROR: no samples have an ingested XML event; nothing to build.")
+    # events that happen before the sample's XML ingest (flagged, not dropped)
+    first_xml_ts = {}
+    for r in rows:
+        if r["file_type"] == "XML" and r["action"] == "ingested":
+            first_xml_ts.setdefault(r["clinical_sample_id"], r["_ts"])
+    pre_xml_events = sum(1 for r in rows if r["_ts"] < first_xml_ts[r["clinical_sample_id"]])
+    if pre_xml_events:
+        log(f"Note: {pre_xml_events:,} event(s) occur before their sample's XML ingest "
+            f"(kept; the sample arrives at its XML event).")
+
     # ---- sample-level facts (one code + vendor per sample) ----
     sample_code, sample_vendor = {}, {}
     multi_code, multi_vendor = set(), set()
@@ -267,7 +295,6 @@ def build(raw_path, key_path, out_dir):
     for r in rows:
         vendor_counts[r["vendor_name"]] += 1
         ftype_counts[r["file_type"]] += 1
-    samples_with_xml = len({r["clinical_sample_id"] for r in rows if r["file_type"] == "XML"})
     meta = {
         "source_file": os.path.basename(raw_path),
         "generated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -282,8 +309,13 @@ def build(raw_path, key_path, out_dir):
         "file_types": {"counts": dict(sorted(ftype_counts.items())), "relabel": FILE_TYPE_RELABEL},
         "vendors": dict(sorted(vendor_counts.items(), key=lambda kv: kv[1], reverse=True)),
         "sample_created_events": len(created_for),
-        "samples_without_xml": n_samples - samples_with_xml,
-        "data_quality": {"samples_multi_oncotree": len(multi_code),
+        "samples_without_xml": 0,
+        "xml_rule": "strict: a sample exists only once an XML (Epic data) ingested event exists for it",
+        "data_quality": {"samples_excluded_no_xml": len(excluded_samples),
+                         "events_excluded_no_xml": excluded_events,
+                         "excluded_sample_ids_preview": excluded_samples[:50],
+                         "events_before_sample_xml": pre_xml_events,
+                         "samples_multi_oncotree": len(multi_code),
                          "samples_multi_vendor": len(multi_vendor),
                          "unknown_oncotree_codes": unknown[:50]},
         "playback_note": ("t_norm is each event's position in [0,1] across the real timeline. "

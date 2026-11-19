@@ -90,7 +90,7 @@ header{padding:34px 46px 0;display:flex;flex-direction:column;z-index:3}
   background:var(--orange);box-shadow:0 0 0 3px var(--bg)}
 
 #atlas{position:relative;z-index:2;min-height:0}
-#atlas svg{display:block;width:1080px;height:100%}
+#atlas svg{display:block;width:1080px;height:100%;overflow:visible}
 .ringline{fill:none;stroke:var(--ring);stroke-width:1}
 .spoke{stroke:var(--spoke);stroke-width:1}
 .link{fill:none;stroke:var(--edge);stroke-width:1;transition:stroke .6s,opacity .6s,stroke-width .6s}
@@ -105,6 +105,8 @@ header{padding:34px 46px 0;display:flex;flex-direction:column;z-index:3}
 /* ── bottom ── */
 #bottom{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;padding:4px 46px 44px;z-index:3;min-height:0}
 #bottom>.card{min-height:0}
+.credit{position:absolute;right:46px;bottom:16px;z-index:4;font-family:var(--f-disp);font-weight:500;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);text-align:right}
 .card{border:1px solid var(--hair);border-radius:16px;padding:22px 24px;background:var(--surface);position:relative;overflow:hidden;
   box-shadow:0 1px 2px rgba(60,50,30,.04),0 10px 30px rgba(60,50,30,.05)}
 .card h3{margin:0 0 2px;font-family:var(--f-disp);font-size:13px;letter-spacing:.2em;
@@ -112,7 +114,7 @@ header{padding:34px 46px 0;display:flex;flex-direction:column;z-index:3}
 #spotcard::before{content:"";position:absolute;left:0;top:25px;width:3px;height:50px;background:var(--orange);border-radius:0 2px 2px 0}
 .spot-name{font-family:var(--f-head);font-weight:600;font-size:36px;letter-spacing:-.02em;
   color:var(--green);line-height:1.3;margin:2px 0 0;min-height:47px;white-space:nowrap;overflow:hidden}
-.spot-stats{display:flex;gap:30px;margin:10px 0 16px;padding-bottom:14px;border-bottom:1px solid var(--hair-2)}
+.spot-stats{display:flex;justify-content:space-between;gap:24px;margin:10px 0 16px;padding-bottom:14px;border-bottom:1px solid var(--hair-2)}
 .spot-stats .s .v{font-family:var(--f-head);font-weight:600;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums lining-nums}
 .spot-stats .s .l{font-family:var(--f-disp);font-weight:500;font-size:12.5px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;margin-top:2px}
 .vbars{display:flex;flex-direction:column;gap:8px;margin-top:4px}
@@ -154,3 +156,39 @@ header{padding:34px 46px 0;display:flex;flex-direction:column;z-index:3}
 .seg.on .tr i{background:var(--orange)}
 .hub-tot{font-family:var(--f-disp);font-weight:600;font-size:12.5px;letter-spacing:.3em;fill:var(--ink-3);text-anchor:middle;text-transform:uppercase}
 @media (prefers-reduced-motion:reduce){.clock .ct b::after{animation:none;opacity:0}}
+
+/* ── site zoom: close-up replay of a top body site ── */
+.zout{opacity:0 !important;transition:opacity .55s ease !important}
+/* applied for a moment while .zout comes off, so every element fades back in (most have no transition of their own) */
+.zback{transition:opacity .55s ease !important}
+#zoomui{position:absolute;left:46px;right:46px;top:8px;z-index:4;text-align:center;pointer-events:none;
+  opacity:0;transform:translateY(-8px);transition:opacity .3s ease,transform .3s ease}
+#zoomui.on{opacity:1;transform:none;transition:opacity .7s ease .65s,transform .7s ease .65s}
+.z-eyebrow{font-family:var(--f-disp);font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-text)}
+.z-headline{margin:10px auto 0;max-width:960px;font-family:var(--f-head);font-weight:500;font-size:30px;line-height:1.28;
+  letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+.z-headline b{font-weight:700;color:var(--orange-text)}
+/* the changing numbers live in their own fixed row: the sentence above never moves */
+.z-stats{display:flex;justify-content:center;gap:40px;margin-top:16px}
+.zst{width:300px;text-align:center}
+.zst b{display:inline-block;font-family:var(--f-head);font-weight:700;font-size:60px;line-height:1.05;letter-spacing:-.02em;
+  color:var(--orange-text);font-variant-numeric:tabular-nums lining-nums}
+.zst span{display:block;margin-top:6px;font-family:var(--f-disp);font-weight:600;font-size:14px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3)}
+#zsubs{position:absolute;left:46px;right:46px;bottom:6px;z-index:4;display:flex;gap:14px;pointer-events:none;
+  opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+#zsubs.on{opacity:1;transform:none;transition:opacity .7s ease .65s,transform .7s ease .65s}
+#zsubs .zs{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:10px 14px}
+#zsubs .zs .c{font-family:var(--f-mono);font-size:12px;color:var(--orange-text);letter-spacing:.04em}
+#zsubs .zs .n{font-family:var(--f-body);font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+#zsubs .zs .k{font-family:var(--f-disp);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:4px;
+  font-variant-numeric:tabular-nums lining-nums}
+#zsubs .zs .k b{color:var(--ink);font-weight:600}
+
+/* events log + weekly sample counter step back while a site is zoomed (the main loop is paused behind it) */
+.evstrip,#growth,.clock,.kpis{transition:opacity .55s ease}
+#stage.zoomed .evstrip,#stage.zoomed #growth,#stage.zoomed .clock,#stage.zoomed .kpis{opacity:0}
+/* the final numbers get underlined during the closing hold */
+.zst #z-new,.zst #z-ev{padding-bottom:4px;background:linear-gradient(var(--orange),var(--orange)) 0 100%/0 4px no-repeat;
+  transition:background-size .8s ease}
+#zoomui.final #z-new,#zoomui.final #z-ev{background-size:100% 4px}

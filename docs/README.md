@@ -35,9 +35,22 @@ start at their state on the first day and grow by one for each new sample that a
 ending exactly at today's totals. At the end of the loop the final total holds for a moment,
 then everything eases back and the week plays again.
 
-A sample "arrives" at its *sample created* event (XML / Epic file ingested). Samples with
-no such event in the log arrive at their first file instead (open question for the
-pipeline team).
+A sample "arrives" at its *sample created* event (XML / Epic file ingested). The XML rule is
+strict (confirmed by the pipeline team): a sample with no ingested XML event is not counted or
+shown anywhere. `build_daniela_db.py` excludes those samples and lists how many in
+`prepared_data/viz_meta.json` (`data_quality`). Gaps in the synthetic sample data are expected
+and do not change the rule.
+
+## Body-site zoom
+
+Every body site gets a short spotlight in turn (clockwise). The **5 most active sites** (most events in the
+replay window, ties broken by new samples) also get a close-up: the main loop pauses, the rest of the atlas
+fades, the view zooms into that site's wedge and its week replays in about 15 s with one even beat per
+event (the header clock sweeps the 7 days with it). A headline counts up ("In the last 7 days, Breast
+collected 11 new samples and 72 pipeline events") and cards show the subtypes that grew most. Then the view
+eases back and the main loop resumes exactly where it stopped. The top 5 is recomputed from the data every
+time, so nothing needs configuring after a rebuild. Timings and `ZOOM_TOP` are constants at the top of the
+zoom section in `js/app.js`. Reduced-motion browsers skip the zoom.
 
 ## Repo layout
 

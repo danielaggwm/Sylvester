@@ -4,15 +4,15 @@
  "level": 0,
  "color": "",
  "n_direct": 0,
- "n_subtree": 36412,
+ "n_subtree": 26155,
  "children": [
   {
    "code": "ADRENAL_GLAND",
    "name": "Adrenal Gland",
    "level": 1,
    "color": "Purple",
-   "n_direct": 20,
-   "n_subtree": 108,
+   "n_direct": 16,
+   "n_subtree": 85,
    "children": [
     {
      "code": "ACA",
@@ -27,16 +27,16 @@
      "name": "Adrenocortical Carcinoma",
      "level": 2,
      "color": "Purple",
-     "n_direct": 57,
-     "n_subtree": 57
+     "n_direct": 42,
+     "n_subtree": 42
     },
     {
      "code": "PHC",
      "name": "Pheochromocytoma",
      "level": 2,
      "color": "Purple",
-     "n_direct": 30,
-     "n_subtree": 30
+     "n_direct": 26,
+     "n_subtree": 26
     }
    ]
   },
@@ -45,34 +45,16 @@
    "name": "Ampulla of Vater",
    "level": 1,
    "color": "Purple",
-   "n_direct": 20,
-   "n_subtree": 82,
+   "n_direct": 14,
+   "n_subtree": 60,
    "children": [
     {
      "code": "AMPCA",
      "name": "Ampullary Carcinoma",
      "level": 2,
      "color": "Purple",
-     "n_direct": 60,
-     "n_subtree": 62,
-     "children": [
-      {
-       "code": "IAMPCA",
-       "name": "Intestinal Ampullary Carcinoma",
-       "level": 3,
-       "color": "Purple",
-       "n_direct": 1,
-       "n_subtree": 1
-      },
-      {
-       "code": "MAMPCA",
-       "name": "Mixed Ampullary Carcinoma",
-       "level": 3,
-       "color": "Purple",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 46,
+     "n_subtree": 46
     }
    ]
   },
@@ -81,26 +63,16 @@
    "name": "Biliary Tract",
    "level": 1,
    "color": "Green",
-   "n_direct": 299,
-   "n_subtree": 319,
+   "n_direct": 202,
+   "n_subtree": 218,
    "children": [
     {
      "code": "ICPN",
      "name": "Intracholecystic Papillary Neoplasm",
      "level": 2,
      "color": "Green",
-     "n_direct": 5,
-     "n_subtree": 6,
-     "children": [
-      {
-       "code": "GBC",
-       "name": "Gallbladder Cancer",
-       "level": 3,
-       "color": "Green",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 4,
+     "n_subtree": 4
     },
     {
      "code": "IPN",
@@ -108,23 +80,23 @@
      "level": 2,
      "color": "Green",
      "n_direct": 4,
-     "n_subtree": 14,
+     "n_subtree": 12,
      "children": [
       {
        "code": "CHOL",
        "name": "Cholangiocarcinoma",
        "level": 3,
        "color": "Green",
-       "n_direct": 5,
-       "n_subtree": 10,
+       "n_direct": 4,
+       "n_subtree": 8,
        "children": [
         {
          "code": "EHCH",
          "name": "Extrahepatic Cholangiocarcinoma",
          "level": 4,
          "color": "Green",
-         "n_direct": 2,
-         "n_subtree": 2
+         "n_direct": 1,
+         "n_subtree": 1
         },
         {
          "code": "IHCH",
@@ -145,32 +117,32 @@
    "name": "Bladder/Urinary Tract",
    "level": 1,
    "color": "Yellow",
-   "n_direct": 210,
-   "n_subtree": 1200,
+   "n_direct": 161,
+   "n_subtree": 877,
    "children": [
     {
      "code": "BLAD",
      "name": "Bladder Adenocarcinoma",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 22,
-     "n_subtree": 22
+     "n_direct": 17,
+     "n_subtree": 17
     },
     {
      "code": "BLSC",
      "name": "Bladder Squamous Cell Carcinoma",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 23,
-     "n_subtree": 23
+     "n_direct": 15,
+     "n_subtree": 15
     },
     {
      "code": "BLCA",
      "name": "Bladder Urothelial Carcinoma",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 862,
-     "n_subtree": 862
+     "n_direct": 624,
+     "n_subtree": 624
     },
     {
      "code": "SCB",
@@ -185,16 +157,16 @@
      "name": "Small Cell Bladder Cancer",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 7,
-     "n_subtree": 7
+     "n_direct": 5,
+     "n_subtree": 5
     },
     {
      "code": "UTUC",
      "name": "Upper Tract Urothelial Carcinoma",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 67,
-     "n_subtree": 67
+     "n_direct": 48,
+     "n_subtree": 48
     },
     {
      "code": "URCA",
@@ -209,16 +181,8 @@
      "name": "Urethral Cancer",
      "level": 2,
      "color": "Yellow",
-     "n_direct": 5,
-     "n_subtree": 5
-    },
-    {
-     "code": "UPA",
-     "name": "Urothelial Papilloma",
-     "level": 2,
-     "color": "Yellow",
-     "n_direct": 1,
-     "n_subtree": 1
+     "n_direct": 4,
+     "n_subtree": 4
     }
    ]
   },
@@ -227,8 +191,8 @@
    "name": "Bone",
    "level": 1,
    "color": "White",
-   "n_direct": 55,
-   "n_subtree": 288,
+   "n_direct": 38,
+   "n_subtree": 195,
    "children": [
     {
      "code": "ADMA",
@@ -243,24 +207,24 @@
      "name": "Chondroblastoma",
      "level": 2,
      "color": "White",
-     "n_direct": 4,
-     "n_subtree": 4
+     "n_direct": 2,
+     "n_subtree": 2
     },
     {
      "code": "CHS",
      "name": "Chondrosarcoma",
      "level": 2,
      "color": "White",
-     "n_direct": 45,
-     "n_subtree": 48,
+     "n_direct": 29,
+     "n_subtree": 31,
      "children": [
       {
        "code": "MCHS",
        "name": "Mesenchymal Chondrosarcoma",
        "level": 3,
        "color": "White",
-       "n_direct": 3,
-       "n_subtree": 3
+       "n_direct": 2,
+       "n_subtree": 2
       }
      ]
     },
@@ -269,24 +233,24 @@
      "name": "Ewing Sarcoma",
      "level": 2,
      "color": "White",
-     "n_direct": 41,
-     "n_subtree": 41
+     "n_direct": 30,
+     "n_subtree": 30
     },
     {
      "code": "GCTB",
      "name": "Giant Cell Tumor of Bone",
      "level": 2,
      "color": "White",
-     "n_direct": 17,
-     "n_subtree": 17
+     "n_direct": 11,
+     "n_subtree": 11
     },
     {
      "code": "OS",
      "name": "Osteosarcoma",
      "level": 2,
      "color": "White",
-     "n_direct": 108,
-     "n_subtree": 122,
+     "n_direct": 70,
+     "n_subtree": 82,
      "children": [
       {
        "code": "CHOS",
@@ -297,20 +261,12 @@
        "n_subtree": 1
       },
       {
-       "code": "LGCOS",
-       "name": "Low-Grade Central Osteosarcoma",
-       "level": 3,
-       "color": "White",
-       "n_direct": 1,
-       "n_subtree": 1
-      },
-      {
        "code": "PAOS",
        "name": "Parosteal Osteosarcoma",
        "level": 3,
        "color": "White",
-       "n_direct": 8,
-       "n_subtree": 8
+       "n_direct": 7,
+       "n_subtree": 7
       },
       {
        "code": "SECOS",
@@ -337,8 +293,8 @@
    "name": "Bowel",
    "level": 1,
    "color": "SaddleBrown",
-   "n_direct": 471,
-   "n_subtree": 2645,
+   "n_direct": 336,
+   "n_subtree": 1910,
    "children": [
     {
      "code": "AGA",
@@ -353,56 +309,56 @@
      "name": "Anal Squamous Cell Carcinoma",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 80,
-     "n_subtree": 80
+     "n_direct": 60,
+     "n_subtree": 60
     },
     {
      "code": "APAD",
      "name": "Appendiceal Adenocarcinoma",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 33,
-     "n_subtree": 33
+     "n_direct": 28,
+     "n_subtree": 28
     },
     {
      "code": "COADREAD",
      "name": "Colorectal Adenocarcinoma",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 714,
-     "n_subtree": 1985,
+     "n_direct": 499,
+     "n_subtree": 1432,
      "children": [
       {
        "code": "COAD",
        "name": "Colon Adenocarcinoma",
        "level": 3,
        "color": "SaddleBrown",
-       "n_direct": 889,
-       "n_subtree": 889
+       "n_direct": 653,
+       "n_subtree": 653
       },
       {
        "code": "CAIS",
        "name": "Colon Adenocarcinoma In Situ",
        "level": 3,
        "color": "SaddleBrown",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       },
       {
        "code": "MACR",
        "name": "Mucinous Adenocarcinoma of the Colon and Rectum",
        "level": 3,
        "color": "SaddleBrown",
-       "n_direct": 28,
-       "n_subtree": 28
+       "n_direct": 17,
+       "n_subtree": 17
       },
       {
        "code": "READ",
        "name": "Rectal Adenocarcinoma",
        "level": 3,
        "color": "SaddleBrown",
-       "n_direct": 351,
-       "n_subtree": 351
+       "n_direct": 261,
+       "n_subtree": 261
       },
       {
        "code": "SRCCR",
@@ -419,8 +375,8 @@
      "name": "Gastrointestinal Neuroendocrine Tumors",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 48,
-     "n_subtree": 49,
+     "n_direct": 33,
+     "n_subtree": 34,
      "children": [
       {
        "code": "RWDNET",
@@ -437,8 +393,8 @@
      "name": "Medullary Carcinoma of the Colon",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 20,
-     "n_subtree": 20
+     "n_direct": 14,
+     "n_subtree": 14
     },
     {
      "code": "SBC",
@@ -453,8 +409,8 @@
      "name": "Small Intestinal Carcinoma",
      "level": 2,
      "color": "SaddleBrown",
-     "n_direct": 4,
-     "n_subtree": 4
+     "n_direct": 3,
+     "n_subtree": 3
     }
    ]
   },
@@ -463,24 +419,24 @@
    "name": "Breast",
    "level": 1,
    "color": "HotPink",
-   "n_direct": 1103,
-   "n_subtree": 6160,
+   "n_direct": 799,
+   "n_subtree": 4392,
    "children": [
     {
      "code": "DCIS",
      "name": "Breast Ductal Carcinoma In Situ",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 138,
-     "n_subtree": 140,
+     "n_direct": 102,
+     "n_subtree": 103,
      "children": [
       {
        "code": "PD",
        "name": "Paget Disease of the Nipple",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       }
      ]
     },
@@ -497,8 +453,8 @@
      "name": "Breast Lobular Carcinoma In Situ",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 25,
-     "n_subtree": 25
+     "n_direct": 15,
+     "n_subtree": 15
     },
     {
      "code": "BNNOS",
@@ -513,36 +469,28 @@
      "name": "Breast Sarcoma",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 3,
-     "n_subtree": 3
+     "n_direct": 2,
+     "n_subtree": 2
     },
     {
      "code": "IBC",
      "name": "Inflammatory Breast Cancer",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 7,
-     "n_subtree": 7
+     "n_direct": 4,
+     "n_subtree": 4
     },
     {
      "code": "BRCA",
      "name": "Invasive Breast Carcinoma",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 1668,
-     "n_subtree": 4850,
+     "n_direct": 1207,
+     "n_subtree": 3442,
      "children": [
       {
        "code": "ACBC",
        "name": "Adenoid Cystic Breast Cancer",
-       "level": 3,
-       "color": "HotPink",
-       "n_direct": 3,
-       "n_subtree": 3
-      },
-      {
-       "code": "BRSRCC",
-       "name": "Breast Carcinoma with Signet Ring",
        "level": 3,
        "color": "HotPink",
        "n_direct": 1,
@@ -561,8 +509,8 @@
        "name": "Breast Invasive Carcinoma, NOS",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 164,
-       "n_subtree": 164
+       "n_direct": 109,
+       "n_subtree": 109
       },
       {
        "code": "CSNOS",
@@ -577,40 +525,40 @@
        "name": "Breast Invasive Ductal Carcinoma",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 2505,
-       "n_subtree": 2505
+       "n_direct": 1772,
+       "n_subtree": 1772
       },
       {
        "code": "ILC",
        "name": "Breast Invasive Lobular Carcinoma",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 422,
-       "n_subtree": 422
+       "n_direct": 288,
+       "n_subtree": 288
       },
       {
        "code": "IMMC",
        "name": "Breast Invasive Mixed Mucinous Carcinoma",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 4,
-       "n_subtree": 4
+       "n_direct": 3,
+       "n_subtree": 3
       },
       {
        "code": "MDLC",
        "name": "Breast Mixed Ductal and Lobular Carcinoma",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 75,
-       "n_subtree": 75
+       "n_direct": 56,
+       "n_subtree": 56
       },
       {
        "code": "SPC",
        "name": "Solid Papillary Carcinoma of the Breast",
        "level": 3,
        "color": "HotPink",
-       "n_direct": 3,
-       "n_subtree": 3
+       "n_direct": 1,
+       "n_subtree": 1
       }
      ]
     },
@@ -619,18 +567,8 @@
      "name": "Metaplastic Breast Cancer",
      "level": 2,
      "color": "HotPink",
-     "n_direct": 26,
-     "n_subtree": 27,
-     "children": [
-      {
-       "code": "EMBC",
-       "name": "Epithelial Type Metaplastic Breast Cancer",
-       "level": 3,
-       "color": "HotPink",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 22,
+     "n_subtree": 22
     }
    ]
   },
@@ -639,48 +577,40 @@
    "name": "CNS/Brain",
    "level": 1,
    "color": "Gray",
-   "n_direct": 163,
-   "n_subtree": 854,
+   "n_direct": 124,
+   "n_subtree": 611,
    "children": [
     {
      "code": "DIFG",
      "name": "Diffuse Glioma",
      "level": 2,
      "color": "Gray",
-     "n_direct": 422,
-     "n_subtree": 458,
+     "n_direct": 298,
+     "n_subtree": 323,
      "children": [
       {
        "code": "ADIFG",
        "name": "Adult-Type Diffuse Glioma",
        "level": 3,
        "color": "Gray",
-       "n_direct": 15,
-       "n_subtree": 24,
+       "n_direct": 10,
+       "n_subtree": 16,
        "children": [
         {
          "code": "ASTR",
          "name": "Astrocytoma, IDH-Mutant",
          "level": 4,
          "color": "Gray",
-         "n_direct": 6,
-         "n_subtree": 6
-        },
-        {
-         "code": "GB",
-         "name": "Glioblastoma, IDH-Wildtype",
-         "level": 4,
-         "color": "Gray",
-         "n_direct": 1,
-         "n_subtree": 1
+         "n_direct": 5,
+         "n_subtree": 5
         },
         {
          "code": "ODG",
          "name": "Oligodendroglioma, IDH-mutant, and 1p/19q-Codeleted",
          "level": 4,
          "color": "Gray",
-         "n_direct": 2,
-         "n_subtree": 2
+         "n_direct": 1,
+         "n_subtree": 1
         }
        ]
       },
@@ -697,8 +627,8 @@
        "name": "High-Grade Glioma, NOS",
        "level": 3,
        "color": "Gray",
-       "n_direct": 6,
-       "n_subtree": 6
+       "n_direct": 4,
+       "n_subtree": 4
       },
       {
        "code": "PDIFHG",
@@ -713,8 +643,8 @@
        "name": "Pediatric-Type Diffuse Low-Grade Glioma",
        "level": 3,
        "color": "Gray",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       }
      ]
     },
@@ -723,8 +653,8 @@
      "name": "Embryonal Tumor",
      "level": 2,
      "color": "Gray",
-     "n_direct": 17,
-     "n_subtree": 20,
+     "n_direct": 14,
+     "n_subtree": 17,
      "children": [
       {
        "code": "MBL",
@@ -749,8 +679,8 @@
      "name": "Encapsulated Glioma",
      "level": 2,
      "color": "Gray",
-     "n_direct": 7,
-     "n_subtree": 9,
+     "n_direct": 4,
+     "n_subtree": 6,
      "children": [
       {
        "code": "PAST",
@@ -767,8 +697,8 @@
      "name": "Ependymomal Tumor",
      "level": 2,
      "color": "Gray",
-     "n_direct": 20,
-     "n_subtree": 21,
+     "n_direct": 16,
+     "n_subtree": 17,
      "children": [
       {
        "code": "APE",
@@ -785,24 +715,24 @@
      "name": "Meningothelial Tumor",
      "level": 2,
      "color": "Gray",
-     "n_direct": 68,
-     "n_subtree": 155,
+     "n_direct": 49,
+     "n_subtree": 104,
      "children": [
       {
        "code": "CHOM",
        "name": "Chordoid Meningioma",
        "level": 3,
        "color": "Gray",
-       "n_direct": 10,
-       "n_subtree": 10
+       "n_direct": 5,
+       "n_subtree": 5
       },
       {
        "code": "MNG",
        "name": "Meningioma",
        "level": 3,
        "color": "Gray",
-       "n_direct": 74,
-       "n_subtree": 74
+       "n_direct": 47,
+       "n_subtree": 47
       },
       {
        "code": "SFTCNS",
@@ -833,30 +763,12 @@
      ]
     },
     {
-     "code": "PINT",
-     "name": "Pineal Tumor",
-     "level": 2,
-     "color": "Gray",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
-    {
      "code": "SELT",
      "name": "Sellar Tumor",
      "level": 2,
      "color": "Gray",
-     "n_direct": 25,
-     "n_subtree": 26,
-     "children": [
-      {
-       "code": "APTAD",
-       "name": "Atypical Pituitary Adenoma",
-       "level": 3,
-       "color": "Gray",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 19,
+     "n_subtree": 19
     }
    ]
   },
@@ -865,16 +777,16 @@
    "name": "Cervix",
    "level": 1,
    "color": "Teal",
-   "n_direct": 77,
-   "n_subtree": 426,
+   "n_direct": 53,
+   "n_subtree": 311,
    "children": [
     {
      "code": "CEAD",
      "name": "Cervical Adenocarcinoma",
      "level": 2,
      "color": "Teal",
-     "n_direct": 40,
-     "n_subtree": 77,
+     "n_direct": 26,
+     "n_subtree": 53,
      "children": [
       {
        "code": "CECC",
@@ -889,16 +801,16 @@
        "name": "Cervical Endometrioid Carcinoma",
        "level": 3,
        "color": "Teal",
-       "n_direct": 3,
-       "n_subtree": 3
+       "n_direct": 2,
+       "n_subtree": 2
       },
       {
        "code": "ECAD",
        "name": "Endocervical Adenocarcinoma",
        "level": 3,
        "color": "Teal",
-       "n_direct": 33,
-       "n_subtree": 33
+       "n_direct": 24,
+       "n_subtree": 24
       }
      ]
     },
@@ -907,16 +819,16 @@
      "name": "Cervical Adenosquamous Carcinoma",
      "level": 2,
      "color": "Teal",
-     "n_direct": 2,
-     "n_subtree": 2
+     "n_direct": 1,
+     "n_subtree": 1
     },
     {
      "code": "CESC",
      "name": "Cervical Squamous Cell Carcinoma",
      "level": 2,
      "color": "Teal",
-     "n_direct": 269,
-     "n_subtree": 269
+     "n_direct": 203,
+     "n_subtree": 203
     },
     {
      "code": "VGCE",
@@ -933,72 +845,72 @@
    "name": "Esophagus/Stomach",
    "level": 1,
    "color": "LightSkyBlue",
-   "n_direct": 139,
-   "n_subtree": 882,
+   "n_direct": 102,
+   "n_subtree": 647,
    "children": [
     {
      "code": "EPDCA",
      "name": "Esophageal Poorly Differentiated Carcinoma",
      "level": 2,
      "color": "LightSkyBlue",
-     "n_direct": 4,
-     "n_subtree": 4
+     "n_direct": 2,
+     "n_subtree": 2
     },
     {
      "code": "ESCC",
      "name": "Esophageal Squamous Cell Carcinoma",
      "level": 2,
      "color": "LightSkyBlue",
-     "n_direct": 140,
-     "n_subtree": 140
+     "n_direct": 100,
+     "n_subtree": 100
     },
     {
      "code": "EGC",
      "name": "Esophagogastric Adenocarcinoma",
      "level": 2,
      "color": "LightSkyBlue",
-     "n_direct": 236,
-     "n_subtree": 598,
+     "n_direct": 174,
+     "n_subtree": 442,
      "children": [
       {
        "code": "GEJ",
        "name": "Adenocarcinoma of the Gastroesophageal Junction",
        "level": 3,
        "color": "LightSkyBlue",
-       "n_direct": 57,
-       "n_subtree": 57
+       "n_direct": 40,
+       "n_subtree": 40
       },
       {
        "code": "ESCA",
        "name": "Esophageal Adenocarcinoma",
        "level": 3,
        "color": "LightSkyBlue",
-       "n_direct": 112,
-       "n_subtree": 112
+       "n_direct": 92,
+       "n_subtree": 92
       },
       {
        "code": "STAD",
        "name": "Stomach Adenocarcinoma",
        "level": 3,
        "color": "LightSkyBlue",
-       "n_direct": 161,
-       "n_subtree": 193,
+       "n_direct": 115,
+       "n_subtree": 136,
        "children": [
         {
          "code": "DSTAD",
          "name": "Diffuse Type Stomach Adenocarcinoma",
          "level": 4,
          "color": "LightSkyBlue",
-         "n_direct": 17,
-         "n_subtree": 17
+         "n_direct": 11,
+         "n_subtree": 11
         },
         {
          "code": "ISTAD",
          "name": "Intestinal Type Stomach Adenocarcinoma",
          "level": 4,
          "color": "LightSkyBlue",
-         "n_direct": 14,
-         "n_subtree": 14
+         "n_direct": 9,
+         "n_subtree": 9
         },
         {
          "code": "TSTAD",
@@ -1027,8 +939,8 @@
    "name": "Eye",
    "level": 1,
    "color": "Green",
-   "n_direct": 78,
-   "n_subtree": 119,
+   "n_direct": 61,
+   "n_subtree": 94,
    "children": [
     {
      "code": "LGT",
@@ -1043,16 +955,16 @@
      "name": "Ocular Melanoma",
      "level": 2,
      "color": "Green",
-     "n_direct": 6,
-     "n_subtree": 20,
+     "n_direct": 5,
+     "n_subtree": 16,
      "children": [
       {
        "code": "UM",
        "name": "Uveal Melanoma",
        "level": 3,
        "color": "Green",
-       "n_direct": 14,
-       "n_subtree": 14
+       "n_direct": 11,
+       "n_subtree": 11
       }
      ]
     },
@@ -1061,8 +973,8 @@
      "name": "Retinoblastoma",
      "level": 2,
      "color": "Green",
-     "n_direct": 20,
-     "n_subtree": 20
+     "n_direct": 16,
+     "n_subtree": 16
     }
    ]
   },
@@ -1071,64 +983,64 @@
    "name": "Head and Neck",
    "level": 1,
    "color": "DarkRed",
-   "n_direct": 290,
-   "n_subtree": 1619,
+   "n_direct": 206,
+   "n_subtree": 1167,
    "children": [
     {
      "code": "HNMUCM",
      "name": "Head and Neck Mucosal Melanoma",
      "level": 2,
      "color": "DarkRed",
-     "n_direct": 9,
-     "n_subtree": 9
+     "n_direct": 5,
+     "n_subtree": 5
     },
     {
      "code": "HNSC",
      "name": "Head and Neck Squamous Cell Carcinoma",
      "level": 2,
      "color": "DarkRed",
-     "n_direct": 484,
-     "n_subtree": 1214,
+     "n_direct": 355,
+     "n_subtree": 881,
      "children": [
       {
        "code": "HNSCUP",
        "name": "Head and Neck Squamous Cell Carcinoma of Unknown Primary",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 22,
-       "n_subtree": 22
+       "n_direct": 15,
+       "n_subtree": 15
       },
       {
        "code": "HPHSC",
        "name": "Hypopharynx Squamous Cell Carcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 6,
-       "n_subtree": 6
+       "n_direct": 2,
+       "n_subtree": 2
       },
       {
        "code": "LXSC",
        "name": "Larynx Squamous Cell Carcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 162,
-       "n_subtree": 162
+       "n_direct": 117,
+       "n_subtree": 117
       },
       {
        "code": "OCSC",
        "name": "Oral Cavity Squamous Cell Carcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 272,
-       "n_subtree": 272
+       "n_direct": 200,
+       "n_subtree": 200
       },
       {
        "code": "OPHSC",
        "name": "Oropharynx Squamous Cell Carcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 267,
-       "n_subtree": 267
+       "n_direct": 191,
+       "n_subtree": 191
       },
       {
        "code": "SNSC",
@@ -1145,42 +1057,34 @@
      "name": "Nasopharyngeal Carcinoma",
      "level": 2,
      "color": "DarkRed",
-     "n_direct": 39,
-     "n_subtree": 39
+     "n_direct": 30,
+     "n_subtree": 30
     },
     {
      "code": "SACA",
      "name": "Salivary Carcinoma",
      "level": 2,
      "color": "DarkRed",
-     "n_direct": 61,
-     "n_subtree": 66,
+     "n_direct": 42,
+     "n_subtree": 45,
      "children": [
       {
        "code": "ACYC",
        "name": "Adenoid Cystic Carcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       },
       {
        "code": "PAC",
        "name": "Polymorphous Adenocarcinoma",
        "level": 3,
        "color": "DarkRed",
-       "n_direct": 3,
-       "n_subtree": 3
+       "n_direct": 2,
+       "n_subtree": 2
       }
      ]
-    },
-    {
-     "code": "SBL",
-     "name": "Sialoblastoma",
-     "level": 2,
-     "color": "DarkRed",
-     "n_direct": 1,
-     "n_subtree": 1
     }
    ]
   },
@@ -1189,48 +1093,40 @@
    "name": "Kidney",
    "level": 1,
    "color": "Orange",
-   "n_direct": 247,
-   "n_subtree": 1208,
+   "n_direct": 165,
+   "n_subtree": 849,
    "children": [
-    {
-     "code": "CCSK",
-     "name": "Clear Cell Sarcoma of Kidney",
-     "level": 2,
-     "color": "Orange",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
     {
      "code": "RCC",
      "name": "Renal Cell Carcinoma",
      "level": 2,
      "color": "Orange",
-     "n_direct": 341,
-     "n_subtree": 948,
+     "n_direct": 234,
+     "n_subtree": 675,
      "children": [
       {
        "code": "NRCC",
        "name": "NUTM1 Renal Cell Carcinoma",
        "level": 3,
        "color": "Orange",
-       "n_direct": 10,
-       "n_subtree": 10
+       "n_direct": 7,
+       "n_subtree": 7
       },
       {
        "code": "CCRCC",
        "name": "Renal Clear Cell Carcinoma",
        "level": 3,
        "color": "Orange",
-       "n_direct": 509,
-       "n_subtree": 521,
+       "n_direct": 365,
+       "n_subtree": 376,
        "children": [
         {
          "code": "SCCRCC",
          "name": "Renal Clear Cell Carcinoma with Sarcomatoid Features",
          "level": 4,
          "color": "Orange",
-         "n_direct": 12,
-         "n_subtree": 12
+         "n_direct": 11,
+         "n_subtree": 11
         }
        ]
       },
@@ -1239,8 +1135,8 @@
        "name": "Renal Non-Clear Cell Carcinoma",
        "level": 3,
        "color": "Orange",
-       "n_direct": 54,
-       "n_subtree": 76,
+       "n_direct": 41,
+       "n_subtree": 58,
        "children": [
         {
          "code": "CHRCC",
@@ -1255,16 +1151,8 @@
          "name": "Papillary Renal Cell Carcinoma",
          "level": 4,
          "color": "Orange",
-         "n_direct": 16,
-         "n_subtree": 16
-        },
-        {
-         "code": "RAML",
-         "name": "Renal Angiomyolipoma",
-         "level": 4,
-         "color": "Orange",
-         "n_direct": 1,
-         "n_subtree": 1
+         "n_direct": 12,
+         "n_subtree": 12
         },
         {
          "code": "URCC",
@@ -1291,8 +1179,8 @@
      "name": "Wilms' Tumor",
      "level": 2,
      "color": "Orange",
-     "n_direct": 9,
-     "n_subtree": 9
+     "n_direct": 6,
+     "n_subtree": 6
     }
    ]
   },
@@ -1301,52 +1189,36 @@
    "name": "Liver",
    "level": 1,
    "color": "MediumSeaGreen",
-   "n_direct": 132,
-   "n_subtree": 852,
+   "n_direct": 95,
+   "n_subtree": 606,
    "children": [
     {
      "code": "FLC",
      "name": "Fibrolamellar Carcinoma",
      "level": 2,
      "color": "MediumSeaGreen",
-     "n_direct": 3,
-     "n_subtree": 3
+     "n_direct": 1,
+     "n_subtree": 1
     },
     {
      "code": "LIHB",
      "name": "Hepatoblastoma",
      "level": 2,
      "color": "MediumSeaGreen",
-     "n_direct": 5,
-     "n_subtree": 5
-    },
-    {
-     "code": "LIAD",
-     "name": "Hepatocellular Adenoma",
-     "level": 2,
-     "color": "MediumSeaGreen",
-     "n_direct": 1,
-     "n_subtree": 1
+     "n_direct": 4,
+     "n_subtree": 4
     },
     {
      "code": "HCC",
      "name": "Hepatocellular Carcinoma",
      "level": 2,
      "color": "MediumSeaGreen",
-     "n_direct": 709,
-     "n_subtree": 709
+     "n_direct": 505,
+     "n_subtree": 505
     },
     {
      "code": "LIMNET",
      "name": "Malignant Nonepithelial Tumor of the Liver",
-     "level": 2,
-     "color": "MediumSeaGreen",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
-    {
-     "code": "UESL",
-     "name": "Undifferentiated Embryonal Sarcoma of the Liver",
      "level": 2,
      "color": "MediumSeaGreen",
      "n_direct": 1,
@@ -1359,8 +1231,8 @@
    "name": "Lung",
    "level": 1,
    "color": "Gainsboro",
-   "n_direct": 682,
-   "n_subtree": 3918,
+   "n_direct": 495,
+   "n_subtree": 2816,
    "children": [
     {
      "code": "CSCLC",
@@ -1375,8 +1247,8 @@
      "name": "Inflammatory Myofibroblastic Lung Tumor",
      "level": 2,
      "color": "Gainsboro",
-     "n_direct": 4,
-     "n_subtree": 4
+     "n_direct": 2,
+     "n_subtree": 2
     },
     {
      "code": "LAIS",
@@ -1391,16 +1263,16 @@
      "name": "Lung Neuroendocrine Tumor",
      "level": 2,
      "color": "Gainsboro",
-     "n_direct": 85,
-     "n_subtree": 183,
+     "n_direct": 58,
+     "n_subtree": 135,
      "children": [
       {
        "code": "LUNE",
        "name": "Large Cell Neuroendocrine Carcinoma",
        "level": 3,
        "color": "Gainsboro",
-       "n_direct": 10,
-       "n_subtree": 10
+       "n_direct": 9,
+       "n_subtree": 9
       },
       {
        "code": "LUCA",
@@ -1415,8 +1287,8 @@
        "name": "Small Cell Lung Cancer",
        "level": 3,
        "color": "Gainsboro",
-       "n_direct": 78,
-       "n_subtree": 78
+       "n_direct": 58,
+       "n_subtree": 58
       }
      ]
     },
@@ -1425,8 +1297,8 @@
      "name": "Non-Small Cell Lung Cancer",
      "level": 2,
      "color": "Gainsboro",
-     "n_direct": 1044,
-     "n_subtree": 3018,
+     "n_direct": 754,
+     "n_subtree": 2157,
      "children": [
       {
        "code": "LCLC",
@@ -1441,16 +1313,16 @@
        "name": "Lung Adenocarcinoma",
        "level": 3,
        "color": "Gainsboro",
-       "n_direct": 1559,
-       "n_subtree": 1559
+       "n_direct": 1120,
+       "n_subtree": 1120
       },
       {
        "code": "LUSC",
        "name": "Lung Squamous Cell Carcinoma",
        "level": 3,
        "color": "Gainsboro",
-       "n_direct": 402,
-       "n_subtree": 402
+       "n_direct": 274,
+       "n_subtree": 274
       },
       {
        "code": "NUTCL",
@@ -1473,18 +1345,10 @@
        "name": "Salivary Gland-Type Tumor of the Lung",
        "level": 3,
        "color": "Gainsboro",
-       "n_direct": 9,
-       "n_subtree": 9
+       "n_direct": 5,
+       "n_subtree": 5
       }
      ]
-    },
-    {
-     "code": "PPB",
-     "name": "Pleuropulmonary Blastoma",
-     "level": 2,
-     "color": "Gainsboro",
-     "n_direct": 1,
-     "n_subtree": 1
     },
     {
      "code": "LAM",
@@ -1499,8 +1363,8 @@
      "name": "Sarcomatoid Carcinoma of the Lung",
      "level": 2,
      "color": "Gainsboro",
-     "n_direct": 21,
-     "n_subtree": 21
+     "n_direct": 18,
+     "n_subtree": 18
     }
    ]
   },
@@ -1509,48 +1373,48 @@
    "name": "Lymphoid",
    "level": 1,
    "color": "LimeGreen",
-   "n_direct": 584,
-   "n_subtree": 3254,
+   "n_direct": 413,
+   "n_subtree": 2324,
    "children": [
     {
      "code": "LATL",
      "name": "Lymphoid Atypical",
      "level": 2,
      "color": "LimeGreen",
-     "n_direct": 20,
-     "n_subtree": 20
+     "n_direct": 13,
+     "n_subtree": 13
     },
     {
      "code": "LBGN",
      "name": "Lymphoid Benign",
      "level": 2,
      "color": "LimeGreen",
-     "n_direct": 10,
-     "n_subtree": 10
+     "n_direct": 9,
+     "n_subtree": 9
     },
     {
      "code": "LNM",
      "name": "Lymphoid Neoplasm",
      "level": 2,
      "color": "LimeGreen",
-     "n_direct": 953,
-     "n_subtree": 2640,
+     "n_direct": 694,
+     "n_subtree": 1889,
      "children": [
       {
        "code": "BLL",
        "name": "B-Lymphoblastic Leukemia/Lymphoma",
        "level": 3,
        "color": "LimeGreen",
-       "n_direct": 113,
-       "n_subtree": 116,
+       "n_direct": 75,
+       "n_subtree": 77,
        "children": [
         {
          "code": "BLLNOS",
          "name": "B-Lymphoblastic Leukemia/Lymphoma, NOS",
          "level": 4,
          "color": "LimeGreen",
-         "n_direct": 3,
-         "n_subtree": 3
+         "n_direct": 2,
+         "n_subtree": 2
         }
        ]
       },
@@ -1559,16 +1423,16 @@
        "name": "Hodgkin Lymphoma",
        "level": 3,
        "color": "LimeGreen",
-       "n_direct": 140,
-       "n_subtree": 195,
+       "n_direct": 98,
+       "n_subtree": 132,
        "children": [
         {
          "code": "CHL",
          "name": "Classical Hodgkin Lymphoma",
          "level": 4,
          "color": "LimeGreen",
-         "n_direct": 52,
-         "n_subtree": 53,
+         "n_direct": 32,
+         "n_subtree": 33,
          "children": [
           {
            "code": "LRCHL",
@@ -1585,8 +1449,8 @@
          "name": "Nodular Lymphocyte-Predominant Hodgkin Lymphoma",
          "level": 4,
          "color": "LimeGreen",
-         "n_direct": 2,
-         "n_subtree": 2
+         "n_direct": 1,
+         "n_subtree": 1
         }
        ]
       },
@@ -1595,40 +1459,32 @@
        "name": "Non-Hodgkin Lymphoma",
        "level": 3,
        "color": "LimeGreen",
-       "n_direct": 814,
-       "n_subtree": 1362,
+       "n_direct": 578,
+       "n_subtree": 974,
        "children": [
         {
          "code": "MBN",
          "name": "Mature B-Cell Neoplasms",
          "level": 4,
          "color": "LimeGreen",
-         "n_direct": 397,
-         "n_subtree": 504,
+         "n_direct": 293,
+         "n_subtree": 363,
          "children": [
-          {
-           "code": "ALKLBCL",
-           "name": "ALK Positive Large B-Cell Lymphoma",
-           "level": 5,
-           "color": "LimeGreen",
-           "n_direct": 2,
-           "n_subtree": 2
-          },
           {
            "code": "CLLSLL",
            "name": "Chronic Lymphocytic Leukemia/Small Lymphocytic Lymphoma",
            "level": 5,
            "color": "LimeGreen",
-           "n_direct": 15,
-           "n_subtree": 15
+           "n_direct": 10,
+           "n_subtree": 10
           },
           {
            "code": "DLBCLNOS",
            "name": "Diffuse Large B-Cell Lymphoma, NOS",
            "level": 5,
            "color": "LimeGreen",
-           "n_direct": 47,
-           "n_subtree": 48,
+           "n_direct": 31,
+           "n_subtree": 32,
            "children": [
             {
              "code": "ABC",
@@ -1645,24 +1501,24 @@
            "name": "Follicular Lymphoma",
            "level": 5,
            "color": "LimeGreen",
-           "n_direct": 13,
-           "n_subtree": 13
+           "n_direct": 8,
+           "n_subtree": 8
           },
           {
            "code": "MCL",
            "name": "Mantle Cell Lymphoma",
            "level": 5,
            "color": "LimeGreen",
-           "n_direct": 2,
-           "n_subtree": 2
+           "n_direct": 1,
+           "n_subtree": 1
           },
           {
            "code": "PCM",
            "name": "Plasma Cell Myeloma",
            "level": 5,
            "color": "LimeGreen",
-           "n_direct": 27,
-           "n_subtree": 27
+           "n_direct": 19,
+           "n_subtree": 19
           }
          ]
         },
@@ -1671,8 +1527,8 @@
          "name": "Mature T and NK Neoplasms",
          "level": 4,
          "color": "LimeGreen",
-         "n_direct": 43,
-         "n_subtree": 44,
+         "n_direct": 32,
+         "n_subtree": 33,
          "children": [
           {
            "code": "SEBVTLC",
@@ -1691,8 +1547,8 @@
        "name": "T-Lymphoblastic Leukemia/Lymphoma",
        "level": 3,
        "color": "LimeGreen",
-       "n_direct": 14,
-       "n_subtree": 14
+       "n_direct": 12,
+       "n_subtree": 12
       }
      ]
     }
@@ -1703,8 +1559,8 @@
    "name": "Myeloid",
    "level": 1,
    "color": "LightSalmon",
-   "n_direct": 361,
-   "n_subtree": 1964,
+   "n_direct": 259,
+   "n_subtree": 1426,
    "children": [
     {
      "code": "MATPL",
@@ -1719,40 +1575,40 @@
      "name": "Myeloid Benign",
      "level": 2,
      "color": "LightSalmon",
-     "n_direct": 8,
-     "n_subtree": 8
+     "n_direct": 7,
+     "n_subtree": 7
     },
     {
      "code": "MNM",
      "name": "Myeloid Neoplasm",
      "level": 2,
      "color": "LightSalmon",
-     "n_direct": 552,
-     "n_subtree": 1594,
+     "n_direct": 398,
+     "n_subtree": 1159,
      "children": [
       {
        "code": "AML",
        "name": "Acute Myeloid Leukemia",
        "level": 3,
        "color": "LightSalmon",
-       "n_direct": 660,
-       "n_subtree": 684,
+       "n_direct": 489,
+       "n_subtree": 507,
        "children": [
         {
          "code": "AMLMRC",
          "name": "AML with Myelodysplasia-Related Changes",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 12,
-         "n_subtree": 12
+         "n_direct": 9,
+         "n_subtree": 9
         },
         {
          "code": "AMLRGA",
          "name": "AML with Recurrent Genetic Abnormalities",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 2,
-         "n_subtree": 2
+         "n_direct": 1,
+         "n_subtree": 1
         },
         {
          "code": "AMLNOS",
@@ -1785,8 +1641,8 @@
          "name": "Myeloid Sarcoma",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 7,
-         "n_subtree": 7
+         "n_direct": 5,
+         "n_subtree": 5
         },
         {
          "code": "TMN",
@@ -1819,8 +1675,8 @@
        "name": "Mastocytosis",
        "level": 3,
        "color": "LightSalmon",
-       "n_direct": 11,
-       "n_subtree": 12,
+       "n_direct": 9,
+       "n_subtree": 10,
        "children": [
         {
          "code": "MCSL",
@@ -1837,20 +1693,12 @@
        "name": "Myelodysplastic Syndromes",
        "level": 3,
        "color": "LightSalmon",
-       "n_direct": 166,
-       "n_subtree": 179,
+       "n_direct": 122,
+       "n_subtree": 133,
        "children": [
         {
          "code": "MDSID5Q",
          "name": "MDS with Isolated Del(5q)",
-         "level": 4,
-         "color": "LightSalmon",
-         "n_direct": 2,
-         "n_subtree": 2
-        },
-        {
-         "code": "MDSMD",
-         "name": "MDS with Multilineage Dysplasia",
          "level": 4,
          "color": "LightSalmon",
          "n_direct": 1,
@@ -1905,16 +1753,16 @@
        "name": "Myeloid/Lymphoid Neoplasms with Eosinophilia and Rearrangement of  PDGFRA/PDGFRB or FGFR1 or with PCM1-JAK2",
        "level": 3,
        "color": "LightSalmon",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       },
       {
        "code": "MPN",
        "name": "Myeloproliferative Neoplasms",
        "level": 3,
        "color": "LightSalmon",
-       "n_direct": 104,
-       "n_subtree": 161,
+       "n_direct": 69,
+       "n_subtree": 106,
        "children": [
         {
          "code": "CELNOS",
@@ -1929,32 +1777,32 @@
          "name": "Chronic Myelogenous Leukemia",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 24,
-         "n_subtree": 24
+         "n_direct": 15,
+         "n_subtree": 15
         },
         {
          "code": "ET",
          "name": "Essential Thrombocythemia",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 15,
-         "n_subtree": 15
+         "n_direct": 9,
+         "n_subtree": 9
         },
         {
          "code": "PV",
          "name": "Polycythemia Vera",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 10,
-         "n_subtree": 10
+         "n_direct": 7,
+         "n_subtree": 7
         },
         {
          "code": "PMF",
          "name": "Primary Myelofibrosis",
          "level": 4,
          "color": "LightSalmon",
-         "n_direct": 7,
-         "n_subtree": 7
+         "n_direct": 5,
+         "n_subtree": 5
         }
        ]
       },
@@ -1975,17 +1823,9 @@
    "name": "Other",
    "level": 1,
    "color": "Black",
-   "n_direct": 61,
-   "n_subtree": 348,
+   "n_direct": 46,
+   "n_subtree": 255,
    "children": [
-    {
-     "code": "AIS",
-     "name": "Adenocarcinoma In Situ",
-     "level": 2,
-     "color": "Black",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
     {
      "code": "ARCH",
      "name": "Adenocarcinoma in Retrorectal Cystic Hamartoma",
@@ -1999,24 +1839,24 @@
      "name": "Cancer of Unknown Primary",
      "level": 2,
      "color": "Black",
-     "n_direct": 100,
-     "n_subtree": 266,
+     "n_direct": 73,
+     "n_subtree": 195,
      "children": [
       {
        "code": "ADNOS",
        "name": "Adenocarcinoma, NOS",
        "level": 3,
        "color": "Black",
-       "n_direct": 55,
-       "n_subtree": 55
+       "n_direct": 38,
+       "n_subtree": 38
       },
       {
        "code": "CUPNOS",
        "name": "Cancer of Unknown Primary, NOS",
        "level": 3,
        "color": "Black",
-       "n_direct": 76,
-       "n_subtree": 76
+       "n_direct": 59,
+       "n_subtree": 59
       },
       {
        "code": "NETNOS",
@@ -2031,16 +1871,16 @@
        "name": "Poorly Differentiated Carcinoma, NOS",
        "level": 3,
        "color": "Black",
-       "n_direct": 15,
-       "n_subtree": 15
+       "n_direct": 9,
+       "n_subtree": 9
       },
       {
        "code": "SCCNOS",
        "name": "Squamous Cell Carcinoma, NOS",
        "level": 3,
        "color": "Black",
-       "n_direct": 18,
-       "n_subtree": 18
+       "n_direct": 14,
+       "n_subtree": 14
       }
      ]
     },
@@ -2049,8 +1889,8 @@
      "name": "Mixed Cancer Types",
      "level": 2,
      "color": "Black",
-     "n_direct": 19,
-     "n_subtree": 19
+     "n_direct": 13,
+     "n_subtree": 13
     }
    ]
   },
@@ -2059,40 +1899,40 @@
    "name": "Ovary/Fallopian Tube",
    "level": 1,
    "color": "LightBlue",
-   "n_direct": 170,
-   "n_subtree": 870,
+   "n_direct": 122,
+   "n_subtree": 622,
    "children": [
     {
      "code": "OVT",
      "name": "Ovarian Epithelial Tumor",
      "level": 2,
      "color": "LightBlue",
-     "n_direct": 237,
-     "n_subtree": 695,
+     "n_direct": 172,
+     "n_subtree": 499,
      "children": [
       {
        "code": "CCOV",
        "name": "Clear Cell Ovarian Cancer",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 44,
-       "n_subtree": 44
+       "n_direct": 33,
+       "n_subtree": 33
       },
       {
        "code": "EOV",
        "name": "Endometrioid Ovarian Cancer",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 43,
-       "n_subtree": 43
+       "n_direct": 30,
+       "n_subtree": 30
       },
       {
        "code": "MOV",
        "name": "Mucinous Ovarian Cancer",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 52,
-       "n_subtree": 52
+       "n_direct": 34,
+       "n_subtree": 34
       },
       {
        "code": "OSMAD",
@@ -2107,32 +1947,32 @@
        "name": "Serous Borderline Ovarian Tumor, Micropapillary",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 10,
-       "n_subtree": 10
+       "n_direct": 7,
+       "n_subtree": 7
       },
       {
        "code": "SOC",
        "name": "Serous Ovarian Cancer",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 184,
-       "n_subtree": 306,
+       "n_direct": 133,
+       "n_subtree": 221,
        "children": [
         {
          "code": "HGSOC",
          "name": "High-Grade Serous Ovarian Cancer",
          "level": 4,
          "color": "LightBlue",
-         "n_direct": 114,
-         "n_subtree": 114
+         "n_direct": 82,
+         "n_subtree": 82
         },
         {
          "code": "LGSOC",
          "name": "Low-Grade Serous Ovarian Cancer",
          "level": 4,
          "color": "LightBlue",
-         "n_direct": 8,
-         "n_subtree": 8
+         "n_direct": 6,
+         "n_subtree": 6
         }
        ]
       },
@@ -2141,8 +1981,8 @@
        "name": "Small Cell Carcinoma of the Ovary",
        "level": 3,
        "color": "LightBlue",
-       "n_direct": 2,
-       "n_subtree": 2
+       "n_direct": 1,
+       "n_subtree": 1
       }
      ]
     },
@@ -2151,16 +1991,8 @@
      "name": "Ovarian Germ Cell Tumor",
      "level": 2,
      "color": "LightBlue",
-     "n_direct": 3,
-     "n_subtree": 3
-    },
-    {
-     "code": "SCST",
-     "name": "Sex Cord Stromal Tumor",
-     "level": 2,
-     "color": "LightBlue",
-     "n_direct": 2,
-     "n_subtree": 2
+     "n_direct": 1,
+     "n_subtree": 1
     }
    ]
   },
@@ -2169,8 +2001,8 @@
    "name": "Pancreas",
    "level": 1,
    "color": "Purple",
-   "n_direct": 181,
-   "n_subtree": 1072,
+   "n_direct": 133,
+   "n_subtree": 757,
    "children": [
     {
      "code": "PAASC",
@@ -2185,24 +2017,16 @@
      "name": "Cystic Tumor of the Pancreas",
      "level": 2,
      "color": "Purple",
-     "n_direct": 24,
-     "n_subtree": 35,
+     "n_direct": 19,
+     "n_subtree": 26,
      "children": [
       {
        "code": "IPMN",
        "name": "Intraductal Papillary Mucinous Neoplasm",
        "level": 3,
        "color": "Purple",
-       "n_direct": 10,
-       "n_subtree": 10
-      },
-      {
-       "code": "ITPN",
-       "name": "Intraductal Tubulopapillary Neoplasm",
-       "level": 3,
-       "color": "Purple",
-       "n_direct": 1,
-       "n_subtree": 1
+       "n_direct": 7,
+       "n_subtree": 7
       }
      ]
     },
@@ -2211,16 +2035,16 @@
      "name": "Pancreatic Adenocarcinoma",
      "level": 2,
      "color": "Purple",
-     "n_direct": 792,
-     "n_subtree": 792
+     "n_direct": 546,
+     "n_subtree": 546
     },
     {
      "code": "PANET",
      "name": "Pancreatic Neuroendocrine Tumor",
      "level": 2,
      "color": "Purple",
-     "n_direct": 57,
-     "n_subtree": 57
+     "n_direct": 45,
+     "n_subtree": 45
     },
     {
      "code": "SPN",
@@ -2237,16 +2061,16 @@
    "name": "Penis",
    "level": 1,
    "color": "Blue",
-   "n_direct": 7,
-   "n_subtree": 52,
+   "n_direct": 5,
+   "n_subtree": 38,
    "children": [
     {
      "code": "PSCC",
      "name": "Penile Squamous Cell Carcinoma",
      "level": 2,
      "color": "Blue",
-     "n_direct": 39,
-     "n_subtree": 45,
+     "n_direct": 27,
+     "n_subtree": 33,
      "children": [
       {
        "code": "BPSCC",
@@ -2281,40 +2105,40 @@
    "name": "Peripheral Nervous System",
    "level": 1,
    "color": "Gray",
-   "n_direct": 35,
-   "n_subtree": 121,
+   "n_direct": 30,
+   "n_subtree": 85,
    "children": [
     {
      "code": "GNBL",
      "name": "Ganglioneuroblastoma",
      "level": 2,
      "color": "Gray",
-     "n_direct": 9,
-     "n_subtree": 9
+     "n_direct": 7,
+     "n_subtree": 7
     },
     {
      "code": "NST",
      "name": "Nerve Sheath Tumor",
      "level": 2,
      "color": "Gray",
-     "n_direct": 16,
-     "n_subtree": 26,
+     "n_direct": 8,
+     "n_subtree": 15,
      "children": [
       {
        "code": "MPNST",
        "name": "Malignant Peripheral Nerve Sheath Tumor",
        "level": 3,
        "color": "Gray",
-       "n_direct": 6,
-       "n_subtree": 6
+       "n_direct": 4,
+       "n_subtree": 4
       },
       {
        "code": "SCHW",
        "name": "Schwannoma",
        "level": 3,
        "color": "Gray",
-       "n_direct": 4,
-       "n_subtree": 4
+       "n_direct": 3,
+       "n_subtree": 3
       }
      ]
     },
@@ -2323,8 +2147,8 @@
      "name": "Neuroblastoma",
      "level": 2,
      "color": "Gray",
-     "n_direct": 51,
-     "n_subtree": 51
+     "n_direct": 33,
+     "n_subtree": 33
     }
    ]
   },
@@ -2333,16 +2157,16 @@
    "name": "Peritoneum",
    "level": 1,
    "color": "Green",
-   "n_direct": 38,
-   "n_subtree": 114,
+   "n_direct": 25,
+   "n_subtree": 85,
    "children": [
     {
      "code": "PEMESO",
      "name": "Peritoneal Mesothelioma",
      "level": 2,
      "color": "Green",
-     "n_direct": 74,
-     "n_subtree": 74
+     "n_direct": 58,
+     "n_subtree": 58
     },
     {
      "code": "PSEC",
@@ -2359,32 +2183,32 @@
    "name": "Pleura",
    "level": 1,
    "color": "Blue",
-   "n_direct": 36,
-   "n_subtree": 133,
+   "n_direct": 30,
+   "n_subtree": 96,
    "children": [
     {
      "code": "PLMESO",
      "name": "Pleural Mesothelioma",
      "level": 2,
      "color": "Blue",
-     "n_direct": 87,
-     "n_subtree": 97,
+     "n_direct": 58,
+     "n_subtree": 66,
      "children": [
       {
        "code": "PLBMESO",
        "name": "Pleural Mesothelioma, Biphasic Type",
        "level": 3,
        "color": "Blue",
-       "n_direct": 6,
-       "n_subtree": 6
+       "n_direct": 5,
+       "n_subtree": 5
       },
       {
        "code": "PLEMESO",
        "name": "Pleural Mesothelioma, Epithelioid Type",
        "level": 3,
        "color": "Blue",
-       "n_direct": 3,
-       "n_subtree": 3
+       "n_direct": 2,
+       "n_subtree": 2
       },
       {
        "code": "PLSMESO",
@@ -2403,8 +2227,8 @@
    "name": "Prostate",
    "level": 1,
    "color": "Cyan",
-   "n_direct": 501,
-   "n_subtree": 2935,
+   "n_direct": 341,
+   "n_subtree": 2092,
    "children": [
     {
      "code": "BCCP",
@@ -2419,8 +2243,8 @@
      "name": "Prostate Adenocarcinoma",
      "level": 2,
      "color": "Cyan",
-     "n_direct": 2421,
-     "n_subtree": 2421
+     "n_direct": 1742,
+     "n_subtree": 1742
     },
     {
      "code": "PRNE",
@@ -2435,8 +2259,8 @@
      "name": "Prostate Small Cell Carcinoma",
      "level": 2,
      "color": "Cyan",
-     "n_direct": 11,
-     "n_subtree": 11
+     "n_direct": 7,
+     "n_subtree": 7
     }
    ]
   },
@@ -2445,32 +2269,24 @@
    "name": "Skin",
    "level": 1,
    "color": "Black",
-   "n_direct": 291,
-   "n_subtree": 1782,
+   "n_direct": 210,
+   "n_subtree": 1306,
    "children": [
-    {
-     "code": "ADPA",
-     "name": "Aggressive Digital Papillary Adenocarcinoma",
-     "level": 2,
-     "color": "Black",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
     {
      "code": "BCC",
      "name": "Basal Cell Carcinoma",
      "level": 2,
      "color": "Black",
-     "n_direct": 116,
-     "n_subtree": 116
+     "n_direct": 92,
+     "n_subtree": 92
     },
     {
      "code": "CSCC",
      "name": "Cutaneous Squamous Cell Carcinoma",
      "level": 2,
      "color": "Black",
-     "n_direct": 194,
-     "n_subtree": 194
+     "n_direct": 149,
+     "n_subtree": 149
     },
     {
      "code": "DTE",
@@ -2485,24 +2301,24 @@
      "name": "Extramammary Paget Disease",
      "level": 2,
      "color": "Black",
-     "n_direct": 6,
-     "n_subtree": 6
+     "n_direct": 4,
+     "n_subtree": 4
     },
     {
      "code": "MEL",
      "name": "Melanoma",
      "level": 2,
      "color": "Black",
-     "n_direct": 457,
-     "n_subtree": 1140,
+     "n_direct": 342,
+     "n_subtree": 829,
      "children": [
       {
        "code": "ACRM",
        "name": "Acral Melanoma",
        "level": 3,
        "color": "Black",
-       "n_direct": 52,
-       "n_subtree": 52
+       "n_direct": 36,
+       "n_subtree": 36
       },
       {
        "code": "SKCN",
@@ -2517,16 +2333,16 @@
        "name": "Cutaneous Melanoma",
        "level": 3,
        "color": "Black",
-       "n_direct": 580,
-       "n_subtree": 580
+       "n_direct": 407,
+       "n_subtree": 407
       },
       {
        "code": "DESM",
        "name": "Desmoplastic Melanoma",
        "level": 3,
        "color": "Black",
-       "n_direct": 29,
-       "n_subtree": 29
+       "n_direct": 26,
+       "n_subtree": 26
       },
       {
        "code": "SKLMM",
@@ -2541,8 +2357,8 @@
        "name": "Melanoma of Unknown Primary",
        "level": 3,
        "color": "Black",
-       "n_direct": 16,
-       "n_subtree": 16
+       "n_direct": 12,
+       "n_subtree": 12
       },
       {
        "code": "SPZM",
@@ -2559,8 +2375,8 @@
      "name": "Merkel Cell Carcinoma",
      "level": 2,
      "color": "Black",
-     "n_direct": 32,
-     "n_subtree": 32
+     "n_direct": 20,
+     "n_subtree": 20
     }
    ]
   },
@@ -2569,32 +2385,24 @@
    "name": "Soft Tissue",
    "level": 1,
    "color": "LightYellow",
-   "n_direct": 123,
-   "n_subtree": 685,
+   "n_direct": 88,
+   "n_subtree": 487,
    "children": [
-    {
-     "code": "AFH",
-     "name": "Angiomatoid Fibrous Histiocytoma",
-     "level": 2,
-     "color": "LightYellow",
-     "n_direct": 1,
-     "n_subtree": 1
-    },
     {
      "code": "ANGS",
      "name": "Angiosarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 10,
-     "n_subtree": 10
+     "n_direct": 7,
+     "n_subtree": 7
     },
     {
      "code": "DES",
      "name": "Desmoid/Aggressive Fibromatosis",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 15,
-     "n_subtree": 15
+     "n_direct": 11,
+     "n_subtree": 11
     },
     {
      "code": "EHAE",
@@ -2617,56 +2425,48 @@
      "name": "Gastrointestinal Stromal Tumor",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 129,
-     "n_subtree": 129
+     "n_direct": 97,
+     "n_subtree": 97
     },
     {
      "code": "LMS",
      "name": "Leiomyosarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 113,
-     "n_subtree": 113
+     "n_direct": 70,
+     "n_subtree": 70
     },
     {
      "code": "LIPO",
      "name": "Liposarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 51,
-     "n_subtree": 132,
+     "n_direct": 43,
+     "n_subtree": 97,
      "children": [
       {
        "code": "DDLS",
        "name": "Dedifferentiated Liposarcoma",
        "level": 3,
        "color": "LightYellow",
-       "n_direct": 45,
-       "n_subtree": 45
-      },
-      {
-       "code": "MRLS",
-       "name": "Myxoid/Round-Cell Liposarcoma",
-       "level": 3,
-       "color": "LightYellow",
-       "n_direct": 1,
-       "n_subtree": 1
+       "n_direct": 32,
+       "n_subtree": 32
       },
       {
        "code": "PLLS",
        "name": "Pleomorphic Liposarcoma",
        "level": 3,
        "color": "LightYellow",
-       "n_direct": 6,
-       "n_subtree": 6
+       "n_direct": 4,
+       "n_subtree": 4
       },
       {
        "code": "WDLS",
        "name": "Well-Differentiated Liposarcoma",
        "level": 3,
        "color": "LightYellow",
-       "n_direct": 29,
-       "n_subtree": 29
+       "n_direct": 18,
+       "n_subtree": 18
       }
      ]
     },
@@ -2675,42 +2475,32 @@
      "name": "Rhabdomyosarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 10,
-     "n_subtree": 11,
-     "children": [
-      {
-       "code": "SCRMS",
-       "name": "Spindle Cell Rhabdomyosarcoma",
-       "level": 3,
-       "color": "LightYellow",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 7,
+     "n_subtree": 7
     },
     {
      "code": "SARCNOS",
      "name": "Sarcoma, NOS",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 48,
-     "n_subtree": 48
+     "n_direct": 34,
+     "n_subtree": 34
     },
     {
      "code": "SYNS",
      "name": "Synovial Sarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 38,
-     "n_subtree": 38
+     "n_direct": 25,
+     "n_subtree": 25
     },
     {
      "code": "MFH",
      "name": "Undifferentiated Pleomorphic Sarcoma/Malignant Fibrous Histiocytoma/High-Grade Spindle Cell Sarcoma",
      "level": 2,
      "color": "LightYellow",
-     "n_direct": 63,
-     "n_subtree": 63
+     "n_direct": 49,
+     "n_subtree": 49
     }
    ]
   },
@@ -2719,24 +2509,24 @@
    "name": "Testis",
    "level": 1,
    "color": "Red",
-   "n_direct": 46,
-   "n_subtree": 211,
+   "n_direct": 30,
+   "n_subtree": 153,
    "children": [
     {
      "code": "NSGCT",
      "name": "Non-Seminomatous Germ Cell Tumor",
      "level": 2,
      "color": "Red",
-     "n_direct": 37,
-     "n_subtree": 83,
+     "n_direct": 28,
+     "n_subtree": 63,
      "children": [
       {
        "code": "EMBCA",
        "name": "Embryonal Carcinoma",
        "level": 3,
        "color": "Red",
-       "n_direct": 18,
-       "n_subtree": 18
+       "n_direct": 10,
+       "n_subtree": 10
       },
       {
        "code": "GCTSTM",
@@ -2751,8 +2541,8 @@
        "name": "Mixed Germ Cell Tumor",
        "level": 3,
        "color": "Red",
-       "n_direct": 23,
-       "n_subtree": 23
+       "n_direct": 20,
+       "n_subtree": 20
       },
       {
        "code": "TT",
@@ -2769,16 +2559,16 @@
      "name": "Seminoma",
      "level": 2,
      "color": "Red",
-     "n_direct": 78,
-     "n_subtree": 78
+     "n_direct": 57,
+     "n_subtree": 57
     },
     {
      "code": "TMESO",
      "name": "Testicular Mesothelioma",
      "level": 2,
      "color": "Red",
-     "n_direct": 4,
-     "n_subtree": 4
+     "n_direct": 3,
+     "n_subtree": 3
     }
    ]
   },
@@ -2787,16 +2577,16 @@
    "name": "Thymus",
    "level": 1,
    "color": "Purple",
-   "n_direct": 66,
-   "n_subtree": 68,
+   "n_direct": 50,
+   "n_subtree": 51,
    "children": [
     {
      "code": "TET",
      "name": "Thymic Epithelial Tumor",
      "level": 2,
      "color": "Purple",
-     "n_direct": 2,
-     "n_subtree": 2
+     "n_direct": 1,
+     "n_subtree": 1
     }
    ]
   },
@@ -2805,40 +2595,40 @@
    "name": "Thyroid",
    "level": 1,
    "color": "Teal",
-   "n_direct": 171,
-   "n_subtree": 949,
+   "n_direct": 133,
+   "n_subtree": 699,
    "children": [
     {
      "code": "THAP",
      "name": "Anaplastic Thyroid Cancer",
      "level": 2,
      "color": "Teal",
-     "n_direct": 24,
-     "n_subtree": 24
+     "n_direct": 19,
+     "n_subtree": 19
     },
     {
      "code": "THHC",
      "name": "Hurthle Cell Thyroid Cancer",
      "level": 2,
      "color": "Teal",
-     "n_direct": 18,
-     "n_subtree": 18
+     "n_direct": 13,
+     "n_subtree": 13
     },
     {
      "code": "THME",
      "name": "Medullary Thyroid Cancer",
      "level": 2,
      "color": "Teal",
-     "n_direct": 34,
-     "n_subtree": 34
+     "n_direct": 25,
+     "n_subtree": 25
     },
     {
      "code": "OAT",
      "name": "Oncocytic Adenoma of the Thyroid",
      "level": 2,
      "color": "Teal",
-     "n_direct": 5,
-     "n_subtree": 5
+     "n_direct": 3,
+     "n_subtree": 3
     },
     {
      "code": "THPD",
@@ -2853,24 +2643,24 @@
      "name": "Well-Differentiated Thyroid Cancer",
      "level": 2,
      "color": "Teal",
-     "n_direct": 250,
-     "n_subtree": 696,
+     "n_direct": 187,
+     "n_subtree": 505,
      "children": [
       {
        "code": "THFO",
        "name": "Follicular Thyroid Cancer",
        "level": 3,
        "color": "Teal",
-       "n_direct": 50,
-       "n_subtree": 50
+       "n_direct": 40,
+       "n_subtree": 40
       },
       {
        "code": "THPA",
        "name": "Papillary Thyroid Cancer",
        "level": 3,
        "color": "Teal",
-       "n_direct": 396,
-       "n_subtree": 396
+       "n_direct": 278,
+       "n_subtree": 278
       }
      ]
     }
@@ -2881,48 +2671,40 @@
    "name": "Uterus",
    "level": 1,
    "color": "PeachPuff",
-   "n_direct": 188,
-   "n_subtree": 1035,
+   "n_direct": 141,
+   "n_subtree": 749,
    "children": [
     {
      "code": "UCEC",
      "name": "Endometrial Carcinoma",
      "level": 2,
      "color": "PeachPuff",
-     "n_direct": 269,
-     "n_subtree": 811,
+     "n_direct": 187,
+     "n_subtree": 581,
      "children": [
       {
        "code": "UASC",
        "name": "Uterine Adenosquamous Carcinoma",
        "level": 3,
        "color": "PeachPuff",
-       "n_direct": 9,
-       "n_subtree": 9
+       "n_direct": 6,
+       "n_subtree": 6
       },
       {
        "code": "UCS",
        "name": "Uterine Carcinosarcoma/Uterine Malignant Mixed Mullerian Tumor",
        "level": 3,
        "color": "PeachPuff",
-       "n_direct": 62,
-       "n_subtree": 62
-      },
-      {
-       "code": "UDDC",
-       "name": "Uterine Dedifferentiated Carcinoma",
-       "level": 3,
-       "color": "PeachPuff",
-       "n_direct": 1,
-       "n_subtree": 1
+       "n_direct": 51,
+       "n_subtree": 51
       },
       {
        "code": "UEC",
        "name": "Uterine Endometrioid Carcinoma",
        "level": 3,
        "color": "PeachPuff",
-       "n_direct": 327,
-       "n_subtree": 327
+       "n_direct": 242,
+       "n_subtree": 242
       },
       {
        "code": "UMNC",
@@ -2937,8 +2719,8 @@
        "name": "Uterine Serous Carcinoma/Uterine Papillary Serous Carcinoma",
        "level": 3,
        "color": "PeachPuff",
-       "n_direct": 138,
-       "n_subtree": 138
+       "n_direct": 90,
+       "n_subtree": 90
       },
       {
        "code": "UUC",
@@ -2963,26 +2745,16 @@
      "name": "Other Uterine Tumor",
      "level": 2,
      "color": "PeachPuff",
-     "n_direct": 8,
-     "n_subtree": 8
+     "n_direct": 6,
+     "n_subtree": 6
     },
     {
      "code": "USARC",
      "name": "Uterine Sarcoma/Mesenchymal",
      "level": 2,
      "color": "PeachPuff",
-     "n_direct": 26,
-     "n_subtree": 27,
-     "children": [
-      {
-       "code": "UPECOMA",
-       "name": "Uterine Perivascular Epithelioid Cell Tumor",
-       "level": 3,
-       "color": "PeachPuff",
-       "n_direct": 1,
-       "n_subtree": 1
-      }
-     ]
+     "n_direct": 20,
+     "n_subtree": 20
     }
    ]
   },
@@ -2991,8 +2763,8 @@
    "name": "Vulva/Vagina",
    "level": 1,
    "color": "Purple",
-   "n_direct": 26,
-   "n_subtree": 139,
+   "n_direct": 16,
+   "n_subtree": 92,
    "children": [
     {
      "code": "VMA",
@@ -3007,16 +2779,16 @@
      "name": "Mucosal Melanoma of the Vulva/Vagina",
      "level": 2,
      "color": "Purple",
-     "n_direct": 7,
-     "n_subtree": 7
+     "n_direct": 4,
+     "n_subtree": 4
     },
     {
      "code": "VSC",
      "name": "Squamous Cell Carcinoma of the Vulva/Vagina",
      "level": 2,
      "color": "Purple",
-     "n_direct": 105,
-     "n_subtree": 105
+     "n_direct": 71,
+     "n_subtree": 71
     }
    ]
   }

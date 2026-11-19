@@ -15,8 +15,10 @@ sampling). Circles, bars and the sample counter start at the state
 it, ending exactly at today's totals. Days are cut at midnight US Eastern.
 
 When does a sample "arrive"? At its "sample created" event (its XML /
-Epic file is ingested). Samples that never get one in the log arrive at
-their first file event instead (open question for the pipeline team).
+Epic file is ingested). The rule is STRICT (confirmed by the team): a
+sample with no such event is not part of the visualization at all.
+build_daniela_db.py already drops those samples; this script refuses to
+run if any slip through.
 
 USAGE (from the docs/ folder):
     python3 tools/build_site.py
@@ -92,7 +94,12 @@ def build(data_dir, days, loop_min):
                 created_idx[s] = i
     if not rows:
         sys.exit("ERROR: the replay file has no events")
-    arrival = {s: created_idx.get(s, first_idx[s]) for s in first_idx}
+    # strict XML rule: every sample must have a sample-created event
+    missing = [s for s in first_idx if s not in created_idx]
+    if missing:
+        sys.exit(f"ERROR: {len(missing):,} sample(s) have no XML sample_created event "
+                 f"(e.g. {missing[:3]}). Rebuild prepared_data with build_daniela_db.py.")
+    arrival = dict(created_idx)
     arrival_events = set(arrival.values())
 
     # replay window = last N calendar days (ET) of the log, ending at the last event
@@ -123,7 +130,7 @@ def build(data_dir, days, loop_min):
         d += timedelta(days=1)
 
     n_new = sum(e[1] for e in events)
-    no_xml = sum(1 for s in first_idx if s not in created_idx)
+    no_xml = meta.get("data_quality", {}).get("samples_excluded_no_xml", 0)
     bundle = {
         "meta": {"totalSamples": meta["totals"]["samples"], "totalEvents": meta["totals"]["events"],
                  "totalFiles": meta["totals"]["files"], "codesUsed": meta["totals"]["oncotree_codes_used"],
