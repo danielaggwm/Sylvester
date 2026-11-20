@@ -72,7 +72,8 @@
 
   const g=svg.append("g");
   // concentric rings
-  g.append("g").selectAll("circle").data(RING.slice(1)).enter().append("circle")
+  const ringsG=g.append("g");
+  ringsG.selectAll("circle").data(RING.slice(1)).enter().append("circle")
     .attr("class","ringline").attr("r",d=>d);
   // faint spokes at level-1 boundaries
   g.append("g").selectAll("line").data(root.children).enter().append("line")
@@ -245,7 +246,9 @@
       const c=circleBy.get(a.data.code); if(c) c.transition().duration(600).ease(d3.easeBackOut).attr("r",nodeR(a)); });
     if(barBy.has(code)) drawBar(n,600);
   }
+  let zoomsThisLoop=0;   // the first zoom of every loop also explains how to read the atlas
   function restartLoop(){
+    zoomsThisLoop=0;
     gen++; resetCounts(); total=B.meta.baseSamples??total; setTotal(total);
     evStreamed=0; kE.textContent="0"; tick.innerHTML=""; setClock(0);   // a new loop starts from zero: events counter, log and timeline too
     nodeSel.select("circle").transition().duration(1500).attr("r",d=>nodeR(d));
@@ -472,17 +475,101 @@
     setTimeout(()=>back.classed("zback",false),700);
     stage.classList.remove("zoomed","recapping");
     zui.classList.remove("on","final"); zsubs.classList.remove("on");
-    rc.className=""; rcNote.style.opacity=0; rcPath.style.opacity=0;
+    rc.className=""; rcNote.style.opacity=0; rcPath.style.opacity=0; annReset();
     setClock(vt); paused=false; busy=false;
   }
   function cancelScene(){ sceneId++; if(sceneReset){ const f=sceneReset; sceneReset=null; f(); } }
 
-  async function zoomSite(c){
+  // ring arcs across the zoomed wedge, so the OncoTree levels stay readable
+  const zann=document.getElementById("zann"), zn=[document.getElementById("za-n1"),document.getElementById("za-n2")],
+        zp=[document.getElementById("za-p1"),document.getElementById("za-p2")], zh=[document.getElementById("za-h1"),document.getElementById("za-h2")];
+  let zringG=null;
+  function buildZoomRings(code,zs){
+    const [e0,e1]=extent.get(code), a0=e0-.03, a1=e1+.03;
+    const grp=d3.select(ringsG.node().parentNode).insert("g",()=>ringsG.node().nextSibling).attr("class","zr").attr("opacity",0);
+    const paths=RING.slice(1).map(r=>{ const p=a=>`${(Math.sin(a)*r).toFixed(1)},${(-Math.cos(a)*r).toFixed(1)}`;
+      return grp.append("path").attr("class","zr-base").attr("stroke-width",1.4/zs)
+        .attr("d",`M${p(a0)}A${r},${r} 0 ${a1-a0>Math.PI?1:0} 1 ${p(a1)}`).node(); });
+    grp.transition().duration(700).attr("opacity",1);
+    return {grp,a0,a1,paths};
+  }
+  function annReset(){
+    zn.forEach(n=>n.classList.remove("on")); zp.concat(zh).forEach(p=>{ p.style.transition="none"; p.style.opacity=0; });
+    g.selectAll(".zr").interrupt().remove(); zringG=null;
+  }
+  function annOut(){   // zoom closing: notes and arrows fade with the rest of the text, the ring arcs fade as the full rings return
+    zn.forEach(n=>n.classList.remove("on")); zp.concat(zh).forEach(p=>{ p.style.transition="opacity .45s ease"; p.style.opacity=0; });
+    if(zringG){ const gr=zringG.grp; gr.transition().duration(600).attr("opacity",0).remove(); zringG=null; }
+  }
+  // the guided notes of the first zoom: rings light up one by one, then an arrow from each note points at what it explains
+  async function zoomIntro(Z,rings,w,code){
+    const toScr=(r,f)=>{ const a=rings.a0+(rings.a1-rings.a0)*f; return [Z.tx+Z.s*Math.sin(a)*r, Z.ty-Z.s*Math.cos(a)*r]; };
+    const edge=[]; for(let i=0;i<=24;i++){ const a=rings.a0+(rings.a1-rings.a0)*i/24;
+      [HUB_R,OUT+46].forEach(r=>edge.push(toScr(r,i/24))); }
+    for(let i=0;i<=20;i++){ const r=HUB_R+(OUT+46-HUB_R)*i/20; edge.push(toScr(r,0),toScr(r,1)); }
+    const gapUp=8-parseFloat(zui.style.top||8), top=ZOOM_TOP_PAD-gapUp+10, bot=H-ZOOM_BOT_PAD, taken=[];
+    const rectDist=(r,p)=>Math.hypot(Math.max(r.x-p[0],0,p[0]-(r.x+r.w)),Math.max(r.y-p[1],0,p[1]-(r.y+r.h)));
+    const overlap=(a,b)=>a.x<b.x+b.w+16&&b.x<a.x+a.w+16&&a.y<b.y+b.h+16&&b.y<a.y+a.h+16;
+    // soft yellow glow along one level: a few stacked strokes of falling opacity, drawn on from the wedge's first side
+    const glow=i=>{ const base=rings.paths[i], len=base.getTotalLength?base.getTotalLength():600, d=base.getAttribute("d");
+      const grp=rings.grp.append("g").attr("class","zglow");
+      [[18,.10],[10,.20],[3.4,.70]].forEach(([wd,op])=>grp.append("path").attr("class","zhl").attr("d",d).attr("stroke-width",wd/Z.s).attr("opacity",op)
+        .attr("stroke-dasharray",len).attr("stroke-dashoffset",len).transition().duration(1000).ease(d3.easeCubicOut).attr("stroke-dashoffset",0));
+      return grp; };
+    // one step: the level glows, an arrow runs from it to the note, then the note's text appears; the arrow and text stay
+    const step=async(k,text,ringIdx)=>{
+      // the arrow leaves the level where no circle sits: the point of the level farthest from the circles on it
+      const onRing=root.descendants().filter(d=>d.depth===ringIdx+1&&d.ancestors().find(a=>a.depth===1).data.code===code), r=RING[ringIdx+1];
+      let f=.14, fd=-1;
+      for(let i=10;i<=90;i+=2){ const a=rings.a0+(rings.a1-rings.a0)*i/100, x=Math.sin(a)*r, y=-Math.cos(a)*r;
+        const dm=d3.min(onRing,d=>Math.hypot(d.px-x,d.py-y))||0; if(dm>fd){fd=dm;f=i/100;} }
+      const T=toScr(r,f), n=zn[k], p=zp[k], hd=zh[k];
+      n.textContent=text; const nw=n.offsetWidth, nh=n.offsetHeight;
+      // the note sits centred on where the arrow lands, in the free band above or below the wedge
+      const left=Math.max(46,Math.min(W-46-nw,T[0]-nw/2));
+      // the note sits close to the arrow's end, in free space beside the wedge (never over it)
+      const inWedge=q=>{ const gx=(q[0]-Z.tx)/Z.s, gy=(q[1]-Z.ty)/Z.s, rr=Math.hypot(gx,gy); if(rr<HUB_R-10||rr>OUT+56) return false;
+        let an=Math.atan2(gx,-gy); if(an<0) an+=2*Math.PI; const lo=((rings.a0%(2*Math.PI))+2*Math.PI)%(2*Math.PI), hi=lo+(rings.a1-rings.a0);
+        return (an>=lo&&an<=hi)||(an+2*Math.PI>=lo&&an+2*Math.PI<=hi); };
+      const free=r=>{ if(r.y<top||r.y+r.h>bot||taken.some(t=>overlap(t,r))) return false;
+        for(let i=0;i<=6;i++) for(let j=0;j<=3;j++) if(inWedge([r.x+r.w*i/6,r.y+r.h*j/3])) return false;
+        return d3.min(edge,q=>rectDist(r,q))>=14; };
+      let best=null;
+      for(const gap of [60,84,112,150,200,280]){ for(const dir of [1,-1]){
+        const r={x:left,y:dir<0?T[1]-gap-nh:T[1]+gap,w:nw,h:nh}; if(!best&&free(r)) best=r; } if(best) break; }
+      if(!best) best={x:left,y:T[1]>(top+bot)/2?top:bot-nh,w:nw,h:nh};
+      taken.push(best); n.style.left=best.x+"px"; n.style.top=best.y+"px";
+      const sx=Math.max(best.x+16,Math.min(best.x+nw-16,T[0]));
+      // the path starts on the level and ends at the note, so the arrowhead points at the text
+      const S=T[1]>best.y+nh?[sx,best.y+nh+12]:[sx,best.y-12], m=(S[1]+T[1])/2;
+      const d=`M${T[0]},${T[1]} C${T[0]},${m} ${S[0]},${m} ${S[0]},${S[1]}`;
+      const gl=glow(ringIdx);
+      await w(900);
+      p.setAttribute("d",d); const len=p.getTotalLength?p.getTotalLength():300;
+      // arrowhead: its own little mark at the end of the line, oriented along the line, appearing as the line arrives
+      let ang=S[1]>T[1]?90:-90;
+      if(p.getPointAtLength){ const e=p.getPointAtLength(len), q=p.getPointAtLength(Math.max(0,len-6)); ang=Math.atan2(e.y-q.y,e.x-q.x)*180/Math.PI; }
+      hd.setAttribute("transform",`translate(${S[0]},${S[1]}) rotate(${ang})`);
+      hd.style.transition="none"; hd.style.opacity=0;
+      p.style.transition="none"; p.style.opacity=1; p.style.strokeDasharray=len; p.style.strokeDashoffset=len; void p.getBoundingClientRect();
+      p.style.transition="stroke-dashoffset .9s cubic-bezier(.4,0,.2,1)"; p.style.strokeDashoffset=0;
+      hd.style.transition="opacity .12s ease .78s"; hd.style.opacity=1;
+      await w(950); n.classList.add("on");
+      await w(3200);                                   // read it, then the glow fades and the next level takes over
+      gl.transition().duration(900).attr("opacity",0).remove();
+      await w(600);
+    };
+    await step(0,"Each ring is a different OncoTree level",0);
+    await step(1,"The further out, the more specific the diagnoses",2);
+  }
+
+  async function zoomSite(c,opts){
     const code=c.data.code, evs=siteEvents.get(code), rank=zoomRank.get(code), subs=topSubtypes(code);
     const fadeSel=g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel,.link,.node");
     // hold the main loop right away; sparks already in flight finish landing while the view starts to zoom
     paused=true; busy=true;
     const my=++sceneId, w=sceneWait(my);
+    const dbg=!!(opts&&opts.debug), intro=dbg||zoomsThisLoop===0; if(!dbg) zoomsThisLoop++;
     const snap={live:null, sub:new Map()};
     const home=g.attr("transform"), s0=+(/scale\(([\d.]+)\)/.exec(home)||[0,1])[1];
     sceneReset=()=>hardReset(home,snap);
@@ -502,6 +589,7 @@
       g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel").classed("zout",true);
       sparkL.classed("zout",true); pulseL.classed("zout",true);   // sparks/pulses of the paused loop must not show during the zoom-in
       stage.classList.add("zoomed");   // the events log and sample counter fade too: they are paused behind the zoom
+      zringG=buildZoomRings(code,Z.s);
       g.transition().duration(ZOOM_IN_MS).ease(d3.easeCubicInOut).attr("transform",`translate(${Z.tx},${Z.ty}) scale(${Z.s})`);
       // headline + subtype cards
       zEl("z-eyebrow").textContent=`#${rank} most active body site of the week`;
@@ -523,6 +611,7 @@
       nodeSel.select("circle").transition().duration(500).attr("r",d=>nodeR(d));
       leaves.forEach(d=>drawBar(d,500));
       await w(600);
+      if(intro){ const rg=zringG; zoomIntro(Z,rg,w,code).catch(()=>{}); }
       // fast replay: one even beat per event across the week; the header clock sweeps the days with it
       let cNew=0, cEv=0;
       const beat=ZOOM_REPLAY_MS/Math.max(evs.length,1);
@@ -544,7 +633,7 @@
     } finally { if(my===sceneId){
       zui.classList.remove("final");
       // zoom out: restore the main loop's state exactly as it was, and bring the atlas back
-      zui.classList.remove("on"); zsubs.classList.remove("on");
+      zui.classList.remove("on"); zsubs.classList.remove("on"); annOut();
       await w(150).catch(()=>{});      // the text has started to fade; the zoom-out follows right behind it
       if(my===sceneId){
       stage.classList.remove("zoomed");   // events log, counter and timeline return together with the atlas
@@ -671,7 +760,7 @@
     cancelScene();
     const c=level1.find(x=>zoomRank.has(x.data.code)); if(!c) return;   // first top site in the clockwise order
     const saved=si; si=level1.indexOf(c); spotlight(); si=saved;        // show its spotlight without moving the rotation
-    zoomSite(c).catch(err=>{ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); });
+    zoomSite(c,{debug:true}).catch(err=>{ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); });
   }
   document.getElementById("dbg-recap").addEventListener("click",debugRecap);
   document.getElementById("dbg-zoom").addEventListener("click",debugZoom);
