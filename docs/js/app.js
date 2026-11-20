@@ -247,6 +247,7 @@
   }
   function restartLoop(){
     gen++; resetCounts(); total=B.meta.baseSamples??total; setTotal(total);
+    evStreamed=0; kE.textContent="0"; tick.innerHTML=""; setClock(0);   // a new loop starts from zero: events counter, log and timeline too
     nodeSel.select("circle").transition().duration(1500).attr("r",d=>nodeR(d));
     leaves.forEach(d=>drawBar(d,1500));
     growthReset();
@@ -333,15 +334,22 @@
     const n=codeMap.get(e[0]);
     if(n){ if(e[1]) spark(n,e[0]); else { fileRipple(n); flickerBar(e[0],0); } pushTicker(e); }
     evStreamed++; kE.textContent=fmt(evStreamed);
-    if(ei===N) holdUntil=(lastTs??performance.now())+SPARK_MS+4500;   // let the last sparks land, show today's total, then start over
+    if(ei===N) holdUntil=(lastTs??performance.now())+SPARK_MS+2500;   // let the last sparks land, show today's total, then the recap scene, then start over
   }
-  let paused=false;   // true while a body site is zoomed in: the main loop holds still and picks up afterwards
+  let paused=false;   // true while a body site is zoomed in (or the recap plays): the main loop holds still and picks up afterwards
+  let busy=false;     // a zoom or the recap is playing: another one must not start
   function frame(ts){
     if(lastTs===null) lastTs=ts;
     const dt=Math.min(ts-lastTs,250); lastTs=ts;
     if(paused){ requestAnimationFrame(frame); return; }
+    if(!holdUntil && ei>=N){ ei=0; vt=0; restartLoop(); }   // the end-of-loop scene was interrupted: just start over
     if(holdUntil){ if(ts<holdUntil){ growthTick(); requestAnimationFrame(frame); return; }
-      holdUntil=0; ei=0; vt=0; restartLoop(); }
+      holdUntil=0;
+      if(!reduce && !busy && typeof runRecap==="function" && recapRows.length>1){   // end of the loop: the top-5 recap, then start over
+        paused=true;
+        runRecap().catch(err=>{ console.error(err); return true; }).then(done=>{ if(!done) return; ei=0; vt=0; restartLoop(); paused=false; });
+        requestAnimationFrame(frame); return; }
+      ei=0; vt=0; restartLoop(); }
     vt=Math.min(1,vt+dt/LOOP_MS); setClock(vt);
     let k=0; while(k<24 && ei<N && B.events[ei][3]<=vt){ fire(); k++; }
     growthTick();
@@ -446,13 +454,39 @@
     });
   }
 
+  // Scenes (zoom, recap) can be interrupted by the debug buttons. Every scene waits through sceneWait(), which
+  // throws once the scene has been cancelled; cancelScene() then puts the page back at once.
+  let sceneId=0, sceneReset=null;
+  const CANCELLED={};
+  const sceneWait=my=>ms=>new Promise((res,rej)=>setTimeout(()=>my===sceneId?res():rej(CANCELLED),ms));
+  function hardReset(home,snap){
+    g.interrupt();
+    if(snap&&snap.live){   // a zoom replay was running: drop its sparks, put every circle back where the loop had it
+      sparkL.selectAll("*").interrupt().remove(); pulseL.selectAll("*").interrupt().remove();
+      nodeSel.select("circle").interrupt(); barSel.interrupt(); tipSel.interrupt();
+      live.clear(); snap.live.forEach((v,key)=>live.set(key,v)); root.each(n=>{ n.liveSub=snap.sub.get(n); });
+      nodeSel.select("circle").attr("r",d=>nodeR(d)); leaves.forEach(d=>drawBar(d,0));
+    }
+    if(home) g.attr("transform",home);
+    const back=g.selectAll(".zout"); back.classed("zback",true).classed("zout",false);
+    setTimeout(()=>back.classed("zback",false),700);
+    stage.classList.remove("zoomed","recapping");
+    zui.classList.remove("on","final"); zsubs.classList.remove("on");
+    rc.className=""; rcNote.style.opacity=0; rcPath.style.opacity=0;
+    setClock(vt); paused=false; busy=false;
+  }
+  function cancelScene(){ sceneId++; if(sceneReset){ const f=sceneReset; sceneReset=null; f(); } }
+
   async function zoomSite(c){
     const code=c.data.code, evs=siteEvents.get(code), rank=zoomRank.get(code), subs=topSubtypes(code);
     const fadeSel=g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel,.link,.node");
     // hold the main loop right away; sparks already in flight finish landing while the view starts to zoom
-    paused=true;
+    paused=true; busy=true;
+    const my=++sceneId, w=sceneWait(my);
     const snap={live:null, sub:new Map()};
     const home=g.attr("transform"), s0=+(/scale\(([\d.]+)\)/.exec(home)||[0,1])[1];
+    sceneReset=()=>hardReset(home,snap);
+    let completed=false;
     // the rows that fade out (KPIs, events log, weekly counter) leave a band under the title: the zoom uses it
     const atlasEl=document.getElementById("atlas"), titleRow=document.querySelector(".titlerow");
     const gapUp=Math.max(0,atlasEl.offsetTop-(titleRow.offsetTop+titleRow.offsetHeight)-72);
@@ -481,18 +515,19 @@
       const paintSub=o=>{ if(!o) return; o.el.querySelector(".a").textContent="+"+fmt(o.nNew); o.el.querySelector(".b").textContent=fmt(o.ev); };
       zui.classList.remove("final"); zui.classList.add("on"); if(subs.length) zsubs.classList.add("on");
       // once the last in-flight spark has landed, remember where every circle stood, then rewind the site to the start of the week
-      await wait(SPARK_MS+350);
+      await w(SPARK_MS+350);
       sparkL.selectAll("*").interrupt().remove(); pulseL.selectAll("*").interrupt().remove();
       sparkL.classed("zout",false); pulseL.classed("zout",false);
       snap.live=new Map(live); root.each(n=>snap.sub.set(n,n.liveSub));
       resetCounts();
       nodeSel.select("circle").transition().duration(500).attr("r",d=>nodeR(d));
       leaves.forEach(d=>drawBar(d,500));
-      await wait(600);
+      await w(600);
       // fast replay: one even beat per event across the week; the header clock sweeps the days with it
       let cNew=0, cEv=0;
       const beat=ZOOM_REPLAY_MS/Math.max(evs.length,1);
       await new Promise(done=>{ let i=0; const tm=d3.timer(el=>{
+        if(my!==sceneId){ tm.stop(); done(); return; }
         while(i<evs.length && i*beat<=el){
           const e=evs[i++], n=codeMap.get(e[0]), o=sub.get(e[0]);
           cEv++; setHead(cNew,cEv); if(o){ o.ev++; paintSub(o); }
@@ -501,14 +536,17 @@
           else { fileRipple(n); flickerBar(e[0],0); }
         }
         if(i>=evs.length){ tm.stop(); done(); } }); });
-      await wait(950);              // the last sparks finish landing so the numbers are final
+      await w(950);              // the last sparks finish landing so the numbers are final
       zui.classList.add("final");   // then underline them for the closing hold
-      await wait(ZOOM_HOLD_MS);
-    } finally {
+      await w(ZOOM_HOLD_MS);
+      completed=true;
+    } catch(err){ if(err!==CANCELLED) throw err;
+    } finally { if(my===sceneId){
       zui.classList.remove("final");
       // zoom out: restore the main loop's state exactly as it was, and bring the atlas back
       zui.classList.remove("on"); zsubs.classList.remove("on");
-      await wait(150);                    // the text has started to fade; the zoom-out follows right behind it
+      await w(150).catch(()=>{});      // the text has started to fade; the zoom-out follows right behind it
+      if(my===sceneId){
       stage.classList.remove("zoomed");   // events log, counter and timeline return together with the atlas
       if(snap.live){ live.clear(); snap.live.forEach((v,key)=>live.set(key,v)); root.each(n=>{ n.liveSub=snap.sub.get(n); }); }
       nodeSel.select("circle").transition().duration(ZOOM_OUT_MS).attr("r",d=>nodeR(d));
@@ -519,18 +557,133 @@
       setTimeout(()=>back.classed("zback",false),700);
       sparkL.classed("zout",false); pulseL.classed("zout",false);
       setClock(vt);
-      await wait(ZOOM_OUT_MS+150);
-      paused=false;
-    }
+      }
+      await w(ZOOM_OUT_MS+150).catch(()=>{});
+      if(my===sceneId){ paused=false; busy=false; sceneReset=null; }
+    } }
+    return completed;
   }
+
+  // ── recap scene: the top sites side by side, at the end of every loop
+  // One stacked bar per site on a single scale: its events this week, split into new-sample arrivals
+  // (orange, from the shared baseline so they compare directly) and file updates (green). The scene
+  // walks the viewer through how to read it, then calls out the fastest-growing site.
+  const baseBySite=new Map();
+  Object.entries(B.base||{}).forEach(([k,v])=>{ const r=rootOf(shown(k)); if(r) baseBySite.set(r,(baseBySite.get(r)||0)+v); });
+  const recapRows=[...zoomRank.entries()].sort((a,b)=>a[1]-b[1]).map(([code])=>{
+    const evs=siteEvents.get(code), nNew=newIn(evs), start=baseBySite.get(code)||0;
+    return {code,name:codeMap.get(code).data.name,events:evs.length,nNew,nUpd:evs.length-nNew,start,end:start+nNew,
+      growth:start?100*nNew/start:0}; });
+  const RC_BAR_W=380, RC_STEPS=[   // guided walkthrough: what to highlight, which part to point at, what to say, how long to stay
+    {focus:"all",   add:[],           ms:4000, target:null, title:"How to read this",
+      body:"Each bar is one body site's activity this week. The longer the bar, the more events."},
+    {focus:"new",   add:["show-new"], ms:4200, target:".rc-row:last-child .seg-new", title:"New patient samples",
+      body:"Each orange block is a sample reaching the pipeline for the first time."},
+    {focus:"upd",   add:["show-upd"], ms:4200, target:".rc-row:last-child .seg-upd", title:"Updates to existing samples",
+      body:"Green is the rest of the activity: files landing, passing quality checks and loading."},
+    {focus:"all",   add:["show-se"],  ms:4400, target:".rc-row:last-child .rc-se", title:"Total patient samples",
+      body:"Each site's total at the start and the end of the week, with the change."},
+    {focus:"growth",add:[],           ms:5000, target:".rc-row.hl .rc-se", title:null,
+      body:"Growth is a site's new samples as a share of its own starting total."} ];
+  const rc=document.getElementById("recap"), rcNote=document.getElementById("rc-note"), rcPath=document.getElementById("rc-arrow-path");
+  const rcT=document.getElementById("rc-note-t"), rcB=document.getElementById("rc-note-b"), rcCard=document.getElementById("rc-card");
+  let rcBest=null;
+  function buildRecap(){
+    const max=d3.max(recapRows,r=>r.events)||1, px=v=>(v/max*RC_BAR_W).toFixed(1)+"px";
+    document.getElementById("rc-chart").innerHTML=recapRows.map((r,i)=>
+      `<div class="rc-row" data-code="${r.code}" style="--i:${i}"><div class="rc-name"><span class="rk">${i+1}</span>${r.name}</div>`+
+      `<div class="rc-bar"><div class="seg-new" style="--w:${px(r.nNew)};--i:${i}"><span class="lab">${fmt(r.nNew)}</span></div>`+
+      `<div class="seg-upd" style="--w:${px(r.nUpd)};--i:${i}"><span class="lab">${fmt(r.nUpd)}</span></div><span class="rc-tot">${fmt(r.events)}</span></div>`+
+      `<div class="rc-se">${fmt(r.start)} → <span class="e">${fmt(r.end)}</span><span class="d">+${r.nNew}</span></div></div>`).join("");
+    rcBest=recapRows.reduce((a,b)=>b.growth>a.growth?b:a);
+    rc.querySelector(`.rc-row[data-code="${rcBest.code}"]`).classList.add("hl");
+    RC_STEPS[RC_STEPS.length-1].title=`Fastest growing: ${rcBest.name}, +${rcBest.growth.toFixed(2)}%`;
+  }
+  // put the note under the chart and draw a curved arrow from it up to the part of the chart it explains
+  function placeNote(st){
+    const rr=rc.getBoundingClientRect(), k=(rr.width/rc.offsetWidth)||1, rw=rc.offsetWidth, nw=390;
+    const cardBottom=(rcCard.getBoundingClientRect().bottom-rr.top)/k, noteTop=cardBottom+62;
+    rcT.textContent=st.title; rcB.textContent=st.body;
+    const tgt=st.target&&rc.querySelector(st.target), tr=tgt&&tgt.getBoundingClientRect();
+    if(!tgt||!tr||!tr.width){ rcNote.style.left=((rw-nw)/2)+"px"; rcNote.style.top=(cardBottom+34)+"px"; rcNote.style.textAlign="center"; return null; }
+    const tx=(tr.left+tr.width/2-rr.left)/k, ty=(tr.bottom-rr.top)/k+8, dir=tx<rw*.6?1:-1;
+    const left=Math.max(0,Math.min(rw-nw,tx-(dir>0?40:nw-40)));
+    rcNote.style.left=left+"px"; rcNote.style.top=noteTop+"px"; rcNote.style.textAlign="left";
+    const sx=tx+dir*74, sy=noteTop-10;
+    return `M${sx.toFixed(1)},${sy.toFixed(1)} C${sx.toFixed(1)},${(sy-52).toFixed(1)} ${(tx+dir*40).toFixed(1)},${(ty+58).toFixed(1)} ${tx.toFixed(1)},${ty.toFixed(1)}`;
+  }
+  async function showNote(st,w){
+    rcNote.style.opacity=0; rcPath.style.opacity=0; await w(350);
+    const d=placeNote(st); rcNote.style.opacity=1; await w(350);
+    if(d){ rcPath.setAttribute("d",d); const len=rcPath.getTotalLength?rcPath.getTotalLength():0;
+      rcPath.style.transition="none"; rcPath.style.strokeDasharray=len||"none"; rcPath.style.strokeDashoffset=len||0; rcPath.style.opacity=1;
+      void rcPath.getBoundingClientRect();
+      rcPath.style.transition="stroke-dashoffset .8s ease-out"; rcPath.style.strokeDashoffset=0; }
+  }
+
+  async function runRecap(){
+    busy=true; buildRecap();
+    const my=++sceneId, w=sceneWait(my); sceneReset=()=>hardReset(null,null);
+    let completed=false;
+    rc.className=""; rc.setAttribute("data-focus","all"); rcNote.style.opacity=0; rcPath.style.opacity=0;
+    const atlasEl=document.getElementById("atlas"), titleRow=document.querySelector(".titlerow");
+    const gapUp=Math.max(0,atlasEl.offsetTop-(titleRow.offsetTop+titleRow.offsetHeight)-72);
+    rc.style.top=(8-gapUp)+"px";
+    const fadeSel=g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel,.link,.node");
+    try{
+      // the atlas and every panel around it step back; the recap arrives once they are gone
+      fadeSel.classed("zout",true); barSel.classed("zout",true); tipSel.classed("zout",true);
+      wedge.classed("zout",true); sparkL.classed("zout",true); pulseL.classed("zout",true);
+      stage.classList.add("zoomed","recapping");
+      rc.classList.add("on");
+      await w(1200);
+      rc.classList.add("bars");
+      await w(1900);
+      for(const st of RC_STEPS){
+        rc.setAttribute("data-focus",st.focus); st.add.forEach(c=>rc.classList.add(c));
+        await showNote(st,w);
+        await w(st.ms);
+      }
+      completed=true;
+    } catch(err){ if(err!==CANCELLED) throw err;
+    } finally { if(my===sceneId){
+      rcNote.style.opacity=0; rcPath.style.opacity=0; rc.classList.remove("on");
+      await w(150).catch(()=>{});
+      if(my===sceneId){
+      stage.classList.remove("zoomed","recapping");
+      const back=g.selectAll(".zout"); back.classed("zback",true).classed("zout",false);
+      setTimeout(()=>back.classed("zback",false),700);
+      }
+      await w(700).catch(()=>{});
+      if(my===sceneId){ rc.className=""; busy=false; sceneReset=null; }
+    } }
+    return completed;
+  }
+
+  // ── debug buttons (bottom left): jump straight to the recap or the first zoom without sitting through the loop.
+  // They only call the same zoom/recap code the loop uses; the loop is paused meanwhile and carries on exactly where it was.
+  function debugRecap(){
+    cancelScene();   // takes over from a zoom/recap that is already playing
+    paused=true;
+    runRecap().then(ok=>{ if(ok) paused=false; }).catch(err=>{ console.error(err); paused=false; busy=false; });
+  }
+  function debugZoom(){
+    cancelScene();
+    const c=level1.find(x=>zoomRank.has(x.data.code)); if(!c) return;   // first top site in the clockwise order
+    const saved=si; si=level1.indexOf(c); spotlight(); si=saved;        // show its spotlight without moving the rotation
+    zoomSite(c).catch(err=>{ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); });
+  }
+  document.getElementById("dbg-recap").addEventListener("click",debugRecap);
+  document.getElementById("dbg-zoom").addEventListener("click",debugZoom);
 
   // spotlight scheduler: every site gets its short spotlight; a top site is zoomed into after a moment
   function cycle(){
+    if(busy){ setTimeout(cycle,400); return; }   // a zoom/recap is playing: leave the spotlight where it is
     spotlight();
     const c=level1.find(x=>x.data.code===curSpot);
-    if(!reduce && c && zoomRank.has(curSpot)){
+    if(!reduce && c && !busy && zoomRank.has(curSpot)){
       (async()=>{
-        try{ await zoomSite(c); }catch(err){ console.error(err); paused=false; stage.classList.remove("zoomed"); }
+        try{ await zoomSite(c); }catch(err){ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); }
         setTimeout(cycle,1200);
       })();
     } else setTimeout(cycle, reduce?9000:5600);

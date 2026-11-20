@@ -63,6 +63,17 @@
       </div>
     </div>
     <div id="zsubs" aria-live="off"></div>
+    <div id="recap" aria-live="off">
+      <div class="rc-eyebrow">Top 5 body sites · last 7 days</div>
+      <h2 class="rc-title">Most active body sites this week</h2>
+      <div class="rc-card" id="rc-card">
+        <div class="rc-legend"><span class="lg-new"><i></i>New-sample arrivals</span><span class="lg-upd"><i></i>File updates</span></div>
+        <div class="rc-chart" id="rc-chart"></div>
+      </div>
+      <div class="rc-zone"></div>
+      <svg class="rc-arrow" aria-hidden="true"><defs><marker id="rc-head" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="#C35009" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path id="rc-arrow-path" d="" fill="none" stroke="#C35009" stroke-width="2.4" stroke-linecap="round" marker-end="url(#rc-head)"/></svg>
+      <div class="rc-note" id="rc-note"><b id="rc-note-t"></b><span id="rc-note-b"></span></div>
+    </div>
   </div>
 
   <div id="bottom">
@@ -104,6 +115,11 @@
   </div>
 
   <div class="credit">Visualization by Daniela Gonzalez from the Sylvester Data Science Team</div>
+
+  <div class="dbg">
+    <button type="button" id="dbg-recap" title="Debug: skip to the Top 5 summary" aria-label="Skip to the Top 5 summary"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 2.5v11l7-5.5zM9 2.5v11l7-5.5z" transform="scale(.82) translate(1.4 1.4)"/><rect x="13" y="2" width="1.8" height="12" rx=".6"/></svg></button>
+    <button type="button" id="dbg-zoom" title="Debug: skip to the first zoom" aria-label="Skip to the first zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4"/></svg></button>
+  </div>
 
 </div></div>
 
