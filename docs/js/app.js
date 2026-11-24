@@ -84,7 +84,7 @@
     .attr("y2",d=>-Math.cos(d.ang-Math.PI/B.meta.nCategories)*(OUT+42));
 
   // wedge (spotlight) layer
-  const wedge=g.append("path").attr("fill",tok("orange-tint")).attr("stroke",P.created).attr("stroke-opacity",.4).attr("stroke-width",1).attr("opacity",0);
+  const wedge=g.append("path").attr("class","wedge").attr("fill",tok("orange-tint")).attr("stroke",P.created).attr("stroke-opacity",.4).attr("stroke-width",1).attr("opacity",0);
   const arcGen=(a0,a1)=>d3.arc()({innerRadius:HUB_R,outerRadius:OUT+46,startAngle:a0-0.03,endAngle:a1+0.03});
 
   // links
@@ -98,7 +98,7 @@
     .attr("data-root",d=>d.target.ancestors().find(a=>a.depth===1)?.data.code||"");
 
   // nodes
-  const nodeSel=g.append("g").selectAll("g").data(root.descendants().filter(d=>d.depth>0)).enter()
+  const nodeSel=g.append("g").attr("class","nodes-g").selectAll("g").data(root.descendants().filter(d=>d.depth>0)).enter()
     .append("g").attr("class","node").attr("transform",d=>`translate(${d.px},${d.py})`)
     .attr("data-root",d=>d.ancestors().find(a=>a.depth===1).data.code);
   nodeSel.append("circle").attr("r",d=>nodeR(d))
@@ -125,7 +125,7 @@
   const SHORT={"Peripheral Nervous System":"Periph. Nerve","Bladder/Urinary Tract":"Bladder",
     "Ovary/Fallopian Tube":"Ovary","Esophagus/Stomach":"Esophagus","Ampulla of Vater":"Ampulla","Biliary Tract":"Biliary","Head and Neck":"Head & Neck","Adrenal Gland":"Adrenal"};
   const angDist=(a,b)=>{const d=Math.abs(a-b)%(2*Math.PI);return Math.min(d,2*Math.PI-d)};
-  const labelG=g.append("g"), lblInfo=[];
+  const labelG=g.append("g").attr("class","lbl-g"), lblInfo=[];
   root.children.forEach(c=>{
     const a=c.la, top=Math.cos(a)>=0, r=top?LR:LR+11, d=0.62;
     const P=x=>[Math.sin(x)*r,-Math.cos(x)*r];
@@ -156,12 +156,11 @@
   g.append("circle").attr("class","hubc").attr("r",HUB_R).attr("fill",P.surface).attr("filter","url(#lift)");
   g.append("circle").attr("class","hubc").attr("r",HUB_R).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",1);
   g.append("circle").attr("class","hubc").attr("r",HUB_R-9).attr("fill","none").attr("stroke",P.hair).attr("stroke-width",.75).attr("stroke-dasharray","1.5 3.5");
-  g.append("text").attr("class","hub-tot").attr("y",-46).text("Total");
-  const hubNum=g.append("text").attr("class","hub-num").attr("y",-8).text("0");
-  g.append("text").attr("class","hub-lab").attr("y",13).text("Patient samples");
+  const hubNum=g.append("text").attr("class","hub-num").attr("y",3).text("0");
+  g.append("text").attr("class","hub-lab").attr("y",25).text("Patient samples");
   const hubCat=g.append("text").attr("class","hub-cat").attr("y",44);
   // spotlit site name inside the hub: wraps onto two lines (breaking after spaces or "/"), shrinking if needed
-  const probe=g.append("text").attr("class","hub-cat").attr("opacity",0);
+  const probe=g.append("text").attr("class","hub-cat hub-probe").attr("opacity",0);
   function setHubCat(name){
     const words=name.replace(/\//g,"/ ").split(/\s+/).filter(Boolean), maxW=[150,128];
     const join=ws=>ws.join(" ").replace(/\/ /g,"/");
@@ -179,9 +178,11 @@
     best.lines.forEach((l,i)=>hubCat.append("tspan").attr("x",0).attr("dy",i?best.fs*1.15:0).text(l));
   }
 
-  const pulseL=g.append("g"); // pulses on top
+  const pulseL=g.append("g").attr("class","pulse-g"); // pulses on top
 
   // fit the whole atlas (labels at their largest spotlight size) into the space left by the panels
+  // the simplified layout is the only layout: the tree gets the room, the legend is a strip underneath
+  let bigAtlas=document.getElementById("stage").classList.contains("intro");   // intro scene: the tree may grow past its design size
   function fitAtlas(){
     H=document.getElementById("atlas").clientHeight||H;
     svg.attr("viewBox",`0 0 ${W} ${H}`);
@@ -189,8 +190,8 @@
     lbls.forEach(n=>n.style.fontSize="17px");
     const bb=g.node().getBBox();
     lbls.forEach((n,i)=>n.style.fontSize=prev[i]);
-    const halfW=Math.max(-bb.x,bb.x+bb.width), halfH=Math.max(-bb.y,bb.y+bb.height), m=40;
-    const s=Math.min((W/2-m)/halfW,(H/2-m)/halfH,1);   // never enlarge past design size: keeps air around the circle
+    const halfW=Math.max(-bb.x,bb.x+bb.width), halfH=Math.max(-bb.y,bb.y+bb.height), m=bigAtlas?22:40;
+    const s=Math.min((W/2-m)/halfW,(H/2-m)/halfH,bigAtlas?1.2:1);   // never enlarge past design size: keeps air around the circle
     g.attr("transform",`translate(${W/2},${H/2}) scale(${s.toFixed(4)})`);
   }
   fitAtlas();
@@ -341,13 +342,23 @@
   }
   let paused=false;   // true while a body site is zoomed in (or the recap plays): the main loop holds still and picks up afterwards
   let busy=false;     // a zoom or the recap is playing: another one must not start
+  // controls the scene director (js/director.js) drives; with no director (or ?classic) they keep their defaults and the loop runs itself
+  let ramp=null;                                // director mode: the stream only advances along a ramp the director asks for
+  const hooks={ streamEnd:null, manual:false };               // called once when the week has fully played; the director then decides what comes next
+  const spot={ on:/[?&]classic\b/.test(location.search)||reduce, autoZoom:true };   // under the director the sweep stays off until the story starts it        // spotlight sweep on/off; whether it starts a zoom when it reaches a top site
   function frame(ts){
     if(lastTs===null) lastTs=ts;
     const dt=Math.min(ts-lastTs,250); lastTs=ts;
     if(paused){ requestAnimationFrame(frame); return; }
+    if(hooks.manual){   // the director paces the week: advance along the current ramp, nothing else (no restart, no recap)
+      if(ramp){ ramp.t+=dt; const f=Math.min(1,ramp.t/ramp.ms); vt=ramp.from+(ramp.to-ramp.from)*f; setClock(vt);
+        let k=0; while(k<24 && ei<N && B.events[ei][3]<=vt){ fire(); k++; }
+        if(f>=1){ const r=ramp; ramp=null; r.done(); } }
+      growthTick(); requestAnimationFrame(frame); return; }
     if(!holdUntil && ei>=N){ ei=0; vt=0; restartLoop(); }   // the end-of-loop scene was interrupted: just start over
     if(holdUntil){ if(ts<holdUntil){ growthTick(); requestAnimationFrame(frame); return; }
       holdUntil=0;
+      if(!reduce && !busy && hooks.streamEnd){ const f=hooks.streamEnd; hooks.streamEnd=null; paused=true; f(); requestAnimationFrame(frame); return; }
       if(!reduce && !busy && typeof runRecap==="function" && recapRows.length>1){   // end of the loop: the top-5 recap, then start over
         paused=true;
         runRecap().catch(err=>{ console.error(err); return true; }).then(done=>{ if(!done) return; ei=0; vt=0; restartLoop(); paused=false; });
@@ -409,6 +420,7 @@
   // The top ZOOM_TOP sites by events in the window are zoomed when the spotlight reaches them.
   // The main loop pauses, the rest of the atlas fades, and that site's week replays with one even beat
   // per event; then the view eases back and the main loop resumes exactly where it stopped.
+  const RC_HOLD_MS=15000;   // the finished dashboard stays this long before the loop starts over
   const ZOOM_TOP=5, ZOOM_IN_MS=1700, ZOOM_REPLAY_MS=15000, ZOOM_HOLD_MS=3200, ZOOM_OUT_MS=1400;
   const ZOOM_TOP_PAD=215, ZOOM_BOT_PAD=120;   // room for the headline above and the subtype cards below the zoomed wedge
   const rootOf=code=>{ const n=codeMap.get(code), a=n&&n.ancestors().find(x=>x.depth===1); return a?a.data.code:null; };
@@ -475,10 +487,10 @@
     setTimeout(()=>back.classed("zback",false),700);
     stage.classList.remove("zoomed","recapping");
     zui.classList.remove("on","final"); zsubs.classList.remove("on");
-    rc.className=""; rcNote.style.opacity=0; rcPath.style.opacity=0; annReset();
+    rc.className=""; annReset(); if(window.Anno) window.Anno.clear(true);
     setClock(vt); paused=false; busy=false;
   }
-  function cancelScene(){ sceneId++; if(sceneReset){ const f=sceneReset; sceneReset=null; f(); } }
+  function cancelScene(){ sceneId++; if(sceneReset){ const f=sceneReset; sceneReset=null; f(); g.interrupt(); fitAtlas(); } }
 
   // ring arcs across the zoomed wedge, so the OncoTree levels stay readable
   const zann=document.getElementById("zann"), zn=[document.getElementById("za-n1"),document.getElementById("za-n2")],
@@ -494,10 +506,12 @@
     return {grp,a0,a1,paths};
   }
   function annReset(){
+    if(window.Anno) window.Anno.clear(true);
     zn.forEach(n=>n.classList.remove("on")); zp.concat(zh).forEach(p=>{ p.style.transition="none"; p.style.opacity=0; });
     g.selectAll(".zr").interrupt().remove(); zringG=null;
   }
-  function annOut(){   // zoom closing: notes and arrows fade with the rest of the text, the ring arcs fade as the full rings return
+  function annOut(){
+    if(window.Anno) window.Anno.clear();   // zoom closing: notes and arrows fade with the rest of the text, the ring arcs fade as the full rings return
     zn.forEach(n=>n.classList.remove("on")); zp.concat(zh).forEach(p=>{ p.style.transition="opacity .45s ease"; p.style.opacity=0; });
     if(zringG){ const gr=zringG.grp; gr.transition().duration(600).attr("opacity",0).remove(); zringG=null; }
   }
@@ -517,14 +531,13 @@
         .attr("stroke-dasharray",len).attr("stroke-dashoffset",len).transition().duration(1000).ease(d3.easeCubicOut).attr("stroke-dashoffset",0));
       return grp; };
     // one step: the level glows, an arrow runs from it to the note, then the note's text appears; the arrow and text stay
-    const step=async(k,text,ringIdx)=>{
+    const step=async(k,text,ringIdx,minGap=0)=>{
       // the arrow leaves the level where no circle sits: the point of the level farthest from the circles on it
       const onRing=root.descendants().filter(d=>d.depth===ringIdx+1&&d.ancestors().find(a=>a.depth===1).data.code===code), r=RING[ringIdx+1];
       let f=.14, fd=-1;
       for(let i=10;i<=90;i+=2){ const a=rings.a0+(rings.a1-rings.a0)*i/100, x=Math.sin(a)*r, y=-Math.cos(a)*r;
         const dm=d3.min(onRing,d=>Math.hypot(d.px-x,d.py-y))||0; if(dm>fd){fd=dm;f=i/100;} }
-      const T=toScr(r,f), n=zn[k], p=zp[k], hd=zh[k];
-      n.textContent=text; const nw=n.offsetWidth, nh=n.offsetHeight;
+      const T=toScr(r,f), sz=window.Anno.measure(text.replace(/<[^>]+>/g,""),{maxW:300,box:true,align:"center"}), nw=sz.w, nh=sz.h;
       // the note sits centred on where the arrow lands, in the free band above or below the wedge
       const left=Math.max(46,Math.min(W-46-nw,T[0]-nw/2));
       // the note sits close to the arrow's end, in free space beside the wedge (never over it)
@@ -535,32 +548,21 @@
         for(let i=0;i<=6;i++) for(let j=0;j<=3;j++) if(inWedge([r.x+r.w*i/6,r.y+r.h*j/3])) return false;
         return d3.min(edge,q=>rectDist(r,q))>=14; };
       let best=null;
-      for(const gap of [60,84,112,150,200,280]){ for(const dir of [1,-1]){
+      for(const gap of [60,84,112,150,200,280].filter(x=>x>=minGap)){ for(const dir of [1,-1]){
         const r={x:left,y:dir<0?T[1]-gap-nh:T[1]+gap,w:nw,h:nh}; if(!best&&free(r)) best=r; } if(best) break; }
       if(!best) best={x:left,y:T[1]>(top+bot)/2?top:bot-nh,w:nw,h:nh};
-      taken.push(best); n.style.left=best.x+"px"; n.style.top=best.y+"px";
-      const sx=Math.max(best.x+16,Math.min(best.x+nw-16,T[0]));
-      // the path starts on the level and ends at the note, so the arrowhead points at the text
-      const S=T[1]>best.y+nh?[sx,best.y+nh+12]:[sx,best.y-12], m=(S[1]+T[1])/2;
-      const d=`M${T[0]},${T[1]} C${T[0]},${m} ${S[0]},${m} ${S[0]},${S[1]}`;
-      const gl=glow(ringIdx);
+      taken.push(best);
+      const gl=glow(ringIdx);                           // the level glows first, then the note (boxed, curved arrow) comes in like the intro's
       await w(900);
-      p.setAttribute("d",d); const len=p.getTotalLength?p.getTotalLength():300;
-      // arrowhead: its own little mark at the end of the line, oriented along the line, appearing as the line arrives
-      let ang=S[1]>T[1]?90:-90;
-      if(p.getPointAtLength){ const e=p.getPointAtLength(len), q=p.getPointAtLength(Math.max(0,len-6)); ang=Math.atan2(e.y-q.y,e.x-q.x)*180/Math.PI; }
-      hd.setAttribute("transform",`translate(${S[0]},${S[1]}) rotate(${ang})`);
-      hd.style.transition="none"; hd.style.opacity=0;
-      p.style.transition="none"; p.style.opacity=1; p.style.strokeDasharray=len; p.style.strokeDashoffset=len; void p.getBoundingClientRect();
-      p.style.transition="stroke-dashoffset .9s cubic-bezier(.4,0,.2,1)"; p.style.strokeDashoffset=0;
-      hd.style.transition="opacity .12s ease .78s"; hd.style.opacity=1;
-      await w(950); n.classList.add("on");
-      await w(3200);                                   // read it, then the glow fades and the next level takes over
+      const top0=document.getElementById("atlas").offsetTop;   // atlas coordinates -> stage coordinates
+      await window.Anno.show({target:{x:T[0],y:T[1]+top0,w:0,h:0},glow:false,html:text,box:true,maxW:300,align:"center",at:{x:best.x,y:best.y+top0}});
+      await w(4800);                                   // read it, then the note and the glow fade and the next level takes over
+      window.Anno.clear();
       gl.transition().duration(900).attr("opacity",0).remove();
       await w(600);
     };
-    await step(0,"Each ring is a different OncoTree level",0);
-    await step(1,"The further out, the more specific the diagnoses",2);
+    await step(0,"Each ring is a different level of the OncoTree (cancer classification).",0,112);   // lower, with a longer arrow
+    await step(1,"The further out, the more <b>specific</b> the diagnoses.",2);
   }
 
   async function zoomSite(c,opts){
@@ -569,9 +571,11 @@
     // hold the main loop right away; sparks already in flight finish landing while the view starts to zoom
     paused=true; busy=true;
     const my=++sceneId, w=sceneWait(my);
-    const dbg=!!(opts&&opts.debug), intro=dbg||zoomsThisLoop===0; if(!dbg) zoomsThisLoop++;
+    const forced=opts&&opts.annotate!==undefined;
+    const intro=forced?!!opts.annotate:(zoomsThisLoop===0); if(!forced) zoomsThisLoop++;
+    const replayMs=(opts&&opts.replayMs)||ZOOM_REPLAY_MS;
     const snap={live:null, sub:new Map()};
-    const home=g.attr("transform"), s0=+(/scale\(([\d.]+)\)/.exec(home)||[0,1])[1];
+    let home=g.attr("transform"); const s0=+(/scale\(([\d.]+)\)/.exec(home)||[0,1])[1];
     sceneReset=()=>hardReset(home,snap);
     let completed=false;
     // the rows that fade out (KPIs, events log, weekly counter) leave a band under the title: the zoom uses it
@@ -614,7 +618,7 @@
       if(intro){ const rg=zringG; zoomIntro(Z,rg,w,code).catch(()=>{}); }
       // fast replay: one even beat per event across the week; the header clock sweeps the days with it
       let cNew=0, cEv=0;
-      const beat=ZOOM_REPLAY_MS/Math.max(evs.length,1);
+      const beat=replayMs/Math.max(evs.length,1);
       await new Promise(done=>{ let i=0; const tm=d3.timer(el=>{
         if(my!==sceneId){ tm.stop(); done(); return; }
         while(i<evs.length && i*beat<=el){
@@ -636,6 +640,7 @@
       zui.classList.remove("on"); zsubs.classList.remove("on"); annOut();
       await w(150).catch(()=>{});      // the text has started to fade; the zoom-out follows right behind it
       if(my===sceneId){
+      if(opts&&opts.relayout) home=opts.relayout();   // the layout changes behind the zoom, so the atlas settles into its new place
       stage.classList.remove("zoomed");   // events log, counter and timeline return together with the atlas
       if(snap.live){ live.clear(); snap.live.forEach((v,key)=>live.set(key,v)); root.each(n=>{ n.liveSub=snap.sub.get(n); }); }
       nodeSel.select("circle").transition().duration(ZOOM_OUT_MS).attr("r",d=>nodeR(d));
@@ -663,64 +668,59 @@
     const evs=siteEvents.get(code), nNew=newIn(evs), start=baseBySite.get(code)||0;
     return {code,name:codeMap.get(code).data.name,events:evs.length,nNew,nUpd:evs.length-nNew,start,end:start+nNew,
       growth:start?100*nNew/start:0}; });
-  const RC_BAR_W=380, RC_STEPS=[   // guided walkthrough: what to highlight, which part to point at, what to say, how long to stay
-    {focus:"all",   add:[],           ms:4000, target:null, title:"How to read this",
-      body:"Each bar is one body site's activity this week. The longer the bar, the more events."},
-    {focus:"new",   add:["show-new"], ms:4200, target:".rc-row:last-child .seg-new", title:"New patient samples",
-      body:"Each orange block is a sample reaching the pipeline for the first time."},
-    {focus:"upd",   add:["show-upd"], ms:4200, target:".rc-row:last-child .seg-upd", title:"Updates to existing samples",
-      body:"Green is the rest of the activity: files landing, passing quality checks and loading."},
-    {focus:"all",   add:["show-se"],  ms:4400, target:".rc-row:last-child .rc-se", title:"Total patient samples",
-      body:"Each site's total at the start and the end of the week, with the change."},
-    {focus:"growth",add:[],           ms:5000, target:".rc-row.hl .rc-se", title:null,
-      body:"Growth is a site's new samples as a share of its own starting total."} ];
-  const rc=document.getElementById("recap"), rcNote=document.getElementById("rc-note"), rcPath=document.getElementById("rc-arrow-path");
-  const rcT=document.getElementById("rc-note-t"), rcB=document.getElementById("rc-note-b"), rcCard=document.getElementById("rc-card");
-  let rcBest=null;
+  // guided walkthrough of the top-5 chart: which part to point at, what to say, how long to stay (boxed notes, like the other scenes)
+  const RC_BAR_W=540, RC_STEPS=[
+    {focus:"all",   add:[],           ms:7500, below:true, target:".rc-row:first-child .rc-tot", maxW:330,
+      html:"<b>Each bar</b> is one body site's activity this week. The longer the bar, the more events."},
+    {focus:"new",   add:["show-new"], ms:4600, target:".rc-row:last-child .seg-new", place:"below", gap:56,
+      html:"Each <b>orange block</b> is a sample reaching the pipeline for the first time."},
+    {focus:"upd",   add:["show-upd"], ms:4600, target:".rc-row:last-child .seg-upd", place:"below", gap:56,
+      html:"<b>Green</b> is the rest of the activity: files landing, passing quality checks and loading."} ];
+  const rc=document.getElementById("recap");
+  // the other panels: largest sites overall, biggest gain, top processing labs
+  const topOverall=B.categories.slice().sort((a,b)=>b.n_samples-a.n_samples);
+  const otherSites=topOverall.slice(14), otherTotal=d3.sum(otherSites,c=>c.n_samples);
+  const nameOf=s=>({"Bladder/Urinary Tract":"Bladder/Urinary","Head and Neck":"Head & Neck","Peripheral Nervous System":"Periph. Nerve","Ovary/Fallopian Tube":"Ovary/Fallopian"}[s]||s);
+  const gainRows=level1.map(c=>{ const evs=siteEvents.get(c.data.code), nNew=newIn(evs), start=baseBySite.get(c.data.code)||0;
+    return {name:c.data.name,nNew,start,pct:start?100*nNew/start:0}; }).sort((a,b)=>(b.nNew-a.nNew)||(b.pct-a.pct));
+  const bestGain=gainRows[0];
+  const labRows=Object.entries(B.vendorFiles||{}).sort((a,b)=>b[1]-a[1]);
+  let rcTick=null;
   function buildRecap(){
-    const max=d3.max(recapRows,r=>r.events)||1, px=v=>(v/max*RC_BAR_W).toFixed(1)+"px";
+    const max=d3.max(recapRows,r=>r.events)||1, px=v=>Math.round(v/max*RC_BAR_W)+"px";
+    document.getElementById("rc-eyebrow").textContent=`The last ${days.length} days · ${document.getElementById("win-dates").textContent}`;
     document.getElementById("rc-chart").innerHTML=recapRows.map((r,i)=>
       `<div class="rc-row" data-code="${r.code}" style="--i:${i}"><div class="rc-name"><span class="rk">${i+1}</span>${r.name}</div>`+
       `<div class="rc-bar"><div class="seg-new" style="--w:${px(r.nNew)};--i:${i}"><span class="lab">${fmt(r.nNew)}</span></div>`+
       `<div class="seg-upd" style="--w:${px(r.nUpd)};--i:${i}"><span class="lab">${fmt(r.nUpd)}</span></div><span class="rc-tot">${fmt(r.events)}</span></div>`+
-      `<div class="rc-se">${fmt(r.start)} → <span class="e">${fmt(r.end)}</span><span class="d">+${r.nNew}</span></div></div>`).join("");
-    rcBest=recapRows.reduce((a,b)=>b.growth>a.growth?b:a);
-    rc.querySelector(`.rc-row[data-code="${rcBest.code}"]`).classList.add("hl");
-    RC_STEPS[RC_STEPS.length-1].title=`Fastest growing: ${rcBest.name}, +${rcBest.growth.toFixed(2)}%`;
+      `</div>`).join("");
+    const bmax=topOverall[0].n_samples||1;
+    document.getElementById("rb-chart").innerHTML=topOverall.slice(0,14).map((c,i)=>
+      `<div class="rb-row" style="--i:${i}"><span class="rb-name">${nameOf(c.root)}</span><div class="rb-track"><div class="rb-fill" style="--w:${(100*c.n_samples/bmax).toFixed(1)}%"></div></div><span class="rb-val">${fmt(c.n_samples)}</span></div>`).join("")+
+      `<div class="rb-row other"><span class="rb-name">${otherSites.length} other sites</span><span></span><span class="rb-val">${fmt(otherTotal)}</span></div>`;
+    document.getElementById("rg-site").textContent=bestGain.name;
+    document.getElementById("rg-num").textContent="+0";
+    document.getElementById("rg-pct").innerHTML=`<b>+${bestGain.pct.toFixed(2)}%</b> on its ${fmt(bestGain.start)} at the start of the week`;
+    const lmax=(labRows[0]||[0,1])[1]||1;
+    document.getElementById("rl-chart").innerHTML=labRows.map(([v,n],i)=>
+      `<div class="rl-row" style="--i:${i}"><span class="rl-name">${v}</span><div class="rl-track"><div class="rl-fill" style="--w:${(100*n/lmax).toFixed(1)}%"></div></div><span class="rl-val">${fmt(n)}</span></div>`).join("");
   }
-  // put the note under the chart and draw a curved arrow from it up to the part of the chart it explains
-  function placeNote(st){
-    const rr=rc.getBoundingClientRect(), k=(rr.width/rc.offsetWidth)||1, rw=rc.offsetWidth, nw=390;
-    const cardBottom=(rcCard.getBoundingClientRect().bottom-rr.top)/k, noteTop=cardBottom+62;
-    rcT.textContent=st.title; rcB.textContent=st.body;
-    const tgt=st.target&&rc.querySelector(st.target), tr=tgt&&tgt.getBoundingClientRect();
-    if(!tgt||!tr||!tr.width){ rcNote.style.left=((rw-nw)/2)+"px"; rcNote.style.top=(cardBottom+34)+"px"; rcNote.style.textAlign="center"; return null; }
-    const tx=(tr.left+tr.width/2-rr.left)/k, ty=(tr.bottom-rr.top)/k+8, dir=tx<rw*.6?1:-1;
-    const left=Math.max(0,Math.min(rw-nw,tx-(dir>0?40:nw-40)));
-    rcNote.style.left=left+"px"; rcNote.style.top=noteTop+"px"; rcNote.style.textAlign="left";
-    const sx=tx+dir*74, sy=noteTop-10;
-    return `M${sx.toFixed(1)},${sy.toFixed(1)} C${sx.toFixed(1)},${(sy-52).toFixed(1)} ${(tx+dir*40).toFixed(1)},${(ty+58).toFixed(1)} ${tx.toFixed(1)},${ty.toFixed(1)}`;
-  }
-  async function showNote(st,w){
-    rcNote.style.opacity=0; rcPath.style.opacity=0; await w(350);
-    const d=placeNote(st); rcNote.style.opacity=1; await w(350);
-    if(d){ rcPath.setAttribute("d",d); const len=rcPath.getTotalLength?rcPath.getTotalLength():0;
-      rcPath.style.transition="none"; rcPath.style.strokeDasharray=len||"none"; rcPath.style.strokeDashoffset=len||0; rcPath.style.opacity=1;
-      void rcPath.getBoundingClientRect();
-      rcPath.style.transition="stroke-dashoffset .8s ease-out"; rcPath.style.strokeDashoffset=0; }
+  function countUp(el,to,ms){      // the biggest-gain number counts up when its card appears
+    if(rcTick) rcTick.stop(); const t0=performance.now();
+    rcTick=d3.timer(()=>{ const f=Math.min(1,(performance.now()-t0)/ms); el.textContent="+"+Math.round(to*d3.easeCubicOut(f)); if(f>=1){ rcTick.stop(); rcTick=null; } });
   }
 
   async function runRecap(){
     busy=true; buildRecap();
     const my=++sceneId, w=sceneWait(my); sceneReset=()=>hardReset(null,null);
     let completed=false;
-    rc.className=""; rc.setAttribute("data-focus","all"); rcNote.style.opacity=0; rcPath.style.opacity=0;
+    rc.className=""; rc.setAttribute("data-focus","all");
     const atlasEl=document.getElementById("atlas"), titleRow=document.querySelector(".titlerow");
     const gapUp=Math.max(0,atlasEl.offsetTop-(titleRow.offsetTop+titleRow.offsetHeight)-72);
     rc.style.top=(8-gapUp)+"px";
     const fadeSel=g.selectAll(".ringline,.spoke,.hubc,.hub-tot,.hub-num,.hub-lab,.hub-cat,.catlabel,.link,.node");
     try{
-      // the atlas and every panel around it step back; the recap arrives once they are gone
+      // the atlas and every panel around it step back; the dashboard arrives once they are gone
       fadeSel.classed("zout",true); barSel.classed("zout",true); tipSel.classed("zout",true);
       wedge.classed("zout",true); sparkL.classed("zout",true); pulseL.classed("zout",true);
       stage.classList.add("zoomed","recapping");
@@ -728,15 +728,28 @@
       await w(1200);
       rc.classList.add("bars");
       await w(1900);
-      for(const st of RC_STEPS){
+      for(const st of RC_STEPS){                       // the top-5 chart, explained
         rc.setAttribute("data-focus",st.focus); st.add.forEach(c=>rc.classList.add(c));
-        await showNote(st,w);
+        let at=null;
+        if(st.below){   // under the whole chart, to the right, with a long curved arrow rising to the end of the top bar
+          const sr=stage.getBoundingClientRect(), k=sr.width/stage.offsetWidth, tr=document.querySelector(st.target).getBoundingClientRect(),
+                cb=document.getElementById("rc-card").getBoundingClientRect();
+          const m=window.Anno.measure(st.html.replace(/<[^>]+>/g,""),{maxW:st.maxW,box:true,align:"left"});
+          at={x:Math.min((sr.width/k)-40-m.w,(tr.left-sr.left)/k-m.w+70),y:(cb.bottom-sr.top)/k+64};
+        }
+        await window.Anno.show({target:st.target,glow:false,html:st.html,place:"below",gap:st.gap,lift:st.lift,maxW:st.maxW||360,align:"left",box:true,at,straight:!!st.below});
         await w(st.ms);
+        window.Anno.clear(); await w(700);
       }
+      rc.setAttribute("data-focus","all");
+      rc.classList.add("show-b"); await w(3200);       // then the dashboard fills in: largest overall, biggest gain, top labs
+      rc.classList.add("show-c"); countUp(document.getElementById("rg-num"),bestGain.nNew,1400); await w(3200);
+      rc.classList.add("show-d"); await w(3200);
+      await w(RC_HOLD_MS);                             // everything on screen, held for reading
       completed=true;
     } catch(err){ if(err!==CANCELLED) throw err;
     } finally { if(my===sceneId){
-      rcNote.style.opacity=0; rcPath.style.opacity=0; rc.classList.remove("on");
+      window.Anno.clear(); rc.classList.remove("on");
       await w(150).catch(()=>{});
       if(my===sceneId){
       stage.classList.remove("zoomed","recapping");
@@ -751,31 +764,132 @@
 
   // ── debug buttons (bottom left): jump straight to the recap or the first zoom without sitting through the loop.
   // They only call the same zoom/recap code the loop uses; the loop is paused meanwhile and carries on exactly where it was.
-  function debugRecap(){
-    cancelScene();   // takes over from a zoom/recap that is already playing
-    paused=true;
-    runRecap().then(ok=>{ if(ok) paused=false; }).catch(err=>{ console.error(err); paused=false; busy=false; });
-  }
-  function debugZoom(){
-    cancelScene();
-    const c=level1.find(x=>zoomRank.has(x.data.code)); if(!c) return;   // first top site in the clockwise order
-    const saved=si; si=level1.indexOf(c); spotlight(); si=saved;        // show its spotlight without moving the rotation
-    zoomSite(c,{debug:true}).catch(err=>{ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); });
-  }
-  document.getElementById("dbg-recap").addEventListener("click",debugRecap);
-  document.getElementById("dbg-zoom").addEventListener("click",debugZoom);
 
   // spotlight scheduler: every site gets its short spotlight; a top site is zoomed into after a moment
   function cycle(){
-    if(busy){ setTimeout(cycle,400); return; }   // a zoom/recap is playing: leave the spotlight where it is
+    if(busy||!spot.on){ setTimeout(cycle,100); return; }   // a zoom/recap is playing, or the director turned the sweep off: leave the spotlight where it is
     spotlight();
     const c=level1.find(x=>x.data.code===curSpot);
-    if(!reduce && c && !busy && zoomRank.has(curSpot)){
+    if(!reduce && c && !busy && spot.autoZoom && zoomRank.has(curSpot)){
       (async()=>{
         try{ await zoomSite(c); }catch(err){ console.error(err); paused=false; busy=false; stage.classList.remove("zoomed"); }
         setTimeout(cycle,1200);
       })();
     } else setTimeout(cycle, reduce?9000:5600);
   }
+  // neutral overview: no site highlighted (everything drawn the way a non-spotlit site is)
+  function unspot(){
+    curSpot=null; cullLabels(null);
+    nodeSel.attr("opacity",.78);
+    barSel.attr("stroke",P.bar).attr("opacity",.45);
+    tipSel.attr("fill",P.tip).attr("opacity",.4);
+    nodeSel.select("circle").attr("fill",d=>d.depth===1?P.node:P.nodeDeep);
+    linkSel.attr("opacity",.32).style("stroke",P.edge);
+    labelG.selectAll(".catlabel").style("fill",P.ink3).style("font-size","13.5px")
+      .attr("opacity",function(){ return this.getAttribute("data-shown")==="1"?.8:0; });
+    wedge.attr("opacity",0); hubCat.attr("opacity",0);
+  }
+
+  // ── intro scene helpers (used by js/director.js): layout, body-site rings, dimming, a held ripple, point lookup
+  const introG=g.insert("g",()=>labelG.node()).attr("class","intro-g").attr("display","none").attr("opacity",0);
+  const RING_IN=OUT+42, RING_OUT=OUT+84;
+  introG.append("path").attr("d",d3.arc()({innerRadius:RING_IN,outerRadius:RING_OUT,startAngle:0,endAngle:2*Math.PI}))
+    .attr("fill",tok("orange")).attr("opacity",.075);
+  [RING_IN,RING_OUT].forEach(r=>introG.append("circle").attr("r",r).attr("fill","none").attr("stroke",tok("orange")).attr("stroke-width",2));
+  const stageEl=document.getElementById("stage"), atlasEl=document.getElementById("atlas");
+  const heldG=g.append("g").attr("class","held-g");   // the one ripple the intro holds in place (events behind it dim with everything else)
+  let heldRip=null, keepNode=null;
+  // all body-site names for the intro's ring note: every site, one size, spread out where names would collide
+  let introLbl=null;
+  function buildIntroLabels(){
+    if(introLbl) return; introLbl=introG.append("g");
+    const r0=(RING_IN+RING_OUT)/2-4, FS=12.5, items=level1.map(c=>({c,a:c.la,name:SHORT[c.data.name]||c.data.name}));
+    const probeT=introLbl.append("text").attr("class","catlabel").style("font-size",FS+"px").attr("opacity",0);
+    items.forEach(o=>{ probeT.text(o.name); let L=60; try{ L=probeT.node().getComputedTextLength()||60; }catch(e){} o.L=L; o.w=(L+14)/r0; });
+    probeT.remove();
+    items.sort((x,y)=>x.a-y.a);
+    const n=items.length, TAU=2*Math.PI;                  // push neighbours apart (round the circle) until nothing overlaps
+    for(let it=0;it<400;it++){ let moved=false;
+      for(let i=0;i<n;i++){ const A1=items[i], B1=items[(i+1)%n]; let gap=B1.a-A1.a; if(i===n-1) gap+=TAU;
+        const need=(A1.w+B1.w)/2; if(gap<need){ const s=(need-gap)/2+1e-4; A1.a-=s; B1.a+=s; moved=true; } }
+      if(!moved) break; }
+    items.forEach(o=>{
+      const top=Math.cos(o.a)>=0, r=top?r0:r0+10, d=o.L/r*0.62+0.03, P=x=>[Math.sin(x)*r,-Math.cos(x)*r];
+      const [x0,y0]=P(top?o.a-d:o.a+d), [x1,y1]=P(top?o.a+d:o.a-d), id="il-"+o.c.data.code;
+      defs.append("path").attr("id",id).attr("d",`M${x0},${y0} A${r},${r} 0 0 ${top?1:0} ${x1},${y1}`);
+      introLbl.append("text").attr("class","catlabel intro-lbl").style("font-size",FS+"px")
+        .append("textPath").attr("href","#"+id).attr("startOffset","50%").attr("text-anchor","middle").text(o.name); });
+  }
+  function introRings(on){
+    if(on) buildIntroLabels();
+    if(on){ introG.attr("display",null); void introG.node().getBoundingClientRect(); introG.transition().duration(700).attr("opacity",1); }
+    else introG.interrupt().transition().duration(500).attr("opacity",0).on("end",()=>introG.attr("display","none"));
+  }
+  function introDim(mode){                              // "tree" keeps the body-site names, "all" dims everything, null clears
+    atlasEl.classList.toggle("dimmed",!!mode); atlasEl.classList.toggle("keeplbl",mode==="tree");
+  }
+  function introKeep(code){
+    if(keepNode){ keepNode.classList.remove("keep"); keepNode=null; }
+    const n=code&&codeMap.get(code); if(!n) return null;
+    keepNode=nodeSel.filter(d=>d===n).node(); keepNode.classList.add("keep"); return keepNode.querySelector("circle");
+  }
+  function introRipple(code){
+    if(heldRip){ heldRip.remove(); heldRip=null; }
+    const n=code&&codeMap.get(code); if(!n) return;
+    heldRip=heldG.append("g");
+    [0,.9].forEach(b=>{ const c=heldRip.append("circle").attr("cx",n.px).attr("cy",n.py).attr("r",nodeR(n)+2).attr("fill","none")
+      .attr("stroke","#005030").attr("stroke-width",2).attr("opacity",0);
+      c.append("animate").attr("attributeName","r").attr("values",`${nodeR(n)+2};${nodeR(n)+30}`).attr("dur","1.8s").attr("begin",b+"s").attr("repeatCount","indefinite");
+      c.append("animate").attr("attributeName","opacity").attr("values","0.9;0").attr("dur","1.8s").attr("begin",b+"s").attr("repeatCount","indefinite");
+      c.append("animate").attr("attributeName","stroke-width").attr("values","2;.5").attr("dur","1.8s").attr("begin",b+"s").attr("repeatCount","indefinite"); });
+  }
+  function stagePt(a,r){                                // a point on the atlas (angle in radians from 12 o'clock, radius in atlas units) in stage pixels
+    const p=svg.node().createSVGPoint(); p.x=Math.sin(a)*r; p.y=-Math.cos(a)*r;
+    const q=p.matrixTransform(g.node().getScreenCTM()), sr=stageEl.getBoundingClientRect(), k=(sr.width/stageEl.offsetWidth)||1;
+    return {x:(q.x-sr.left)/k, y:(q.y-sr.top)/k, w:0, h:0};
+  }
+  function bySamples(){ return level1.slice().sort((a,b)=>b.liveSub-a.liveSub).map(n=>n.data.code); }
+  function introLayout(on,ms){                          // ms: glide the tree from its old size and place to its new one
+    const old=g.attr("transform");
+    stageEl.classList.toggle("intro",!!on); bigAtlas=!!on; fitAtlas();
+    if(ms){ const nw=g.attr("transform"); g.attr("transform",old).transition().duration(ms).ease(d3.easeCubicInOut).attr("transform",nw); }
+  }
+  // switch layout while a zoom is on screen: returns the transform the atlas should settle to, leaves the current one alone
+  function relayout(on){
+    const cur=g.attr("transform");
+    stageEl.classList.toggle("intro",!!on); bigAtlas=!!on; stageEl.classList.add("entering"); setTimeout(()=>stageEl.classList.remove("entering"),1300);
+    fitAtlas(); const nw=g.attr("transform"); g.attr("transform",cur); return nw;
+  }
+  function introReset(){ introRings(false); introDim(null); introKeep(null); introRipple(null); atlasEl.classList.remove("ringlbl"); }
+  // the control surface the scene director uses (js/director.js); nothing here changes how the page behaves on its own
+  window.Atlas={
+    classic:/[?&]classic\b/.test(location.search),
+    reduce,
+    rank:{ top:n=>[...zoomRank.entries()].sort((a,b)=>a[1]-b[1]).slice(0,n).map(([code])=>code) },
+    stream:{ done:()=>new Promise(r=>{ hooks.streamEnd=r; }),            // classic: resolves when the week has fully played
+             manual(v){ hooks.manual=!!v; if(!v) ramp=null; },           // director mode: advance only along runTo ramps
+             runTo(p,ms){ return new Promise(res=>{ ramp={from:vt,to:p,ms:Math.max(ms,1),t:0,done:res}; }); },   // play on to progress p (0..1) over ms of running time
+             restart(){ if(ramp){ const r=ramp; ramp=null; r.done(); } holdUntil=0; ei=0; vt=0; restartLoop(); },
+             pause(){ paused=true; }, resume(){ paused=false; } },
+    spotlight:{ start(){ spot.on=true; }, stop(){ spot.on=false; }, autoZoom(v){ spot.autoZoom=!!v; },
+                goTo(code){ const i=level1.findIndex(x=>x.data.code===code); if(i<0) return Promise.resolve();
+                  const go=()=>{ const saved=si; si=i; spotlight(); si=saved; wedge.interrupt().attr("opacity",0).transition().duration(600).attr("opacity",1); };   // the slice fades in instead of jumping
+                  if(+wedge.attr("opacity")>0){ wedge.interrupt().transition().duration(260).attr("opacity",0);       // the slice that was lit fades out first
+                    return new Promise(r=>setTimeout(()=>{ go(); r(); },280)); }
+                  go(); return Promise.resolve(); },
+                clear:unspot },
+    intro:{ ringOut:RING_OUT,
+            swap:async on=>{ const sl=ms=>new Promise(r=>setTimeout(r,ms)); if(on&&stageEl.classList.contains("intro")) return;          // into the intro layout (a quick dip, not a jump)
+              atlasEl.classList.add("swapping"); stageEl.classList.add("swapping"); await sl(420); introLayout(on); await sl(80);
+              atlasEl.classList.remove("swapping"); stageEl.classList.remove("swapping"); },
+            relayout,
+            ringLabels:on=>atlasEl.classList.toggle("ringlbl",!!on),
+            layout:introLayout, rings:introRings, dim:introDim, keep:introKeep, ripple:introRipple, pt:stagePt, bySamples, reset:introReset,
+            node:code=>{ const n=codeMap.get(code); return n?nodeSel.filter(d=>d===n).node():null; } },
+    scenes:{ summary:()=>runRecap(),
+             zoom:(code,o)=>{ const c=level1.find(x=>x.data.code===code); return c?zoomSite(c,o):Promise.resolve(false); },
+             idle:()=>new Promise(r=>{ const t=()=>busy?setTimeout(t,200):r(); t(); }),
+             cancel:cancelScene }
+  };
   cycle();
 })();

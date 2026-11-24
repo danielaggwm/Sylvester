@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sample Atlas</title>
+<title>Inside the Genomics Pipeline</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Barlow+Semi+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body> 
-<div id="viewport"><div id="stage">
+<div id="viewport"><div id="stage" class="intro">
 
   <header>
     <div class="brandrow">
@@ -24,8 +24,8 @@
     <div class="rule"></div>
     <div class="titlerow">
       <div>
-        <h1 class="wordmark">Sample Atlas</h1>
-        <div class="sub">Clinical genomics · OncoTree samples</div>
+        <h1 class="wordmark">Inside the Genomics Pipeline</h1>
+        <div class="sub">One week of patient samples, mapped by cancer type</div>
       </div>
       <div class="clock">
         <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
@@ -68,15 +68,32 @@
       <div class="za-note" id="za-n1"></div><div class="za-note" id="za-n2"></div>
     </div>
     <div id="recap" aria-live="off">
-      <div class="rc-eyebrow">Top 5 body sites · last 7 days</div>
-      <h2 class="rc-title">Most active body sites this week</h2>
-      <div class="rc-card" id="rc-card">
+      <div class="rc-eyebrow" id="rc-eyebrow">The last 7 days</div>
+      <h2 class="rc-title">The week in review</h2>
+      <div class="rc-card rc-a" id="rc-card">
+        <div class="rc-head"><h3>Most active body sites this week</h3></div>
         <div class="rc-legend"><span class="lg-new"><i></i>New-sample arrivals</span><span class="lg-upd"><i></i>File updates</span></div>
         <div class="rc-chart" id="rc-chart"></div>
       </div>
-      <div class="rc-zone"></div>
-      <svg class="rc-arrow" aria-hidden="true"><defs><marker id="rc-head" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="#C35009" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path id="rc-arrow-path" d="" fill="none" stroke="#C35009" stroke-width="2.4" stroke-linecap="round" marker-end="url(#rc-head)"/></svg>
-      <div class="rc-note" id="rc-note"><b id="rc-note-t"></b><span id="rc-note-b"></span></div>
+      <div class="rc-grid">
+        <div class="rc-card rc-b" id="rc-b">
+          <div class="rc-head"><h3>Largest overall</h3><span>Total patient samples<br>by body site</span></div>
+          <div class="rb-chart" id="rb-chart"></div>
+        </div>
+        <div class="rc-col">
+          <div class="rc-card rc-c" id="rc-c">
+            <div class="rc-head"><h3>Biggest gain<br>this week</h3><span>New samples,<br>one body site</span></div>
+            <div class="rg-site" id="rg-site">—</div>
+            <div class="rg-num" id="rg-num">+0</div>
+            <div class="rg-lab">new patient samples</div>
+            <div class="rg-pct" id="rg-pct"></div>
+          </div>
+          <div class="rc-card rc-d" id="rc-d">
+            <div class="rc-head"><h3>Top processing labs</h3><span>Files processed,<br>all time</span></div>
+            <div class="rl-chart" id="rl-chart"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -113,16 +130,19 @@
           <circle cx="22" cy="15" r="5" fill="#2E6B50"/>
           <circle cx="22" cy="15" r="5" fill="none" stroke="#005030" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
         </svg></span><span class="tx"><b>Green ripple = a file update</b> for an existing sample: received, quality-checked, or loaded.</span></div>
-        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#F47321" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time; its details are on the left.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#F47321" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time.<span class="onfull"> Its details are on the left.</span></span></div>
       </div>
     </div>
   </div>
 
   <div class="credit">Visualization by Daniela Gonzalez from the Sylvester Data Science Team</div>
 
-  <div class="dbg">
-    <button type="button" id="dbg-recap" title="Debug: skip to the Top 5 summary" aria-label="Skip to the Top 5 summary"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 2.5v11l7-5.5zM9 2.5v11l7-5.5z" transform="scale(.82) translate(1.4 1.4)"/><rect x="13" y="2" width="1.8" height="12" rx=".6"/></svg></button>
-    <button type="button" id="dbg-zoom" title="Debug: skip to the first zoom" aria-label="Skip to the first zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4"/></svg></button>
+  <div id="anno-under" aria-hidden="true"></div>
+  <div id="anno" aria-hidden="true"><svg></svg></div>
+  <div class="dbg" hidden>
+    <button type="button" data-scene="1" title="Jump to scene 1" aria-label="Jump to scene 1">1</button>
+    <button type="button" data-scene="2" title="Jump to scene 2" aria-label="Jump to scene 2">2</button>
+    <button type="button" data-scene="3" title="Jump to scene 3" aria-label="Jump to scene 3">3</button>
   </div>
 
 </div></div>
@@ -130,5 +150,7 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="data/bundle.js"></script>
 <script src="js/app.js"></script>
+<script src="js/annotate.js"></script>
+<script src="js/director.js"></script>
 </body>
 </html>

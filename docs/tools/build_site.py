@@ -141,7 +141,7 @@ def build(data_dir, days, loop_min):
                  "tStart": iso(t_start), "tEnd": iso(t_end),
                  "dateStart": t_start.astimezone(ET).date().isoformat(),
                  "dateEnd": last_day.isoformat(), "days": day_marks},
-        "vendors": vendors, "vendorTotals": meta["vendors"],
+        "vendors": vendors, "vendorTotals": meta["vendors"], "vendorFiles": meta.get("vendor_files", {}),
         "tree": tree, "categories": cats, "events": events, "base": dict(base),
     }
     if bundle["meta"]["baseSamples"] + n_new != bundle["meta"]["totalSamples"]:

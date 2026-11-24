@@ -292,9 +292,11 @@ def build(raw_path, key_path, out_dir):
     # ---- meta ----
     vendor_counts = defaultdict(int)
     ftype_counts = defaultdict(int)
+    vendor_file_ids = defaultdict(set)      # distinct files each processing lab has handled (all time)
     for r in rows:
         vendor_counts[r["vendor_name"]] += 1
         ftype_counts[r["file_type"]] += 1
+        vendor_file_ids[r["vendor_name"]].add(r["file_id"])
     meta = {
         "source_file": os.path.basename(raw_path),
         "generated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -308,6 +310,7 @@ def build(raw_path, key_path, out_dir):
         "actions": ACTION_LABEL,
         "file_types": {"counts": dict(sorted(ftype_counts.items())), "relabel": FILE_TYPE_RELABEL},
         "vendors": dict(sorted(vendor_counts.items(), key=lambda kv: kv[1], reverse=True)),
+        "vendor_files": dict(sorted(((v, len(f)) for v, f in vendor_file_ids.items()), key=lambda kv: kv[1], reverse=True)),
         "sample_created_events": len(created_for),
         "samples_without_xml": 0,
         "xml_rule": "strict: a sample exists only once an XML (Epic data) ingested event exists for it",

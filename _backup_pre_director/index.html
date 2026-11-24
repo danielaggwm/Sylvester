@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sample Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Barlow+Semi+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body> 
+<div id="viewport"><div id="stage">
+
+  <header>
+    <div class="brandrow">
+      <img class="logo" src="assets/sylvester-logo.png" alt="Sylvester Comprehensive Cancer Center, University of Miami Health System">
+      <div class="window">
+        <span class="lb">Replaying the last 7 days</span>
+        <span class="dt" id="win-dates">—</span>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="titlerow">
+      <div>
+        <h1 class="wordmark">Sample Atlas</h1>
+        <div class="sub">Clinical genomics · OncoTree samples</div>
+      </div>
+      <div class="clock">
+        <div class="ct"><b></b><span class="lb">Pipeline time</span><span id="clock-date">—</span></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi lead"><div class="v" id="k-samples">0</div><div class="l">Patient samples</div></div>
+      <div class="kpi"><div class="v" id="k-cats">0</div><div class="l">Total body sites</div></div>
+      <div class="kpi"><div class="v" id="k-files">0</div><div class="l">All-time files processed</div></div>
+      <div class="kpi"><div class="v" id="k-ev">0</div><div class="l">Events streamed</div></div>
+    </div>
+    <div class="evstrip" aria-live="off">
+      <div class="es-lab">Latest<br>events</div>
+      <div class="ticker" id="ticker"></div>
+    </div>
+  </header>
+
+  <div id="growth" aria-label="Total patient samples through the replay week">
+    <div class="gr-cap"><span>Total patient samples · last 7 days</span><b id="gr-delta">+0 new</b></div>
+    <div class="gr-row">
+      <div class="gr-end"><span class="l" id="gr-start-l">—</span><span class="v" id="gr-start">—</span></div>
+      <div class="gr-track"><i id="gr-fill"></i></div>
+      <div class="gr-end"><span class="v" id="gr-end">—</span><span class="l" id="gr-end-l">—</span></div>
+    </div>
+  </div>
+
+  <div id="atlas">
+    <div id="zoomui" aria-live="off">
+      <div class="z-eyebrow" id="z-eyebrow"></div>
+      <p class="z-headline">In the last <span id="z-days">7</span> days, <b id="z-site"></b> collected</p>
+      <div class="z-stats">
+        <div class="zst"><b id="z-new">0</b><span>New samples</span></div>
+        <div class="zst"><b id="z-ev">0</b><span>Pipeline events</span></div>
+      </div>
+    </div>
+    <div id="zsubs" aria-live="off"></div>
+    <div id="zann" aria-hidden="true">
+      <svg><path class="za" id="za-p1"/><path class="za" id="za-p2"/><path class="za-h" id="za-h1" d="M-10,-7 L0,0 L-10,7"/><path class="za-h" id="za-h2" d="M-10,-7 L0,0 L-10,7"/></svg>
+      <div class="za-note" id="za-n1"></div><div class="za-note" id="za-n2"></div>
+    </div>
+    <div id="recap" aria-live="off">
+      <div class="rc-eyebrow">Top 5 body sites · last 7 days</div>
+      <h2 class="rc-title">Most active body sites this week</h2>
+      <div class="rc-card" id="rc-card">
+        <div class="rc-legend"><span class="lg-new"><i></i>New-sample arrivals</span><span class="lg-upd"><i></i>File updates</span></div>
+        <div class="rc-chart" id="rc-chart"></div>
+      </div>
+      <div class="rc-zone"></div>
+      <svg class="rc-arrow" aria-hidden="true"><defs><marker id="rc-head" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="#C35009" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path id="rc-arrow-path" d="" fill="none" stroke="#C35009" stroke-width="2.4" stroke-linecap="round" marker-end="url(#rc-head)"/></svg>
+      <div class="rc-note" id="rc-note"><b id="rc-note-t"></b><span id="rc-note-b"></span></div>
+    </div>
+  </div>
+
+  <div id="bottom">
+    <div class="card" id="spotcard">
+      <h3>Now in focus</h3>
+      <div class="spot-name" id="spot-name">—</div>
+      <div class="spot-stats">
+        <div class="s"><div class="v" id="spot-samples">—</div><div class="l">Total samples</div></div>
+        <div class="s"><div class="v" id="spot-share">—</div><div class="l">of all samples</div></div>
+        <div class="s"><div class="v" id="spot-files">—</div><div class="l">Total files</div></div>
+      </div>
+      <h3 style="margin-bottom:10px">Processing lab mix</h3>
+      <div class="vbars" id="vbars"></div>
+      <h3 style="margin:18px 0 8px">Largest subtypes</h3>
+      <div class="subs" id="subs"></div>
+    </div>
+
+    <div class="card readcard">
+      <h3>How to read</h3>
+      <div class="legend" style="margin-top:12px">
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><circle cx="10" cy="11" r="4" fill="#2E6B50"/><circle cx="24" cy="11" r="8" fill="#2E6B50"/></svg></span><span class="tx"><b>Each circle is a cancer type.</b> Bigger circle = more patient samples.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="24" aria-hidden="true"><circle cx="17" cy="12" r="2.6" fill="#005030"/><circle cx="17" cy="12" r="6.5" fill="none" stroke="#528067"/><circle cx="17" cy="12" r="10.5" fill="none" stroke="#9DBBA9"/></svg></span><span class="tx"><b>Inner ring = where the cancer starts</b> (body site, e.g. Lung). <b>Rings further out = more specific diagnoses</b> (e.g. Lung Adenocarcinoma).</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><g stroke="#86A795" stroke-width="2" stroke-linecap="round"><line x1="6" y1="19" x2="6" y2="13"/><line x1="11" y1="19" x2="11" y2="6"/><line x1="16" y1="19" x2="16" y2="10"/><line x1="21" y1="19" x2="21" y2="3"/><line x1="26" y1="19" x2="26" y2="14"/></g></svg></span><span class="tx"><b>Outer bars:</b> one bar per specific diagnosis. Longer bar = more samples. It flickers on activity and grows when a new sample arrives.</span></div>
+        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" overflow="visible" aria-hidden="true">
+          <circle cx="4" cy="15" r="2.2" fill="#9AA3AA" opacity=".6"/>
+          <circle cx="29" cy="15" r="4.5" fill="#2E6B50"/>
+          <circle cy="15" r="1.4" fill="#FBCCA9" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;.2;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".18s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="2.2" fill="#F8A06A" opacity="0"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;.45;0;0" keyTimes="0;.56;.6;1" dur="2.6s" begin=".09s" repeatCount="indefinite"/></circle>
+          <circle cy="15" r="3.4" fill="#F47321"><animate attributeName="cx" values="4;29;29" keyTimes="0;.58;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.57;.6;1" dur="2.6s" repeatCount="indefinite"/></circle>
+          <circle cx="29" cy="15" r="4.5" fill="none" stroke="#F47321" stroke-width="2"><animate attributeName="r" values="4.5;4.5;11.5;11.5" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;.58;.92;1" dur="2.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Orange spark = a new patient sample.</b> It travels from the center to its cancer type; the circle grows and the total goes up.</span></div>
+        <div class="lg"><span class="gl"><svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true">
+          <circle cx="22" cy="15" r="5" fill="#2E6B50"/>
+          <circle cx="22" cy="15" r="5" fill="none" stroke="#005030" stroke-width="1.6"><animate attributeName="r" values="5;14" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/><animate attributeName="stroke-width" values="1.6;.4" dur="1.6s" repeatCount="indefinite"/></circle>
+        </svg></span><span class="tx"><b>Green ripple = a file update</b> for an existing sample: received, quality-checked, or loaded.</span></div>
+        <div class="lg"><span class="gl"><svg width="34" height="22" aria-hidden="true"><path d="M5 18 A12 12 0 0 1 29 18" fill="none" stroke="#F47321" stroke-width="2"/></svg></span><span class="tx"><b>Spotlight</b> highlights one body site at a time; its details are on the left.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="credit">Visualization by Daniela Gonzalez from the Sylvester Data Science Team</div>
+
+  <div class="dbg">
+    <button type="button" id="dbg-recap" title="Debug: skip to the Top 5 summary" aria-label="Skip to the Top 5 summary"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 2.5v11l7-5.5zM9 2.5v11l7-5.5z" transform="scale(.82) translate(1.4 1.4)"/><rect x="13" y="2" width="1.8" height="12" rx=".6"/></svg></button>
+    <button type="button" id="dbg-zoom" title="Debug: skip to the first zoom" aria-label="Skip to the first zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4"/></svg></button>
+  </div>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="data/bundle.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

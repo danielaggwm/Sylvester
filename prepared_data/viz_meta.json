@@ -1,6 +1,6 @@
 {
   "source_file": "pipeline_events_synthetic.csv",
-  "generated": "2026-11-19 19:25:48",
+  "generated": "2026-11-24 20:22:11",
   "oncotree_key": "oncotree_lookup.json",
   "totals": {
     "events": 155938,
@@ -39,6 +39,13 @@
     "Guardant Health": 26417,
     "NeoGenomics": 25413,
     "Adaptive": 5408
+  },
+  "vendor_files": {
+    "Foundation Medicine": 18921,
+    "Caris": 14073,
+    "Guardant Health": 8837,
+    "NeoGenomics": 8495,
+    "Adaptive": 1811
   },
   "sample_created_events": 26155,
   "samples_without_xml": 0,
