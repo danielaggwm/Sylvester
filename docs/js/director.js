@@ -41,7 +41,7 @@
 
     A.intro.dim("tree"); A.intro.rings(true); A.intro.ringLabels(true); await sleep(900); chk();         // the body-site names get their orange rings
     const ang=0.78, ptr=A.intro.pt(ang,A.intro.ringOut);
-    await Anno.show({target:ptr,glow:false,html:"We have cancer samples for <b>32 body sites</b>",place:"above",gap:96,dx:30,maxW:240,align:"left",box:true}); chk();
+    await Anno.show({target:ptr,glow:false,html:"We have cancer samples for <b>32 body sites</b>.",place:"above",gap:96,dx:30,maxW:240,align:"left",box:true}); chk();
     await sleep(T.ringsMs); chk(); Anno.clear(); A.intro.rings(false); A.intro.ringLabels(false); A.intro.dim(null); await sleep(T.gapMs+600); chk();
 
     const [big,rip]=A.intro.bySamples();                                   // the biggest circle: bigger circle = more samples
